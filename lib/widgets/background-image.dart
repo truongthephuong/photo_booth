@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BackGroundImage extends StatelessWidget {
@@ -9,16 +8,16 @@ class BackGroundImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShaderMask(
-      shaderCallback: (bounds) => LinearGradient(
+      shaderCallback: (bounds) => const LinearGradient(
         colors: [Colors.black, Colors.black12],
         begin: Alignment.bottomCenter,
         end: Alignment.center,
       ).createShader(bounds),
       blendMode: BlendMode.darken,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/main_bg.jpg'),
+              image: AssetImage('assets/images/bg-img-1.gif'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)
           ),

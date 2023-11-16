@@ -1,6 +1,6 @@
-# photo_editor
+# photobooth_section1
 
-Photo editor Flutter project
+A new Flutter project.
 
 ## Getting Started
 

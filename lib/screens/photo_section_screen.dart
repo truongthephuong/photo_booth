@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -6,6 +5,8 @@ import '../widgets/nav-drawer.dart';
 const _defaultColor = Color(0xFF34568B);
 
 class PhotoSectionScreen extends StatefulWidget {
+  const PhotoSectionScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _PhotoSectionScreenState();
 }
@@ -31,7 +32,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
     // }
     if(index == 2) {
       Navigator.pushNamedAndRemoveUntil(
-          context as BuildContext, '/photo_cam', ModalRoute.withName('/photo_cam'));
+          context, '/photo_cam', ModalRoute.withName('/photo_cam'));
     }
 
     setState(() {
@@ -44,16 +45,16 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Photo Editor Section"),
+        title: const Text("Photo Editor Section"),
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 10),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: _buildList(),
       ),
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -88,8 +89,8 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
         mainAxisSpacing: 4,
         crossAxisSpacing: 4,
         pattern: [
-          WovenGridTile(1),
-          WovenGridTile(
+          const WovenGridTile(1),
+          const WovenGridTile(
             5 / 7,
             crossAxisRatio: 0.9,
             alignment: AlignmentDirectional.centerEnd,

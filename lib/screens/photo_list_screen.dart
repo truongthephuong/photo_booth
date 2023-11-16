@@ -1,15 +1,14 @@
 import 'dart:math';
-import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../widgets/nav-drawer.dart';
-import '../screens/home.dart';
 const _defaultColor = Color(0xFF34568B);
 
 class PhotoListScreen extends StatefulWidget {
+  const PhotoListScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _PhotoListScreenState();
 }
@@ -34,11 +33,11 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
     // }
     if(index == 0) {
       Navigator.pushNamedAndRemoveUntil(
-          context as BuildContext, '/home', ModalRoute.withName('/home'));
+          context, '/home', ModalRoute.withName('/home'));
     }
     if(index == 2) {
       Navigator.pushNamedAndRemoveUntil(
-          context as BuildContext, '/photo_cam', ModalRoute.withName('/photo_cam'));
+          context, '/photo_cam', ModalRoute.withName('/photo_cam'));
     }
 
     setState(() {
@@ -73,7 +72,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Photo Editor Section"),
+        title: const Text("Photo Editor Section"),
         centerTitle: true,
       ),
       body: MasonryGridView.count(
@@ -114,7 +113,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
             );
           },
         ),
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

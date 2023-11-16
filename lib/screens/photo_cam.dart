@@ -1,5 +1,5 @@
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:camera_windows/camera_windows.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,12 +8,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import '../main.dart';
 import '../widgets/nav-drawer.dart';
 import '../palatter.dart';
 
 class TakePictureScreen extends StatefulWidget {
+  const TakePictureScreen({super.key});
+
   @override
   _TakePictureScreenState createState() => _TakePictureScreenState();
 }
@@ -29,6 +30,8 @@ class _TakePictureScreenState extends State<TakePictureScreen>
   bool isImageSelected = false;
   File? imageFile;
   late File saveImagefile;
+
+  late MyCameraDelegate _cameraDelegate;
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
@@ -57,29 +60,44 @@ class _TakePictureScreenState extends State<TakePictureScreen>
     // Hide the status bar
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
-    onNewCameraSelected(cameras[0]);
+    //onNewCameraSelected(cameras[0]);
+    _cameraDelegate = MyCameraDelegate();
+    _initializeCamera();
     // TODO: implement initState
     super.initState();
 
   }
 
+  Future<void> _initializeCamera() async {
+    await _cameraDelegate.initializeCamera();
+  }
+
+  Future<void> _selectImage() async {
+    XFile? image = await ImagePicker().pickImage(
+      source: ImageSource.camera
+    );
+    // Handle the taken picture here if needed
+  }
+
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
+    _cameraDelegate.dispose();
     super.dispose();
   }
 
   void onNewCameraSelected(CameraDescription cameraDescription) async {
     final previousCameraController = controller;
+    final firstCamera = cameras.first;
     // Instantiating the camera controller
     final CameraController cameraController = CameraController(
-      cameraDescription,
+      firstCamera,
       currentResolutionPreset,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
     // Dispose the previous controller
-    await previousCameraController?.dispose();
+    await previousCameraController.dispose();
 
     // Replace with the new controller
     if (mounted) {
@@ -103,17 +121,17 @@ class _TakePictureScreenState extends State<TakePictureScreen>
     // Update the Boolean
     if (mounted) {
       setState(() {
-        _isCameraInitialized = controller!.value.isInitialized;
+        _isCameraInitialized = controller.value.isInitialized;
       });
     }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    final CameraController? cameraController = controller;
+    final CameraController cameraController = controller;
 
     // App state changed before we got the chance to initialize.
-    if (cameraController == null || !cameraController.value.isInitialized) {
+    if (!cameraController.value.isInitialized) {
       return;
     }
 
@@ -129,7 +147,7 @@ class _TakePictureScreenState extends State<TakePictureScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 59, 59, 59),
+      backgroundColor: const Color.fromARGB(255, 59, 59, 59),
       appBar: AppBar(
         title: const Text('Photo Booth - Get Photo'),
       ),
@@ -148,18 +166,17 @@ class _TakePictureScreenState extends State<TakePictureScreen>
                           border: Border.all(
                             color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(20))
+                          borderRadius: const BorderRadius.all(Radius.circular(20))
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white.withOpacity(0.1), // background
-                          onPrimary: Colors.black,
+                          foregroundColor: Colors.black, backgroundColor: Colors.white.withOpacity(0.1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           child: Text(
                             'From Gallery',
                             style: kBodyText,
@@ -178,25 +195,24 @@ class _TakePictureScreenState extends State<TakePictureScreen>
                           border: Border.all(
                             color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(20))
+                          borderRadius: const BorderRadius.all(Radius.circular(20))
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white.withOpacity(0.1), // background
-                          onPrimary: Colors.black,
+                          foregroundColor: Colors.black, backgroundColor: Colors.white.withOpacity(0.1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           child: Text(
                             'From Camera',
                             style: kBodyText,
                           ),
                         ),
                         onPressed: () async {
-                          await _captureImagefromCamera();
+                          await _pickImagefromCamera();
                         },
                       ),
                     ),
@@ -222,25 +238,24 @@ class _TakePictureScreenState extends State<TakePictureScreen>
                           border: Border.all(
                             color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(20))
+                          borderRadius: const BorderRadius.all(Radius.circular(20))
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white.withOpacity(0.1), // background
-                          onPrimary: Colors.black,
+                          foregroundColor: Colors.black, backgroundColor: Colors.white.withOpacity(0.1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           child: Text(
                             'Save Photo',
                             style: kBodyText,
                           ),
                         ),
                         onPressed: () async {
-                          await _captureImagefromCamera();
+                          await _pickImagefromCamera();
                         },
                       ),
                     ),
@@ -253,7 +268,7 @@ class _TakePictureScreenState extends State<TakePictureScreen>
           ],
         ),
       ),
-      drawer: NavDrawer(),
+      drawer: const NavDrawer(),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -263,7 +278,7 @@ class _TakePictureScreenState extends State<TakePictureScreen>
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-              label: 'Business',
+              label: 'List Photo',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.camera),
@@ -300,8 +315,10 @@ class _TakePictureScreenState extends State<TakePictureScreen>
 
   _pickImagefromCamera() async {
     try {
-      final pickedImage =
-      await ImagePicker().pickImage(source: ImageSource.camera);
+      print('Image from camera 11111');
+      final pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+      print('Image from camera');
+      print(pickedImage);
       if (pickedImage != null) {
         setState(() {
           imageFile = File(pickedImage.path);
@@ -318,14 +335,15 @@ class _TakePictureScreenState extends State<TakePictureScreen>
     }
   }
 
+/*
   _captureImagefromCamera() async {
     print('Load camera ');
     /// Capture Image in 5 seconds
     const captureInterval = Duration(seconds: 5);
-    var capImage = null;
+    Object? capImage;
     try {
 
-      Future.delayed(Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 5), () {
         print('auto get photo ');
         capImage = ImagePicker().pickImage(source: ImageSource.camera);
         if (capImage != null) {
@@ -343,7 +361,7 @@ class _TakePictureScreenState extends State<TakePictureScreen>
       capImage = await ImagePicker().pickImage(source: ImageSource.camera);
       if (capImage != null) {
         setState(() {
-          imageFile = File(capImage.path);
+          imageFile = File(capImage?.path);
           print('Image from camera');
           print(imageFile);
           isImageSelected = true;
@@ -357,6 +375,8 @@ class _TakePictureScreenState extends State<TakePictureScreen>
     }
   }
 
+ */
+
   _saveImage() async {
     Uint8List bytes = await saveImagefile.readAsBytes();
     var result = await ImageGallerySaver.saveImage(
@@ -369,6 +389,42 @@ class _TakePictureScreenState extends State<TakePictureScreen>
     } else{
       print(result["errorMessage"]);
     }
+  }
+
+}
+
+class MyCameraDelegate {
+  late CameraController _controller;
+
+  Future<void> initializeCamera() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+
+    _controller = CameraController(
+      firstCamera,
+      ResolutionPreset.medium,
+    );
+
+    await _controller.initialize();
+  }
+
+  Future<XFile?> takePicture() async {
+    try {
+      if (!_controller.value.isInitialized) {
+        return null;
+      }
+
+      XFile? photo = await _controller.takePicture();
+
+      return photo;
+    } catch (e) {
+      print("Error taking picture: $e");
+      return null;
+    }
+  }
+
+  Future<void> dispose() async {
+    await _controller.dispose();
   }
 
 }

@@ -1,16 +1,19 @@
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_player_win/video_player_win.dart';
 
 import '../palatter.dart';
 import '../screens/photo_list_screen.dart';
-import '../screens/photo_cam.dart';
 import '../screens/photo_capture.dart';
+import '../widgets/background-image.dart';
 
 class IntroScreen extends StatefulWidget {
+  const IntroScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _IntroScreenState();
 }
@@ -18,8 +21,25 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   late VideoPlayerController _controller;
 
+  static const MaterialColor black = MaterialColor(
+    0xFFFFFFFF,
+    <int, Color>{
+      50: Color(0x00000000),
+      100: Color(0x00000000),
+      200: Color(0x00000000),
+      300: Color(0x00000000),
+      400: Color(0x00000000),
+      500: Color(0x00000000),
+      600: Color(0x00000000),
+      700: Color(0x00000000),
+      800: Color(0x00000000),
+      900: Color(0x00000000),
+    },
+  );
+
   @override
   void initState() {
+
     _controller = VideoPlayerController.asset("assets/videos/man_surfing.mp4");
     _controller.initialize().then((_) {
       _controller.setVolume(0);
@@ -31,7 +51,7 @@ class _IntroScreenState extends State<IntroScreen> {
         });
       });
     });
-
+/*
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -39,7 +59,36 @@ class _IntroScreenState extends State<IntroScreen> {
       DeviceOrientation.portraitDown,
     ]);
 
+ */
+
+    //reload();
     super.initState();
+  }
+
+  void reload() {
+    _controller?.dispose();
+
+    _controller = VideoPlayerController.asset("assets/videos/man_surf.mp4");
+
+    _controller!.initialize().then((value) {
+      if (_controller!.value.isInitialized) {
+        _controller!.play();
+        setState(() {});
+
+        _controller!.addListener(() {
+          if (_controller!.value.isCompleted) {
+            log("ui: player pos=${_controller!.value.position} (completed)");
+          } else {
+            log("ui: player pos=${_controller!.value.position}");
+          }
+        });
+      } else {
+        log("video file load failed");
+      }
+    }).catchError((e) {
+      log("controller.initialize() error occurs: $e");
+    });
+    setState(() {});
   }
 
   @override
@@ -47,6 +96,7 @@ class _IntroScreenState extends State<IntroScreen> {
     super.dispose();
     _controller.dispose();
   }
+
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
@@ -63,7 +113,7 @@ class _IntroScreenState extends State<IntroScreen> {
     // }
     if(index == 2) {
       Navigator.pushNamedAndRemoveUntil(
-          context as BuildContext, '/photo_cam', ModalRoute.withName('/photo_cam'));
+          context, '/photo_cam', ModalRoute.withName('/photo_cam'));
     }
 
     setState(() {
@@ -74,21 +124,23 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.green),
-
+      theme: ThemeData(
+        primarySwatch: black,
+      ),
       // standard dark theme
       darkTheme: ThemeData.dark(),
 
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
+          /*
           children: <Widget>[
             SizedBox.expand(
               child: FittedBox(
                 fit: BoxFit.cover,
                 child: SizedBox(
-                  width: _controller.value.size?.width ?? 0,
-                  height: _controller.value.size?.height ?? 0,
+                  width: _controller.value.size.width ?? 0,
+                  height: _controller.value.size.height ?? 0,
                   child: VideoPlayer(_controller),
                 ),
               ),
@@ -96,6 +148,113 @@ class _IntroScreenState extends State<IntroScreen> {
             //LoginWidget()
             _getContent(context)
           ],
+           */
+          children: [
+            BackGroundImage(),
+            Scaffold (
+              backgroundColor: Colors.transparent,
+              body: SingleChildScrollView(
+                child: SafeArea(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 40.0),
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        /*
+        const Image(
+          image: AssetImage("assets/images/logo.png"),
+          width: 150.0,
+        ),
+         */
+                        const Text(
+                          "MONGTAMEDIA",
+                          style: TextStyle(color: Colors.white, fontSize: 40),
+                        ),
+                        const Text(
+                          "Photo - Booth",
+                          style: TextStyle(color: Colors.white, fontSize: 40),
+                        ),
+
+                        Container(
+                          margin: const EdgeInsets.only(left: 20, right: 20),
+                          height: 80,
+                          width: 200,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(20))
+                          ),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white, backgroundColor: Colors.grey.withOpacity(0.1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'Get Photo',
+                                style: kBodyText,
+                              ),
+                            ),
+                            onPressed: () async {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute( builder: (context) => PhotoCapture()),
+                                //MaterialPageRoute( builder: (context) => const TakePictureScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                          height: 80,
+                          width: 200,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(20))
+                          ),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white, backgroundColor: Colors.grey.withOpacity(0.1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'Photo List',
+                                style: kBodyText,
+                              ),
+                            ),
+                            onPressed: () async {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute( builder: (context) => const PhotoListScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ),
+              ),
+            )
+          ],
+
         ),
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
@@ -127,10 +286,10 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   _getVideoBackground() {
-    var _visible;
+    var visible;
     return AnimatedOpacity(
-      opacity: _visible ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 1000),
+      opacity: visible ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 1000),
       child: VideoPlayer(_controller),
     );
   }
@@ -146,27 +305,33 @@ class _IntroScreenState extends State<IntroScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        SizedBox(
+        const SizedBox(
           height: 50.0,
         ),
-        Image(
+        /*
+        const Image(
           image: AssetImage("assets/images/logo.png"),
           width: 150.0,
         ),
-        Text(
+         */
+        const Text(
+          "MONGTAMEDIA",
+          style: TextStyle(color: Colors.white, fontSize: 40),
+        ),
+        const Text(
           "Photo - Booth",
           style: TextStyle(color: Colors.white, fontSize: 40),
         ),
         Container(
           margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 40.0),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             "View and share videos of current ocean conditions.",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         ..._getLoginButtons(context)
       ],
     );
@@ -182,18 +347,17 @@ class _IntroScreenState extends State<IntroScreen> {
             border: Border.all(
               color: Colors.black,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(20))
+            borderRadius: const BorderRadius.all(Radius.circular(20))
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey.withOpacity(0.1), // background
-            onPrimary: Colors.white,
+            foregroundColor: Colors.white, backgroundColor: Colors.grey.withOpacity(0.1),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
               'Get Photo',
               style: kBodyText,
@@ -203,8 +367,8 @@ class _IntroScreenState extends State<IntroScreen> {
             Navigator.pop(context);
             Navigator.push(
               context,
-              //MaterialPageRoute( builder: (context) => PhotoCapture()),
-              MaterialPageRoute( builder: (context) => TakePictureScreen()),
+              MaterialPageRoute( builder: (context) => PhotoCapture()),
+              //MaterialPageRoute( builder: (context) => const TakePictureScreen()),
             );
           },
         ),
@@ -217,18 +381,17 @@ class _IntroScreenState extends State<IntroScreen> {
             border: Border.all(
               color: Colors.black,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(20))
+            borderRadius: const BorderRadius.all(Radius.circular(20))
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.grey.withOpacity(0.1),
-            onPrimary: Colors.white,
+            foregroundColor: Colors.white, backgroundColor: Colors.grey.withOpacity(0.1),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
               'Photo List',
               style: kBodyText,
@@ -238,7 +401,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Navigator.pop(context);
             Navigator.push(
               context,
-              MaterialPageRoute( builder: (context) => PhotoListScreen()),
+              MaterialPageRoute( builder: (context) => const PhotoListScreen()),
             );
           },
         ),

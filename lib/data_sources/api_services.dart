@@ -1,15 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../models/api_error.dart';
-import '../models/api_response.dart';
-import '../models/user.dart';
-import '../models/users.dart';
-import '../models/contents.dart';
-import '../models/detail_content.dart';
 import 'api_urls.dart';
 
 class ApiServices{
+  /*
   //For fetching user from database to list
   Future<List<User>> fetchUser() {
     return http
@@ -18,21 +13,21 @@ class ApiServices{
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
 
-      if(statusCode != 200 || jsonBody == null){
+      if(statusCode != 200){
         print(response.reasonPhrase);
-        throw new Exception("Lỗi load api");
+        throw Exception("Lỗi load api");
       }
 
-      final JsonDecoder _decoder = new JsonDecoder();
-      final useListContainer = _decoder.convert(jsonBody);
+      const JsonDecoder decoder = JsonDecoder();
+      final useListContainer = decoder.convert(jsonBody);
       final List userList = useListContainer['results'];
-      return userList.map((contactRaw) => new User.fromJson(contactRaw)).toList();
+      return userList.map((contactRaw) => User.fromJson(contactRaw)).toList();
     });
   }
 
   //For user login function
   Future<ApiResponse>? userLogin(String username, String password ) async {
-    ApiResponse _apiResponse = new ApiResponse();
+    ApiResponse apiResponse = ApiResponse();
 
     try {
       final http.Response response = await http.post(
@@ -51,50 +46,50 @@ class ApiServices{
 
       switch (response.statusCode) {
         case 201:
-          _apiResponse.Data = Users.fromJson(json.decode(response.body));
+          apiResponse.Data = Users.fromJson(json.decode(response.body));
           print('vao day 1 ');
           //_apiResponse.Data = response.body;
           break;
         case 401:
           print('vao day 2');
-          _apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
+          apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
           break;
         default:
           print('vao day 3');
-          _apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
+          apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
           break;
       }
     } on SocketException {
-      _apiResponse.ApiError = ApiError(error: "Server error. Please retry");
+      apiResponse.ApiError = ApiError(error: "Server error. Please retry");
     }
-    return _apiResponse;
+    return apiResponse;
   }
 
   //For get detail of user
   Future<ApiResponse> getUserDetails(String userId) async {
-    ApiResponse _apiResponse = new ApiResponse();
-    final _baseUrl = ApiUrls().API_USER_LIST;
-    final JsonDecoder _decoder = new JsonDecoder();
+    ApiResponse apiResponse = ApiResponse();
+    final baseUrl = ApiUrls().API_USER_LIST;
+    const JsonDecoder decoder = JsonDecoder();
     try {
-      final response = await http.get('${_baseUrl}/$userId' as Uri);
+      final response = await http.get('$baseUrl/$userId' as Uri);
 
       switch (response.statusCode) {
         case 200:
-          _apiResponse.Data = User.fromJson(_decoder.convert(response.body));
+          apiResponse.Data = User.fromJson(decoder.convert(response.body));
           break;
         case 401:
-          print((_apiResponse.ApiError as ApiError).error);
-          _apiResponse.ApiError = ApiError.fromJson(_decoder.convert(response.body));
+          print((apiResponse.ApiError as ApiError).error);
+          apiResponse.ApiError = ApiError.fromJson(decoder.convert(response.body));
           break;
         default:
-          print((_apiResponse.ApiError as ApiError).error);
-          _apiResponse.ApiError = ApiError.fromJson(_decoder.convert(response.body));
+          print((apiResponse.ApiError as ApiError).error);
+          apiResponse.ApiError = ApiError.fromJson(decoder.convert(response.body));
           break;
       }
     } on SocketException {
-      _apiResponse.ApiError = ApiError(error: "Server error. Please retry");
+      apiResponse.ApiError = ApiError(error: "Server error. Please retry");
     }
-    return _apiResponse;
+    return apiResponse;
   }
 
   Future<List<Contents>> fetchContents() async {
@@ -104,31 +99,31 @@ class ApiServices{
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
 
-      if(statusCode != 200 || jsonBody == null){
+      if(statusCode != 200){
         print(response.reasonPhrase);
-        throw new Exception("Lỗi load api");
+        throw Exception("Lỗi load api");
       }
 
-      final JsonDecoder _decoder = new JsonDecoder();
-      final contentsListContainer = _decoder.convert(jsonBody);
+      const JsonDecoder decoder = JsonDecoder();
+      final contentsListContainer = decoder.convert(jsonBody);
       final List contentsList = contentsListContainer['contents'];
       //print('list data on service');
       //print(contentsList);
-      return contentsList.map((contactRaw) => new Contents.fromJson(contactRaw)).toList();
+      return contentsList.map((contactRaw) => Contents.fromJson(contactRaw)).toList();
     });
   }
 
   Future<DetailContents>? fetchDetailContents(int conId) async {
-    ApiResponse _apiResponse = new ApiResponse();
-    final _baseUrl = ApiUrls().API_DEAITL_CONTENTS;
-    final JsonDecoder _decoder = new JsonDecoder();
-    final apiUrl = '${_baseUrl}?id=${conId}';
+    ApiResponse apiResponse = ApiResponse();
+    final baseUrl = ApiUrls().API_DEAITL_CONTENTS;
+    const JsonDecoder decoder = JsonDecoder();
+    final apiUrl = '$baseUrl?id=$conId';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
 
       final String jsonBody = response.body;
-      final contentsContainer = _decoder.convert(jsonBody);
+      final contentsContainer = decoder.convert(jsonBody);
       print('list data on service');
       print(contentsContainer);
       if (response.statusCode == 200) {
@@ -161,20 +156,22 @@ class ApiServices{
       final String jsonBody = response.body;
       final int statusCode = response.statusCode;
 
-      if(statusCode != 200 || jsonBody == null){
+      if(statusCode != 200){
         print(response.reasonPhrase);
-        throw new Exception("Lỗi load api");
+        throw Exception("Lỗi load api");
       }
 
-      final JsonDecoder _decoder = new JsonDecoder();
-      final contentsListContainer = _decoder.convert(jsonBody);
+      const JsonDecoder decoder = JsonDecoder();
+      final contentsListContainer = decoder.convert(jsonBody);
       final List contentsList = contentsListContainer['contents'];
       //print('list data on service');
       //print(contentsListContainer['contents']);
       //print(contentsList);
-      return contentsList.map((contactRaw) => new Contents.fromJson(contactRaw)).toList();
+      return contentsList.map((contactRaw) => Contents.fromJson(contactRaw)).toList();
     });
   }
+
+   */
 
 
 }

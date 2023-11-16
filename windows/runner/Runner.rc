@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.photo_editor" "\0"
-            VALUE "FileDescription", "photo_editor" "\0"
+            VALUE "CompanyName", "com.photobooth" "\0"
+            VALUE "FileDescription", "photobooth_section1" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "photo_editor" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.photo_editor. All rights reserved." "\0"
-            VALUE "OriginalFilename", "photo_editor.exe" "\0"
-            VALUE "ProductName", "photo_editor" "\0"
+            VALUE "InternalName", "photobooth_section1" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.photobooth. All rights reserved." "\0"
+            VALUE "OriginalFilename", "photobooth_section1.exe" "\0"
+            VALUE "ProductName", "photobooth_section1" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

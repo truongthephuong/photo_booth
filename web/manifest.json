@@ -1,11 +1,11 @@
 {
-    "name": "photo_editor",
-    "short_name": "photo_editor",
+    "name": "photobooth_section1",
+    "short_name": "photobooth_section1",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Photo editor Flutter project",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
