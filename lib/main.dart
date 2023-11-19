@@ -11,7 +11,6 @@ import 'package:camera_platform_interface/camera_platform_interface.dart';
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
-
   try {
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -63,7 +62,7 @@ class MyApp extends StatelessWidget {
       routes: {
         //'/': (context) => const IntroScreen(),
         '/': (context) => UserLoginScreen(),
-        '/photo_cam': (context) => const TakePictureScreen(),
+        '/photo_cam': (context) => CameraApp(),
         '/home': (context) => const IntroScreen(),
         //'/detail_content': (context) => DetailContentScreen(0),
       },
@@ -73,5 +72,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
