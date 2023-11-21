@@ -54,6 +54,7 @@ dependencies:
   camera_android: 0.9.7+1
   camera_platform_interface: ^2.6.0
   camera_windows: ^0.2.1+8
+  window_manager: ^0.2.7
 
 dev_dependencies:
   flutter_test:

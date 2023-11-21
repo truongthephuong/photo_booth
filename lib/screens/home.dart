@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_win/video_player_win.dart';
 
@@ -10,6 +11,7 @@ import '../palatter.dart';
 import '../screens/photo_list_screen.dart';
 import '../screens/photo_capture.dart';
 import '../widgets/background-image.dart';
+import '../screens/photo_section_screen.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -20,6 +22,7 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen> {
   late VideoPlayerController _controller;
+  String _storedUserValue = '';
 
   static const MaterialColor black = MaterialColor(
     0xFFFFFFFF,
@@ -39,7 +42,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   void initState() {
-
+    _loadStoredValue();
     _controller = VideoPlayerController.asset("assets/videos/man_surfing.mp4");
     _controller.initialize().then((_) {
       _controller.setVolume(0);
@@ -108,9 +111,12 @@ class _IntroScreenState extends State<IntroScreen> {
   void _onItemTapped(int index) {
     print(index);
 
-    // if(index == 1) {
-    //   _pickImagefromGallery();
-    // }
+    if(index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute( builder: (context) => PhotoSectionScreen()),
+      );
+    }
     if(index == 2) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/photo_cam', ModalRoute.withName('/photo_cam'));
@@ -275,7 +281,7 @@ class _IntroScreenState extends State<IntroScreen> {
             type: BottomNavigationBarType.shifting,
             backgroundColor:Colors.black.withOpacity(0.1),
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.green,
+            selectedItemColor: Colors.black,
             unselectedItemColor: Colors.grey,
             iconSize: 40,
             onTap: _onItemTapped,
@@ -283,6 +289,18 @@ class _IntroScreenState extends State<IntroScreen> {
         ),
       ),
     );
+  }
+
+  _loadStoredValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('on home screen');
+    print(prefs.getString('username'));
+
+    setState(() {
+      _storedUserValue = prefs.getString('username') ?? '';
+    });
+    print('_storedUserValue');
+    print(_storedUserValue);
   }
 
   _getVideoBackground() {

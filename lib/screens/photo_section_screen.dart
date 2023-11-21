@@ -64,7 +64,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_box_outlined),
-              label: 'Business',
+              label: 'List Effective',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.camera),
@@ -73,7 +73,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
           ],
           type: BottomNavigationBarType.shifting,
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.green,
+          selectedItemColor: Colors.black,
           unselectedItemColor: Colors.grey,
           iconSize: 40,
           onTap: _onItemTapped,
@@ -82,28 +82,51 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
     );
   }
 
+  List<ImgList> imgList = [
+    ImgList(id : 9, imgUrl: 'assets/images/Berries01.jpg'),
+    ImgList(id : 1, imgUrl: 'assets/images/bonsai.jpg'),
+    ImgList(id : 2, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
+    ImgList(id : 3, imgUrl: 'assets/images/hoa-tra-co-5.jpg'),
+    ImgList(id : 4, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
+    ImgList(id : 5, imgUrl: 'assets/images/y-nghia-hoa-tra-my.jpg'),
+    ImgList(id : 6, imgUrl: 'assets/images/Berries01.jpg'),
+    ImgList(id : 8, imgUrl: 'assets/images/thuycanh.jpg'),
+  ];
+
   Widget _buildList() {
-    return GridView.custom(
-      gridDelegate: SliverWovenGridDelegate.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        pattern: [
-          const WovenGridTile(1),
-          const WovenGridTile(
-            5 / 7,
-            crossAxisRatio: 0.9,
-            alignment: AlignmentDirectional.centerEnd,
-          ),
+    var ImgCount = imgList.length;
+    return Padding(
+      padding: EdgeInsets.all(2.0),
+      // list view to show images and list count
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          Row(children: [
+            // showing item count
+            //Text("Image Count:$ImgCount"),
+            SizedBox(width: 45),
+
+          ]),
+          // showing list of images
+          for (var item in imgList)
+            Center(
+              child: Container(
+                  width: 500,
+                  height: 240,
+                  child: Image.asset(item.imgUrl)
+              ),
+            )
         ],
       ),
-      childrenDelegate: SliverChildBuilderDelegate(
-            (context, index) => Tile(index: index),
-      ),
     );
-
   }
 
+}
+
+class ImgList{
+  String imgUrl;
+  int id;
+  ImgList({required this.imgUrl, required this.id});
 }
 
 class Tile extends StatelessWidget {
