@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../data_sources/helper.dart';
 import '../widgets/nav-drawer.dart';
 const _defaultColor = Color(0xFF34568B);
 
@@ -12,9 +13,11 @@ class PhotoSectionScreen extends StatefulWidget {
 }
 
 class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
+  PhotoHelper photoHelper = new PhotoHelper();
 
   @override
   void initState() {
+    photoHelper.expireScreen(context);
     super.initState();
   }
 
@@ -83,14 +86,12 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
   }
 
   List<ImgList> imgList = [
-    ImgList(id : 9, imgUrl: 'assets/images/Berries01.jpg'),
-    ImgList(id : 1, imgUrl: 'assets/images/bonsai.jpg'),
-    ImgList(id : 2, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
-    ImgList(id : 3, imgUrl: 'assets/images/hoa-tra-co-5.jpg'),
-    ImgList(id : 4, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
-    ImgList(id : 5, imgUrl: 'assets/images/y-nghia-hoa-tra-my.jpg'),
-    ImgList(id : 6, imgUrl: 'assets/images/Berries01.jpg'),
-    ImgList(id : 8, imgUrl: 'assets/images/thuycanh.jpg'),
+    ImgList(id : 6, imgUrl: 'assets/images/list-ngang/anime.png'),
+    ImgList(id : 1, imgUrl: 'assets/images/list-ngang/caricature.png'),
+    ImgList(id : 2, imgUrl: 'assets/images/list-ngang/cartoon.png'),
+    ImgList(id : 3, imgUrl: 'assets/images/list-ngang/comic.png'),
+    ImgList(id : 4, imgUrl: 'assets/images/list-ngang/pixar.png'),
+    ImgList(id : 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
   ];
 
   Widget _buildList() {
@@ -112,7 +113,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
             Center(
               child: Container(
                   width: 500,
-                  height: 240,
+                  height: 195,
                   child: Image.asset(item.imgUrl)
               ),
             )

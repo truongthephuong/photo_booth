@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../widgets/nav-drawer.dart';
+import '../data_sources/helper.dart';
+
 const _defaultColor = Color(0xFF34568B);
 
 class PhotoListScreen extends StatefulWidget {
@@ -14,9 +17,35 @@ class PhotoListScreen extends StatefulWidget {
 }
 
 class _PhotoListScreenState extends State<PhotoListScreen> {
+  // late Timer timer;
+  // late int seconds;
+  PhotoHelper photoHelper = new PhotoHelper();
+
   @override
   void initState() {
+    /*
+    seconds = 0;
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {
+        seconds++;
+      });
+
+      if(seconds == 30) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/home', ModalRoute.withName('/home'));
+      }
+      print('on time ');
+      print(seconds);
+    });
+     */
+    photoHelper.expireScreen(context);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    //timer?.cancel();
+    super.dispose();
   }
 
   int _selectedIndex = 1;
@@ -56,15 +85,15 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
 
 */
   final List<Map<String, dynamic>> _items = [
-    {"id": 0, "title": "Item 0", "actPage": '/home', "imgUrl": "assets/images/Berries01.jpg"},
-    {'id': 1, 'title': "Item 1", 'actPage': 'cate1', "imgUrl": 'assets/images/bonsai.jpg'},
-    {'id': 2, 'title': "Item 2", 'actPage': 'cate2', "imgUrl": 'assets/images/hoa-tra-my-do.jpg'},
-    {'id': 3, 'title': "Item 3", 'actPage': 'cate3', "imgUrl": 'assets/images/hoa-tra-co-5.jpg'},
-    {'id': 4, 'title': "Item 4", 'actPage': 'cate4', "imgUrl": 'assets/images/hoa-tra-trang.jpg'},
-    {'id': 5, 'title': "Item 5", 'actPage': 'cate5', "imgUrl": 'assets/images/y-nghia-hoa-tra-my.jpg'},
-    {'id': 6, 'title': "Item 6", 'actPage': 'cate6', "imgUrl": 'assets/images/tramy0.png'},
-    {'id': 7, 'title': "Item 7", 'actPage': 'cate7', "imgUrl": 'assets/images/thuycanh.jpg'},
-    {'id': 8, 'title': "Item 8", 'actPage': 'cate8', "imgUrl": 'assets/images/channuoi.jpg'},
+    {"id": 0, "title": "Item 0", "actPage": '/home', "imgUrl": "assets/images/list-doc/anime.gif"},
+    {'id': 1, 'title': "Item 1", 'actPage': 'cate1', "imgUrl": 'assets/images/list-doc/caricature.gif'},
+    {'id': 2, 'title': "Item 2", 'actPage': 'cate2', "imgUrl": 'assets/images/list-doc/cartoon.gif'},
+    {'id': 3, 'title': "Item 3", 'actPage': 'cate3', "imgUrl": 'assets/images/list-doc/comic.gif'},
+    {'id': 4, 'title': "Item 4", 'actPage': 'cate4', "imgUrl": 'assets/images/list-doc/pixar.gif'},
+    {'id': 5, 'title': "Item 5", 'actPage': 'cate5', "imgUrl": 'assets/images/list-doc/slamdunk.gif'},
+    {'id': 6, 'title': "Item 6", 'actPage': 'cate6', "imgUrl": 'assets/images/list-doc/anime.gif'},
+    {'id': 7, 'title': "Item 7", 'actPage': 'cate7', "imgUrl": 'assets/images/list-doc/caricature.gif'},
+    {'id': 8, 'title': "Item 8", 'actPage': 'cate8', "imgUrl": 'assets/images/list-doc/slamdunk.gif'},
   ];
 
 
@@ -112,6 +141,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
               ),
             );
           },
+
         ),
       drawer: const NavDrawer(),
       bottomNavigationBar: BottomNavigationBar(
