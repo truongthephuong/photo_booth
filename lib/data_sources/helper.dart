@@ -23,3 +23,9 @@ class PhotoHelper {
   }
 
 }
+
+class ImgList{
+  String imgUrl;
+  int id;
+  ImgList({required this.imgUrl, required this.id});
+}

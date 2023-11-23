@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photobooth_section1/screens/photo_ai_screen.dart';
 
 import '../data_sources/helper.dart';
 import '../widgets/nav-drawer.dart';
@@ -111,10 +112,26 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
           // showing list of images
           for (var item in imgList)
             Center(
-              child: Container(
-                  width: 500,
-                  height: 195,
-                  child: Image.asset(item.imgUrl)
+              child: GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('You had choise : ' + item.id.toString()))
+                  );
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) => PhotoAiScreen(),
+                      settings: RouteSettings(
+                        arguments: imgList,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                    width: 500,
+                    height: 195,
+                    child: Image.asset(item.imgUrl)
+                ),
               ),
             )
         ],
