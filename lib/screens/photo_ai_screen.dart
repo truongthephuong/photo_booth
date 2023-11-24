@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import '../data_sources/helper.dart';
 
 class PhotoAiScreen extends StatefulWidget {
-
   @override
   State<PhotoAiScreen> createState() => _PhotoAiScreenState();
 }
@@ -52,28 +51,25 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
                       textAlign: TextAlign.center,
                     )),
                 child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isImageSelected = true;
-                        imgSelect = item.imgUrl;
-                      });
+                  onTap: () {
+                    setState(() {
+                      isImageSelected = true;
+                      imgSelect = item.imgUrl;
+                    });
 
-                      print('Select image');
-                      print(imgSelect);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content:
-                          Text('You had choise : ' + item.imgUrl,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          )
-                          )
-                      );
-                    },
-                    child: Image.asset(item.imgUrl, fit: BoxFit.fitWidth),
-                  ),
-
+                    print('Select image');
+                    print(imgSelect);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      'You had choise : ' + item.imgUrl,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    )));
+                  },
+                  child: Image.file(File(item.imgUrl), fit: BoxFit.fitWidth),
+                ),
               );
             }).toList(),
           ),
@@ -85,30 +81,31 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
             ),
             textAlign: TextAlign.center,
           ),
-          isImageSelected ? Expanded(
-            child: Container(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(imgSelect),
+          isImageSelected
+              ? Expanded(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.file(File(imgSelect)),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ) : Container(
-            child: const Text(
-              'Not yet select picture, please choose picture',
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+                )
+              : Container(
+                  child: const Text(
+                    'Not yet select picture, please choose picture',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
         ],
       ),
     );
   }
-
 }
