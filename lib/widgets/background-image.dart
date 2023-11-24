@@ -19,7 +19,7 @@ class BackGroundImage extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage('assets/images/bg-img-1.gif'),
               fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)
+              //colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)
           ),
         ),
       ),

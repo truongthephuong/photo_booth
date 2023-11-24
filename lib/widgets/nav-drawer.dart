@@ -95,6 +95,16 @@ class NavDrawer extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
+          ListTile(
+            title: const Text("Get Photo"),
+            leading: const Icon(Icons.account_tree),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute( builder: (context) => IntroScreen()),
+              );
+            },
+          ),
         ],
       ),
     );

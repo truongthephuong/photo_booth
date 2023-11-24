@@ -1,17 +1,32 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:window_manager/window_manager.dart';
 import './screens/home.dart';
 import './screens/photo_cam.dart';
 import './screens/login_screen.dart';
 import 'package:camera/camera.dart';
 //import 'package:camera_windows/camera_windows.dart';
 import 'package:camera_platform_interface/camera_platform_interface.dart';
+
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
-
   try {
     WidgetsFlutterBinding.ensureInitialized();
+
+    // Must add this line.
+    //await windowManager.ensureInitialized();
+
+/*
+    windowManager.waitUntilReadyToShow().then((_) async {
+      await windowManager.setTitleBarStyle('hidden' as TitleBarStyle);
+      await windowManager.setFullScreen(true);
+      await windowManager.center();
+      await windowManager.show();
+      await windowManager.setSkipTaskbar(false);
+    });
+
+ */
     cameras = await availableCameras();
     //cameras = await CameraPlatform.instance.availableCameras();
   } on CameraException catch (e) {
@@ -47,7 +62,7 @@ class MyApp extends StatelessWidget {
       routes: {
         //'/': (context) => const IntroScreen(),
         '/': (context) => UserLoginScreen(),
-        '/photo_cam': (context) => const TakePictureScreen(),
+        '/photo_cam': (context) => CameraApp(),
         '/home': (context) => const IntroScreen(),
         //'/detail_content': (context) => DetailContentScreen(0),
       },
@@ -57,5 +72,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

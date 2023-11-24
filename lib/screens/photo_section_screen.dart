@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photobooth_section1/screens/photo_ai_screen.dart';
 
+import '../data_sources/helper.dart';
 import '../widgets/nav-drawer.dart';
 const _defaultColor = Color(0xFF34568B);
 
@@ -12,9 +14,11 @@ class PhotoSectionScreen extends StatefulWidget {
 }
 
 class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
+  PhotoHelper photoHelper = new PhotoHelper();
 
   @override
   void initState() {
+    photoHelper.expireScreen(context);
     super.initState();
   }
 
@@ -64,7 +68,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_box_outlined),
-              label: 'Business',
+              label: 'List Effective',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.camera),
@@ -73,7 +77,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
           ],
           type: BottomNavigationBarType.shifting,
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.green,
+          selectedItemColor: Colors.black,
           unselectedItemColor: Colors.grey,
           iconSize: 40,
           onTap: _onItemTapped,
@@ -82,28 +86,65 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
     );
   }
 
+  List<ImgList> imgList = [
+    ImgList(id : 6, imgUrl: 'assets/images/list-ngang/anime.png'),
+    ImgList(id : 1, imgUrl: 'assets/images/list-ngang/caricature.png'),
+    ImgList(id : 2, imgUrl: 'assets/images/list-ngang/cartoon.png'),
+    ImgList(id : 3, imgUrl: 'assets/images/list-ngang/comic.png'),
+    ImgList(id : 4, imgUrl: 'assets/images/list-ngang/pixar.png'),
+    ImgList(id : 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
+  ];
+
   Widget _buildList() {
-    return GridView.custom(
-      gridDelegate: SliverWovenGridDelegate.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        pattern: [
-          const WovenGridTile(1),
-          const WovenGridTile(
-            5 / 7,
-            crossAxisRatio: 0.9,
-            alignment: AlignmentDirectional.centerEnd,
-          ),
+    var ImgCount = imgList.length;
+    return Padding(
+      padding: EdgeInsets.all(2.0),
+      // list view to show images and list count
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          Row(children: [
+            // showing item count
+            //Text("Image Count:$ImgCount"),
+            SizedBox(width: 45),
+
+          ]),
+          // showing list of images
+          for (var item in imgList)
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('You had choise : ' + item.id.toString()))
+                  );
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute( builder: (context) => PhotoAiScreen(),
+                      settings: RouteSettings(
+                        arguments: imgList,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                    width: 500,
+                    height: 195,
+                    child: Image.asset(item.imgUrl)
+                ),
+              ),
+            )
         ],
       ),
-      childrenDelegate: SliverChildBuilderDelegate(
-            (context, index) => Tile(index: index),
-      ),
     );
-
   }
 
+}
+
+class ImgList{
+  String imgUrl;
+  int id;
+  ImgList({required this.imgUrl, required this.id});
 }
 
 class Tile extends StatelessWidget {

@@ -45,7 +45,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
           appBar: AppBar(
             title: Text("Photo Booth System"),
           ),
-
           body: SingleChildScrollView(
             child: SafeArea(
               child: Column(
@@ -57,7 +56,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         SizedBox(
                           height: 20,
                         ),
-
                       ],
                     ),
                   ),
@@ -85,34 +83,39 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                               //   inputAction: TextInputAction.next,
                               // ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600]?.withOpacity(0.6),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: TextFormField(
-                                      controller: emailController,
-                                      decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[600]?.withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: TextFormField(
+                                    controller: emailController,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 20),
                                       border: InputBorder.none,
                                       hintText: 'Name or phone number',
                                       prefixIcon: Padding(
-                                        padding: const EdgeInsets. symmetric(horizontal: 20),
-                                        child: Icon(Icons.account_box, color: Colors.white, size: 20),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Icon(Icons.account_box,
+                                            color: Colors.white, size: 20),
                                       ),
                                       hintStyle: kBodyText,
                                     ),
-                                      style: kBodyText,
-                                      keyboardType: TextInputType.emailAddress,
-                                      textInputAction: TextInputAction.next,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please fill name or phone number';
-                                        }
-                                        return null;
-                                      },
-                                    ),
+                                    style: kBodyText,
+                                    keyboardType: TextInputType.emailAddress,
+                                    textInputAction: TextInputAction.next,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please fill name or phone number';
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ),
                               // PasswordInput(
@@ -147,19 +150,27 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                                       ),
                                     ),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white.withOpacity(0.3),
+                                      backgroundColor:
+                                          Colors.white.withOpacity(0.3),
                                     ),
                                     onPressed: () {
                                       setState(() {
-                                        passwordController.text.isEmpty ? _validate = true : _validate = false;
+                                        passwordController.text.isEmpty
+                                            ? _validate = true
+                                            : _validate = false;
                                       });
                                       if (_formKey.currentState!.validate()) {
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar( const SnackBar( content: Text('Processing Data')),);
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text('Processing Data')),
+                                        );
                                         _handleSubmitted();
                                       } else {
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar( const SnackBar(content: Text('Please fill input') ));
+                                            .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text('Please fill input')));
                                       }
                                     }),
                               ),
@@ -192,46 +203,48 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
   }
 
   void _handleSubmitted() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     final FormState? form = _formKey.currentState;
     ApiResponse? _apiResponse = new ApiResponse();
     if (!form!.validate()) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Name or phone must required.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Name or phone must required.')));
     } else {
       form.save();
       print('Name input ' + emailController.text);
-      //print('Password input ' + passwordController.text);
-      // _apiResponse = (await ApiServices().userLogin(
-      //     emailController.text, passwordController.text)) as ApiResponse;
-      //_apiResponse = await authenticateUser(emailController.text, passwordController.text);
-      // print('vao day 2222');
-      // print(_apiResponse.ApiError);
-      //_saveAndRedirectToHome(_apiResponse);
 
-      // if (_apiResponse.ApiError == Null) {
-      //   _saveAndRedirectToHome(_apiResponse);
-      // } else {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(content: Text('_apiResponse.ApiError')));
-      // }
       var directory = await getExternalDocumentPath();
-      var newFolder = await createFolder(directory+"/"+emailController.text);
+      var newFolder =
+          await createFolder(directory + "/" + emailController.text);
       //var directory = await Directory("/storage/emulated/0/$emailController.text").create(recursive: true);
       print(newFolder);
-      if(newFolder.isNotEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Folder was created with name : ' + newFolder)));
-        Navigator.push(
-          context,
-          MaterialPageRoute( builder: (context) => IntroScreen()),
-        );
-
+      if (newFolder.isNotEmpty) {
+        if (newFolder.toString() == 'existed') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('This user had existed with name : ' +
+                  emailController.text)));
+          await prefs.setString("username", emailController.text);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => IntroScreen()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Folder was created with name : ' + newFolder)));
+          await prefs.setString("username", emailController.text);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => IntroScreen()),
+          );
+        }
       }
     }
   }
 
   void _saveAndRedirectToHome(_apiResponse) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    await prefs.setString("username", emailController.text);
     // await prefs.setString("access_token", (_apiResponse.Data as Users).access_token);
     // await prefs.setString("userEmail", (_apiResponse.Data as Users).userEmail);
     // print("Api return at login screen ");
@@ -240,7 +253,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
     // Navigator.pushNamedAndRemoveUntil(
     //     context, '/home', ModalRoute.withName('/home'),
     //     arguments: (_apiResponse.Data as Users));
-
   }
 
   Future<String> createFolder(String cow) async {
@@ -252,7 +264,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
       await Permission.storage.request();
     }
     if ((await path.exists())) {
-      return path.path;
+      return 'existed';
     } else {
       path.create();
       return path.path;
@@ -287,5 +299,4 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
     final String directory = await getExternalDocumentPath();
     return directory;
   }
-
 }

@@ -36,7 +36,6 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
 
   void _onItemTapped(int index) {
     print(index);
-
     // if(index == 1) {
     //   _pickImagefromGallery();
     // }
