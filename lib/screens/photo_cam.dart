@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/models/image_model.dart';
-import 'package:photobooth_section1/screens/photo_list_screen.dart';
+import 'package:photobooth_section1/screens/image_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CameraApp extends StatefulWidget {
@@ -17,7 +17,7 @@ class _CameraAppState extends State<CameraApp> {
   late CameraController _controller;
   late List<CameraDescription> cameras;
   bool isCameraReady = false;
-  final List<String> images = [];
+  List<ImageModel> savedImages = [];
 
   int _countdown = 5;
   late Timer _timer;
@@ -50,6 +50,7 @@ class _CameraAppState extends State<CameraApp> {
         if (_countdown == 0) {
           timer.cancel();
           takePhoto();
+          _countdown = 5;
         } else {
           setState(() {
             _countdown--;
@@ -78,19 +79,25 @@ class _CameraAppState extends State<CameraApp> {
         final String userPath = path.join(userDir, path.basename(file.path));
         await File(file.path).copy(userPath);
 
-        // Test
-        print('Photo captured: $userPath');
-
-        images.add(userPath);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PhotoListScreen(
-              images: images,
-            ),
-          ),
+        final ImageModel savedImage = ImageModel(
+          id: savedImages.length + 1,
+          title: '${_username} ${savedImages.length + 1}',
+          actPage: 'actPage1',
+          imgUrl: userPath,
         );
+
+        setState(() {
+          savedImages.add(savedImage);
+        });
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => ImageListScreen(
+        //       images: savedImages,
+        //     ),
+        //   ),
+        // );
       } catch (e) {
         print('Error taking photo: $e');
       }
@@ -118,6 +125,9 @@ class _CameraAppState extends State<CameraApp> {
         },
         child: PhotoCamForm(_countdown, _controller),
       ),
+      bottomNavigationBar: ThumbnailGridView(
+        images: savedImages,
+      ),
     );
   }
 }
@@ -136,10 +146,54 @@ class PhotoCamForm extends StatelessWidget {
         Center(
           child: Text(
             '$_countdown',
-            style: TextStyle(fontSize: 60.0, color: Colors.white),
+            style: TextStyle(fontSize: 100.0, color: Colors.blueAccent),
           ),
         ),
       ],
+    );
+  }
+}
+
+class ThumbnailGridView extends StatelessWidget {
+  final List<ImageModel> images;
+
+  const ThumbnailGridView({Key? key, required this.images}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: images.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: [
+                Image.file(
+                  File(images[index].imgUrl),
+                  width: 80.0,
+                  height: 80.0,
+                  fit: BoxFit.cover,
+                ),
+                // Positioned(
+                //   top: 0,
+                //   right: 0,
+                //   child: IconButton(
+                //     icon: Icon(Icons.close),
+                //     onPressed: () {
+                //       // Remove the photo from the provider
+                //       images.removeAt(index);
+                //       setState(() => {});
+                //     },
+                //   ),
+                // ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

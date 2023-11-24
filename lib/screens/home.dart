@@ -256,9 +256,8 @@ class _IntroScreenState extends State<IntroScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PhotoListScreen(
-                                        images: [],
-                                      )),
+                                  builder: (context) =>
+                                      const PhotoListScreen()),
                             );
                           },
                         ),
@@ -270,6 +269,30 @@ class _IntroScreenState extends State<IntroScreen> {
             )
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_box_outlined),
+                label: 'Photo List',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.camera),
+                label: 'Camera',
+              ),
+            ],
+            type: BottomNavigationBarType.shifting,
+            backgroundColor: Colors.black.withOpacity(0.1),
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.grey,
+            iconSize: 40,
+            onTap: _onItemTapped,
+            elevation: 5),
       ),
     );
   }
@@ -368,7 +391,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Navigator.pop(context);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PhotoCapture()),
+              MaterialPageRoute(builder: (context) => CameraApp()),
               //MaterialPageRoute( builder: (context) => const TakePictureScreen()),
             );
           },
@@ -402,10 +425,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Navigator.pop(context);
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => PhotoListScreen(
-                        images: [],
-                      )),
+              MaterialPageRoute(builder: (context) => const PhotoListScreen()),
             );
           },
         ),
