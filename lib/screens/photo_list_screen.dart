@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photobooth_section1/screens/photo_ai_result.dart';
 
 import '../widgets/nav-drawer.dart';
 import '../data_sources/helper.dart';
@@ -10,7 +11,8 @@ import '../data_sources/helper.dart';
 const _defaultColor = Color(0xFF34568B);
 
 class PhotoListScreen extends StatefulWidget {
-  const PhotoListScreen({super.key});
+  final String imgUrl;
+  const PhotoListScreen({super.key, required this.imgUrl});
 
   @override
   State<StatefulWidget> createState() => _PhotoListScreenState();
@@ -38,7 +40,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
       print(seconds);
     });
      */
-    photoHelper.expireScreen(context);
+    // photoHelper.expireScreen(context);
     super.initState();
   }
 
@@ -172,10 +174,17 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
               //height: _items[index]['height'],
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      _items[index]['actPage'],
-                      ModalRoute.withName(_items[index]['actPage']));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PhotoAiResult(imgUrl: widget.imgUrl),
+                    ),
+                  );
+                  // Navigator.pushNamedAndRemoveUntil(
+                  //     context,
+                  //     _items[index]['actPage'],
+                  //     ModalRoute.withName(_items[index]['actPage']));
                 },
                 child: Column(
                   children: [

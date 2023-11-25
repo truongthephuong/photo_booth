@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/models/image_model.dart';
 import 'package:photobooth_section1/screens/image_list.dart';
+import 'package:photobooth_section1/screens/photo_ai_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CameraApp extends StatefulWidget {
@@ -89,15 +90,6 @@ class _CameraAppState extends State<CameraApp> {
         setState(() {
           savedImages.add(savedImage);
         });
-
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ImageListScreen(
-        //       images: savedImages,
-        //     ),
-        //   ),
-        // );
       } catch (e) {
         print('Error taking photo: $e');
       }
@@ -127,6 +119,21 @@ class _CameraAppState extends State<CameraApp> {
       ),
       bottomNavigationBar: ThumbnailGridView(
         images: savedImages,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PhotoAiScreen(
+                images: savedImages,
+              ),
+            ),
+          );
+        },
+        child: new Icon(Icons.navigate_next),
+        backgroundColor: Colors.redAccent,
+        elevation: 0.0,
       ),
     );
   }
