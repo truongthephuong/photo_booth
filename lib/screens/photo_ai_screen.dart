@@ -12,7 +12,6 @@ import '../models/ai_payload.dart';
 import '../palatter.dart';
 
 class PhotoAiScreen extends StatefulWidget {
-
   @override
   State<PhotoAiScreen> createState() => _PhotoAiScreenState();
 }
@@ -78,10 +77,25 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
                     child: Image.asset(item.imgUrl, fit: BoxFit.fitWidth),
                   ),
 
+
+                    print('Select image');
+                    print(imgSelect);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      'You had choise : ' + item.imgUrl,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    )));
+                  },
+                  child: Image.file(File(item.imgUrl), fit: BoxFit.fitWidth),
+                ),
               );
             }).toList(),
           ),
           const SizedBox(height: 30),
+
           isImageSelected ? Expanded(
             child: Container(
               child: Column(
@@ -204,6 +218,7 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Name or phone must required.')));
   }
+
 
 }
 

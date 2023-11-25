@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photobooth_section1/models/image_model.dart';
 import 'package:photobooth_section1/screens/photo_ai_screen.dart';
 
 import '../data_sources/helper.dart';
 import '../widgets/nav-drawer.dart';
+
 const _defaultColor = Color(0xFF34568B);
 
 class PhotoSectionScreen extends StatefulWidget {
-  const PhotoSectionScreen({super.key});
+  final List<ImageModel> images;
+  PhotoSectionScreen({Key? key, required this.images}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PhotoSectionScreenState();
@@ -24,9 +29,12 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Home Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('From galary', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('From camera', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Text('Home Page',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Text('From galary',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Text('From camera',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
 
   void _onItemTapped(int index) {
@@ -34,7 +42,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
     // if(index == 1) {
     //   _pickImagefromGallery();
     // }
-    if(index == 2) {
+    if (index == 2) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/photo_cam', ModalRoute.withName('/photo_cam'));
     }
@@ -43,7 +51,6 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
       _selectedIndex = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,19 +88,18 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
           unselectedItemColor: Colors.grey,
           iconSize: 40,
           onTap: _onItemTapped,
-          elevation: 5
-      ),
+          elevation: 5),
     );
   }
 
-  List<ImgList> imgList = [
-    ImgList(id : 6, imgUrl: 'assets/images/list-ngang/anime.png'),
-    ImgList(id : 1, imgUrl: 'assets/images/list-ngang/caricature.png'),
-    ImgList(id : 2, imgUrl: 'assets/images/list-ngang/cartoon.png'),
-    ImgList(id : 3, imgUrl: 'assets/images/list-ngang/comic.png'),
-    ImgList(id : 4, imgUrl: 'assets/images/list-ngang/pixar.png'),
-    ImgList(id : 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
-  ];
+  // List<ImgList> imgList = [
+  //   ImgList(id: 6, imgUrl: 'assets/images/list-ngang/anime.png'),
+  //   ImgList(id: 1, imgUrl: 'assets/images/list-ngang/caricature.png'),
+  //   ImgList(id: 2, imgUrl: 'assets/images/list-ngang/cartoon.png'),
+  //   ImgList(id: 3, imgUrl: 'assets/images/list-ngang/comic.png'),
+  //   ImgList(id: 4, imgUrl: 'assets/images/list-ngang/pixar.png'),
+  //   ImgList(id: 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
+  // ];
 
   List<ImgList> imgList1 = [
     ImgList(id : 6, imgUrl: 'assets/images/bonsai.jpg'),
@@ -106,6 +112,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
 
 
   Widget _buildList() {
+    List<ImageModel> imgList = widget.images;
     var ImgCount = imgList.length;
     return Padding(
       padding: EdgeInsets.all(2.0),
@@ -117,20 +124,19 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
             // showing item count
             //Text("Image Count:$ImgCount"),
             SizedBox(width: 45),
-
           ]),
           // showing list of images
           for (var item in imgList)
             Center(
               child: GestureDetector(
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('You had choise : ' + item.id.toString()))
-                  );
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('You had choise : ' + item.id.toString())));
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute( builder: (context) => PhotoAiScreen(),
+                    MaterialPageRoute(
+                      builder: (context) => PhotoAiScreen(),
                       settings: RouteSettings(
                         arguments: imgList1,
                       ),
@@ -140,18 +146,16 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
                 child: Container(
                     width: 500,
                     height: 195,
-                    child: Image.asset(item.imgUrl)
-                ),
+                    child: Image.file(File(item.imgUrl))),
               ),
             )
         ],
       ),
     );
   }
-
 }
 
-class ImgList{
+class ImgList {
   String imgUrl;
   int id;
   ImgList({required this.imgUrl, required this.id});
