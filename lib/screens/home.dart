@@ -117,7 +117,7 @@ class _IntroScreenState extends State<IntroScreen> {
     if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => PhotoSectionScreen()),
+        MaterialPageRoute(builder: (context) => PhotoSectionScreen(images: [],)),
       );
     }
     if (index == 2) {

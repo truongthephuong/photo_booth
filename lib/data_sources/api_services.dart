@@ -8,7 +8,7 @@ import 'api_urls.dart';
 
 class ApiServices{
 
-  Future<ApiResponse>? animeAiPhoto(String username, String password ) async {
+  Future<ApiResponse>? animeAiPhoto(Object payLoad ) async {
     ApiResponse apiResponse = ApiResponse();
 
     try {
@@ -17,10 +17,7 @@ class ApiServices{
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{
-          'email': username,
-          'password': password,
-        }),
+        body: payLoad,
       );
 
       //print('result from api ');

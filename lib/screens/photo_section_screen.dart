@@ -92,14 +92,14 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
     );
   }
 
-  // List<ImgList> imgList = [
-  //   ImgList(id: 6, imgUrl: 'assets/images/list-ngang/anime.png'),
-  //   ImgList(id: 1, imgUrl: 'assets/images/list-ngang/caricature.png'),
-  //   ImgList(id: 2, imgUrl: 'assets/images/list-ngang/cartoon.png'),
-  //   ImgList(id: 3, imgUrl: 'assets/images/list-ngang/comic.png'),
-  //   ImgList(id: 4, imgUrl: 'assets/images/list-ngang/pixar.png'),
-  //   ImgList(id: 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
-  // ];
+  List<ImgList> imgList = [
+    ImgList(id: 6, imgUrl: 'assets/images/list-ngang/anime.png'),
+    ImgList(id: 1, imgUrl: 'assets/images/list-ngang/caricature.png'),
+    ImgList(id: 2, imgUrl: 'assets/images/list-ngang/cartoon.png'),
+    ImgList(id: 3, imgUrl: 'assets/images/list-ngang/comic.png'),
+    ImgList(id: 4, imgUrl: 'assets/images/list-ngang/pixar.png'),
+    ImgList(id: 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
+  ];
 
   List<ImgList> imgList1 = [
     ImgList(id : 6, imgUrl: 'assets/images/bonsai.jpg'),
@@ -112,7 +112,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
 
 
   Widget _buildList() {
-    List<ImageModel> imgList = widget.images;
+    //List<ImageModel> imgList = widget.images;// code of Huy
     var ImgCount = imgList.length;
     return Padding(
       padding: EdgeInsets.all(2.0),
@@ -146,7 +146,8 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
                 child: Container(
                     width: 500,
                     height: 195,
-                    child: Image.file(File(item.imgUrl))),
+                    //child: Image.file(File(item.imgUrl))), //code of Huy
+                    child: Image.asset(item.imgUrl),),
               ),
             )
         ],
@@ -161,71 +162,3 @@ class ImgList {
   ImgList({required this.imgUrl, required this.id});
 }
 
-class Tile extends StatelessWidget {
-  const Tile({
-    Key? key,
-    required this.index,
-    this.extent,
-    this.backgroundColor,
-    this.bottomSpace,
-  }) : super(key: key);
-
-  final int index;
-  final double? extent;
-  final double? bottomSpace;
-  final Color? backgroundColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final child = Container(
-      color: backgroundColor ?? _defaultColor,
-      height: extent,
-      child: Center(
-        child: CircleAvatar(
-          minRadius: 20,
-          maxRadius: 20,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          child: Text('$index', style: const TextStyle(fontSize: 20)),
-        ),
-      ),
-    );
-
-    if (bottomSpace == null) {
-      return child;
-    }
-
-    return Column(
-      children: [
-        Expanded(child: child),
-        Container(
-          height: bottomSpace,
-          color: Colors.green,
-        )
-      ],
-    );
-  }
-}
-
-class ImageTile extends StatelessWidget {
-  const ImageTile({
-    Key? key,
-    required this.index,
-    required this.width,
-    required this.height,
-  }) : super(key: key);
-
-  final int index;
-  final int width;
-  final int height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(
-      'https://picsum.photos/$width/$height?random=$index',
-      width: width.toDouble(),
-      height: height.toDouble(),
-      fit: BoxFit.cover,
-    );
-  }
-}

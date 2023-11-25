@@ -44,6 +44,16 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // setState(() {
+          //   index = (index + 1) % customizations.length;
+          // });
+        },
+        foregroundColor: Colors.deepOrange,
+        backgroundColor: Colors.white70,
+        child: const Icon(Icons.account_balance_wallet_outlined),
+      ),
     );
   }
 

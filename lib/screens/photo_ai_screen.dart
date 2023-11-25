@@ -8,10 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/photo_ai_result.dart';
 
+import '../data_sources/api_services.dart';
 import '../models/ai_payload.dart';
+import '../models/api_response.dart';
 import '../palatter.dart';
 
 class PhotoAiScreen extends StatefulWidget {
+
   @override
   State<PhotoAiScreen> createState() => _PhotoAiScreenState();
 }
@@ -35,7 +38,6 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
     return MaterialApp(
       //debugShowCheckedModeBanner: false,
       //darkTheme: ThemeData.dark(),
-
       home: Column(
         children: [
           const SizedBox(height: 10),
@@ -57,45 +59,29 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
                       textAlign: TextAlign.center,
                     )),
                 child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isImageSelected = true;
-                        imgSelect = item.imgUrl;
-                      });
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content:
-                          Text('You had choise : ' + item.imgUrl,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          )
-                          )
-                      );
-                    },
-                    child: Image.asset(item.imgUrl, fit: BoxFit.fitWidth),
-                  ),
-
-
-                    print('Select image');
-                    print(imgSelect);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                      'You had choise : ' + item.imgUrl,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    )));
+                  onTap: () {
+                    setState(() {
+                      isImageSelected = true;
+                      imgSelect = item.imgUrl;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content:
+                        Text('You had choise : ' + item.imgUrl,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        )
+                        )
+                    );
                   },
-                  child: Image.file(File(item.imgUrl), fit: BoxFit.fitWidth),
+                  child: Image.asset(item.imgUrl, fit: BoxFit.fitWidth),
                 ),
+
               );
             }).toList(),
           ),
           const SizedBox(height: 30),
-
           isImageSelected ? Expanded(
             child: Container(
               child: Column(
@@ -151,12 +137,18 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
               },
             ),
           ),
+
         ],
       ),
+
     );
   }
 
   _pickImagefromAiApi(imgUrl) async {
+    ByteData bytes = await rootBundle.load(imgUrl);
+    var buffer = bytes.buffer;
+    var imgBase64 = base64.encode(Uint8List.view(buffer));
+
     AnimePayload payLoad = AnimePayload(
       prompt: "(((best quality, high quality, highres))), 1boy, handsome, beautiful, young, celebrity, angular face",
       negativePrompt:
@@ -178,7 +170,7 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
           enabled: true,
           guidanceEnd: 1,
           guidanceStart: 0,
-          inputImage: "encoded_base64_image_here",
+          inputImage: imgBase64,
           inputMode: "simple",
           isUi: true,
           loopback: false,
@@ -198,27 +190,42 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
 
     // print('Photo url ');
     // print(imgUrl);
-    // print('payload');
+    // print('payLoad');
     // print(payLoad.toJson());
-    ByteData bytes = await rootBundle.load(imgUrl);
-    var buffer = bytes.buffer;
-    var imgBase64 = base64.encode(Uint8List.view(buffer));
-    print('Convert to base64 ');
-    print(imgBase64);
+    // ByteData bytes = await rootBundle.load(imgUrl);
+    // var buffer = bytes.buffer;
+    // var imgBase64 = base64.encode(Uint8List.view(buffer));
 
+    print('payload for call API ');
+    print(payLoad.toJson());
+
+    ApiResponse? _apiResponse = new ApiResponse();
+    _apiResponse = (await ApiServices().animeAiPhoto(payLoad.toJson())) as ApiResponse;
+
+      if (_apiResponse.ApiError == Null) {
+        //_saveAndRedirectToHome(_apiResponse);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('_apiResponse.ApiError')));
+      }
+
+    /*
     Navigator.push(
-      context,
+        context,
         MaterialPageRoute( builder: (context) => PhotoAiResult(),
           settings: RouteSettings(
             arguments: imgBase64,
           ),
         )
     );
+     */
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Name or phone must required.')));
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Name or phone must required.'))
+    );
+
   }
 
 
-}
 
+}
