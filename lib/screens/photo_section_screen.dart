@@ -101,6 +101,16 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
   //   ImgList(id: 5, imgUrl: 'assets/images/list-ngang/slamdunk.png'),
   // ];
 
+  List<ImgList> imgList1 = [
+    ImgList(id : 6, imgUrl: 'assets/images/bonsai.jpg'),
+    ImgList(id : 1, imgUrl: 'assets/images/thuycanh.jpg'),
+    ImgList(id : 2, imgUrl: 'assets/images/Berries01.jpg'),
+    ImgList(id : 3, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
+    ImgList(id : 4, imgUrl: 'assets/images/mohinhvac.jpg'),
+    ImgList(id : 5, imgUrl: 'assets/images/nam-an.jpg'),
+  ];
+
+
   Widget _buildList() {
     List<ImageModel> imgList = widget.images;
     var ImgCount = imgList.length;
@@ -128,7 +138,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
                     MaterialPageRoute(
                       builder: (context) => PhotoAiScreen(),
                       settings: RouteSettings(
-                        arguments: imgList,
+                        arguments: imgList1,
                       ),
                     ),
                   );
