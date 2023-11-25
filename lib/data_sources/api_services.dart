@@ -1,9 +1,52 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import '../models/anime_ai_photo.dart';
+import '../models/api_error.dart';
+import '../models/api_response.dart';
 import 'api_urls.dart';
 
 class ApiServices{
+
+  Future<ApiResponse>? animeAiPhoto(String username, String password ) async {
+    ApiResponse apiResponse = ApiResponse();
+
+    try {
+      final http.Response response = await http.post(
+        ApiUrls().API_ANIME_AI_PHOTO,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': username,
+          'password': password,
+        }),
+      );
+
+      //print('result from api ');
+      print(response.body);
+
+      switch (response.statusCode) {
+        case 201:
+          apiResponse.Data = AnimeAiPhoto.fromJson(json.decode(response.body));
+          print('vao day 1 ');
+          //_apiResponse.Data = response.body;
+          break;
+        case 401:
+          print('vao day 2');
+          apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
+          break;
+        default:
+          print('vao day 3');
+          apiResponse.ApiError = ApiError.fromJson(json.decode(response.body));
+          break;
+      }
+    } on SocketException {
+      apiResponse.ApiError = ApiError(error: "Server error. Please retry");
+    }
+    return apiResponse;
+  }
+
   /*
   //For fetching user from database to list
   Future<List<User>> fetchUser() {
