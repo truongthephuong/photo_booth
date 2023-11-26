@@ -22,6 +22,7 @@ class PhotoAiScreen extends StatefulWidget {
 class _PhotoAiScreenState extends State<PhotoAiScreen> {
   bool isImageSelected = false;
   String imgSelect = '';
+  int cntImg = 0;
 
   @override
   void initState() {

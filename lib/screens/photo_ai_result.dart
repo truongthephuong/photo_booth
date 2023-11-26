@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/screens/frame_screen.dart';
+import 'package:photobooth_section1/screens/photo_result_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'dart:convert';
@@ -20,9 +21,12 @@ class PhotoAiResult extends StatefulWidget {
 
 class _PhotoAiResultState extends State<PhotoAiResult> {
   List _items = [];
+  List<ImgList> imgListAi = [];
+  int cntImg = 0;
   String userImgPath = "";
   final ApiService apiService = ApiService();
   Uint8List resultImageUrl = Uint8List(0);
+  List<String> aiImages = [];
 
   @override
   void initState() {
@@ -45,6 +49,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     String fileNameWithPath = '$fileName.jpg';
     final String userPath = path.join(userDir, fileNameWithPath);
     setState(() {
+      aiImages.add(userPath);
       userImgPath = userPath;
     });
   }
@@ -135,9 +140,12 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
 
               setState(() {
                 resultImageUrl = imageData;
+                cntImg++;
               });
 
               getImagePath('photo_with_ai');
+
+              imgListAi.add(getImagePath('photo_with_ai') as ImgList);
 
               print('Image saved successfully');
             }
@@ -177,20 +185,24 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
               )
             : CircularProgressIndicator(),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   label: Text('Add Frame'),
-      //   backgroundColor: Colors.blueAccent,
-      //   icon: Icon(Icons.confirmation_num, size: 24.0),
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: (context) => FrameScreen(
-      //                 imgUrl: userImgPath,
-      //               )),
-      //     );
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Photos Created'),
+        backgroundColor: Colors.blueAccent,
+        icon: Icon(Icons.confirmation_num, size: 24.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PhotoResultList(
+                aiImages: aiImages,
+              ),
+              settings: RouteSettings(
+                arguments: imgListAi,
+              ),
+            ),
+          );
+        },
+      ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -226,4 +238,10 @@ class ApiService {
       throw Exception('Failed');
     }
   }
+}
+
+class ImgList {
+  String imgUrl;
+  //int id;
+  ImgList({required this.imgUrl});
 }
