@@ -26,6 +26,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   String userImgPath = "";
   final ApiService apiService = ApiService();
   Uint8List resultImageUrl = Uint8List(0);
+  List<String> aiImages = [];
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     String fileNameWithPath = '$fileName.jpg';
     final String userPath = path.join(userDir, fileNameWithPath);
     setState(() {
+      aiImages.add(userPath);
       userImgPath = userPath;
     });
   }
@@ -191,7 +193,9 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PhotoResultList(imgUrl: '',),
+              builder: (context) => PhotoResultList(
+                aiImages: aiImages,
+              ),
               settings: RouteSettings(
                 arguments: imgListAi,
               ),

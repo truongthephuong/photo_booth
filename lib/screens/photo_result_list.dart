@@ -10,7 +10,9 @@ const _defaultColor = Color(0xFF34568B);
 
 class PhotoResultList extends StatefulWidget {
   final String imgUrl;
-  const PhotoResultList({super.key, required this.imgUrl});
+  final List<String> aiImages;
+  const PhotoResultList(
+      {super.key, required this.imgUrl, required this.aiImages});
 
   @override
   State<StatefulWidget> createState() => _PhotoResultListState();
@@ -113,7 +115,7 @@ class _PhotoResultListState extends State<PhotoResultList> {
 
   @override
   Widget build(BuildContext context) {
-    List imgList = ModalRoute.of(context)!.settings.arguments as List;
+    List imgList = widget.aiImages;
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Photos Had Created"),
@@ -121,7 +123,7 @@ class _PhotoResultListState extends State<PhotoResultList> {
         centerTitle: true,
       ),
       body: MasonryGridView.count(
-        itemCount: _items.length,
+        itemCount: imgList.length,
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
         // the number of columns
         crossAxisCount: 2,
@@ -135,7 +137,7 @@ class _PhotoResultListState extends State<PhotoResultList> {
             // Give each item a random background color
             color: Color.fromARGB(Random().nextInt(256), Random().nextInt(256),
                 Random().nextInt(256), Random().nextInt(256)),
-            key: ValueKey(_items[index]['id']),
+            key: ValueKey(index),
             child: SizedBox(
               //height: _items[index]['height'],
               child: InkWell(
@@ -144,7 +146,7 @@ class _PhotoResultListState extends State<PhotoResultList> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          PhotoAiResult(imgUrl: widget.imgUrl),
+                          PhotoAiResult(imgUrl: imgList[index]),
                     ),
                   );
                   // Navigator.pushNamedAndRemoveUntil(
@@ -154,9 +156,9 @@ class _PhotoResultListState extends State<PhotoResultList> {
                 },
                 child: Column(
                   children: [
-                    Image.asset(_items[index]['imgUrl']),
+                    Image.asset(imgList[index]),
                     //Image.asset(_items[index]['imgUrl']),
-                    Text(_items[index]['title'],
+                    Text('AI Photo $index',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ],
@@ -168,5 +170,4 @@ class _PhotoResultListState extends State<PhotoResultList> {
       ),
     );
   }
-
 }
