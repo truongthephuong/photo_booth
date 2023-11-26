@@ -151,7 +151,8 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Photo Editor Section"),
+        title: const Text("Choose effect"),
+        backgroundColor: Colors.amberAccent,
         centerTitle: true,
       ),
       body: MasonryGridView.count(
@@ -188,10 +189,11 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
                 },
                 child: Column(
                   children: [
-                    Image.network(_items[index]['imgUrl']),
+                    Image.asset(_items[index]['imgUrl']),
                     //Image.asset(_items[index]['imgUrl']),
                     Text(_items[index]['title'],
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -199,30 +201,6 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
           );
         },
       ),
-      drawer: const NavDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_box_outlined),
-              label: 'Business',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Camera',
-            ),
-          ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.green,
-          unselectedItemColor: Colors.grey,
-          iconSize: 40,
-          onTap: _onItemTapped,
-          elevation: 5),
     );
   }
 }

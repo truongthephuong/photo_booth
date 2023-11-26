@@ -6,14 +6,15 @@ import 'package:flutter/services.dart';
 
 import '../main.dart';
 
-class PhotoCapture extends  StatefulWidget {
+class PhotoCapture extends StatefulWidget {
   const PhotoCapture({super.key});
 
   @override
   State<PhotoCapture> createState() => _PhotoCaptureState();
 }
 
-class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver {
+class _PhotoCaptureState extends State<PhotoCapture>
+    with WidgetsBindingObserver {
   String _cameraInfo = 'Unknown';
   int _cameraIndex = 0;
   int _cameraId = -1;
@@ -29,9 +30,12 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Home Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('From galary', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('From camera', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Text('Home Page',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Text('From galary',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Text('From camera',
+        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
 
   void _onItemTapped(int index) {
@@ -39,11 +43,11 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
     // if(index == 1) {
     //   _pickImagefromGallery();
     // }
-    if(index == 0) {
+    if (index == 0) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/home', ModalRoute.withName('/home'));
     }
-    if(index == 2) {
+    if (index == 2) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/photo_cam', ModalRoute.withName('/photo_cam'));
     }
@@ -58,7 +62,6 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
     WidgetsFlutterBinding.ensureInitialized();
     _fetchCameras();
     super.initState();
-
   }
 
   @override
@@ -167,7 +170,7 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
           _recording = false;
           _recordingTimed = false;
           _cameraInfo =
-          'Failed to initialize camera: ${e.code}: ${e.description}';
+              'Failed to initialize camera: ${e.code}: ${e.description}';
         });
       }
     }
@@ -193,7 +196,7 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
         if (mounted) {
           setState(() {
             _cameraInfo =
-            'Failed to dispose camera: ${e.code}: ${e.description}';
+                'Failed to dispose camera: ${e.code}: ${e.description}';
           });
         }
       }
@@ -247,7 +250,7 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
           await CameraPlatform.instance.startVideoRecording(_cameraId);
         } else {
           final XFile file =
-          await CameraPlatform.instance.stopVideoRecording(_cameraId);
+              await CameraPlatform.instance.stopVideoRecording(_cameraId);
 
           _showInSnackBar('Video captured to: ${file.path}');
         }
@@ -339,13 +342,13 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
   }
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     final List<DropdownMenuItem<ResolutionPreset>> resolutionItems =
-    ResolutionPreset.values
-        .map<DropdownMenuItem<ResolutionPreset>>((ResolutionPreset value) {
+        ResolutionPreset.values
+            .map<DropdownMenuItem<ResolutionPreset>>((ResolutionPreset value) {
       return DropdownMenuItem<ResolutionPreset>(
         value: value,
         child: Text(value.toString()),
@@ -396,7 +399,7 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
                         ? _disposeCurrentCamera
                         : _initializeCamera,
                     child:
-                    Text(_initialized ? 'Dispose camera' : 'Create camera'),
+                        Text(_initialized ? 'Dispose camera' : 'Create camera'),
                   ),
                   const SizedBox(width: 5),
                   ElevatedButton(
@@ -465,35 +468,7 @@ class _PhotoCaptureState extends State<PhotoCapture> with WidgetsBindingObserver
               ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.white,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_box_outlined),
-                label: 'Photo List',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.camera),
-                label: 'Camera',
-              ),
-            ],
-            type: BottomNavigationBarType.shifting,
-            backgroundColor:Colors.black.withOpacity(0.1),
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.green,
-            unselectedItemColor: Colors.grey,
-            iconSize: 40,
-            onTap: _onItemTapped,
-            elevation: 5
-        ),
       ),
-
     );
-
   }
-
 }

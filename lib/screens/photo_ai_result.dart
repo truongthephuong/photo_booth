@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:photobooth_section1/screens/frame_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'dart:convert';
@@ -31,7 +32,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     fetchDataAndSaveImage();
   }
 
-  Future<String> getImagePath(String fileName) async {
+  Future<void> getImagePath(String fileName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
@@ -46,7 +47,6 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     setState(() {
       userImgPath = userPath;
     });
-    return userPath;
   }
 
   Future<void> readJson() async {
@@ -137,6 +137,8 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
                 resultImageUrl = imageData;
               });
 
+              getImagePath('photo_with_ai');
+
               print('Image saved successfully');
             }
           }
@@ -149,7 +151,11 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Photo Result From AI"),
+        title: const Text(
+          "Photo AI",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.amberAccent,
         centerTitle: true,
       ),
       body: Center(
@@ -171,6 +177,21 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
               )
             : CircularProgressIndicator(),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Add Frame'),
+        backgroundColor: Colors.blueAccent,
+        icon: Icon(Icons.confirmation_num, size: 24.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => FrameScreen(
+                      imgUrl: userImgPath,
+                    )),
+          );
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

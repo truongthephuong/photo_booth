@@ -43,7 +43,12 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text("Photo Booth System"),
+            title: Text(
+              "Photo Booth System",
+              style: TextStyle(color: Colors.black),
+            ),
+            backgroundColor: Colors.amberAccent,
+            centerTitle: true,
           ),
           body: SingleChildScrollView(
             child: SafeArea(
@@ -196,7 +201,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
               ),
             ),
           ),
-          drawer: NavDrawer(),
         ),
       ],
     );

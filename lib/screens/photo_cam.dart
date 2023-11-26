@@ -110,6 +110,14 @@ class _CameraAppState extends State<CameraApp> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Snap Photo",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.amberAccent,
+        centerTitle: true,
+      ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -120,7 +128,8 @@ class _CameraAppState extends State<CameraApp> {
       bottomNavigationBar: ThumbnailGridView(
         images: savedImages,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Go to gallery'),
         onPressed: () {
           Navigator.push(
             context,
@@ -131,10 +140,11 @@ class _CameraAppState extends State<CameraApp> {
             ),
           );
         },
-        child: new Icon(Icons.navigate_next),
-        backgroundColor: Colors.redAccent,
+        icon: Icon(Icons.navigate_next, size: 24.0),
+        backgroundColor: Colors.blueAccent,
         elevation: 0.0,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
