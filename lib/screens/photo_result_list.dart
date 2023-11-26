@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -154,7 +155,7 @@ class _PhotoResultListState extends State<PhotoResultList> {
                 },
                 child: Column(
                   children: [
-                    Image.asset(imgList[index]),
+                    Image.file(File(imgList[index])),
                     //Image.asset(_items[index]['imgUrl']),
                     Text('AI Photo $index',
                         style: TextStyle(
