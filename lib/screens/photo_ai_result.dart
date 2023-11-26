@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/screens/frame_screen.dart';
+import 'package:photobooth_section1/screens/photo_result_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'dart:convert';
@@ -182,20 +183,22 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
               )
             : CircularProgressIndicator(),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   label: Text('Add Frame'),
-      //   backgroundColor: Colors.blueAccent,
-      //   icon: Icon(Icons.confirmation_num, size: 24.0),
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: (context) => FrameScreen(
-      //                 imgUrl: userImgPath,
-      //               )),
-      //     );
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Photos Created'),
+        backgroundColor: Colors.blueAccent,
+        icon: Icon(Icons.confirmation_num, size: 24.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PhotoResultList(imgUrl: '',),
+              settings: RouteSettings(
+                arguments: imgListAi,
+              ),
+            ),
+          );
+        },
+      ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
