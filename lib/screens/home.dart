@@ -273,6 +273,7 @@ class _IntroScreenState extends State<IntroScreen> {
             )
           ],
         ),
+        /*
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -297,6 +298,8 @@ class _IntroScreenState extends State<IntroScreen> {
             iconSize: 40,
             onTap: _onItemTapped,
             elevation: 5),
+
+         */
       ),
     );
   }
