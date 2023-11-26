@@ -125,7 +125,7 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
             SizedBox(width: 45),
           ]),
           // showing list of images
-          for (var item in imgList1)
+          for (var item in imgList)
             Center(
               child: GestureDetector(
                 onTap: () {
