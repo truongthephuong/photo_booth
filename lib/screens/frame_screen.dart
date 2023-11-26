@@ -20,8 +20,6 @@ class FrameScreen extends StatefulWidget {
 class _FrameScreenState extends State<FrameScreen> {
   late img.Image? image;
   late img.Image? frame;
-  bool processing = false;
-  bool isProcessing = false;
   Uint8List resultImageUrl = Uint8List(0);
   String userImgPath = "";
 
@@ -33,17 +31,10 @@ class _FrameScreenState extends State<FrameScreen> {
   }
 
   Future<void> applyFrame() async {
-    setState(() {
-      processing = true;
-    });
-
     File _imageFile = File(widget.imgUrl);
     final Uint8List _bytes = await _imageFile.readAsBytes();
     // Load the main image
     image = img.decodeImage(Uint8List.fromList(_bytes));
-
-    print('image add frame');
-    print(widget.imgUrl);
 
     // Load the frame
     frame = img.decodeImage(Uint8List.fromList(
@@ -59,46 +50,48 @@ class _FrameScreenState extends State<FrameScreen> {
     }
 
     // Save the result to a folder
-    await saveImage(image, 'result_image.jpg');
+    await saveImage(image, 'result_image');
 
-    setState(() {
-      processing = false;
-    });
+    loadImage();
   }
 
   Future<void> saveImage(img.Image? image, String fileName) async {
     // Get the application documents directory
-    final directory = await getApplicationDocumentsDirectory();
+    final _documentDir = await getApplicationDocumentsDirectory();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _username = prefs.getString('username') ?? "";
 
     // Create the file path
-    final filePath = '${directory.path}/$fileName';
+    final String userDir = path.join(_documentDir.path, _username);
+    String fileNameWithPath = '$fileName.jpg';
+    final String userPath = path.join(userDir, fileNameWithPath);
 
     // Save the image to the file
-    File(filePath).writeAsBytesSync(Uint8List.fromList(img.encodeJpg(image!)));
+    File(userPath).writeAsBytesSync(Uint8List.fromList(img.encodeJpg(image!)));
   }
 
   Future<void> loadImage() async {
-    final Directory appDir = await getApplicationDocumentsDirectory();
-    final String appDirPath = appDir.path;
-    File imageFile = File('$appDirPath/result_image.jpg');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _username = prefs.getString('username') ?? "";
 
-    // Check if the image file exists
-    if (await imageFile.exists()) {
-      // Read the image file as bytes
-      Uint8List bytes = await imageFile.readAsBytes();
-      resultImageUrl = bytes;
-    } else {
-      // If the file doesn't exist, return an empty Uint8List or handle accordingly
-      resultImageUrl = Uint8List(0);
-    }
+    Directory _documentDir = Directory('');
+    _documentDir = await getApplicationDocumentsDirectory();
+
+    final String userDir = path.join(_documentDir.path, _username);
+    await Directory(userDir).create(recursive: true);
+
+    String fileNameWithPath = 'result_image.jpg';
+    final String userPath = path.join(userDir, fileNameWithPath);
+    File imageFile = File(userPath);
+
+    Uint8List bytes = await imageFile.readAsBytes();
     setState(() {
-      resultImageUrl = resultImageUrl;
+      resultImageUrl = bytes;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    loadImage();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -109,29 +102,21 @@ class _FrameScreenState extends State<FrameScreen> {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 20),
-            isProcessing
-                ? CircularProgressIndicator()
-                : resultImageUrl.isNotEmpty
-                    ? Card(
-                        elevation: 5,
-                        child: Container(
-                          width: 300,
-                          height: 300,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: MemoryImage(resultImageUrl),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Container(),
-          ],
-        ),
+        child: resultImageUrl.isNotEmpty
+            ? Card(
+                elevation: 5,
+                child: Container(
+                  width: 512,
+                  height: 512,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(resultImageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
+            : CircularProgressIndicator(),
       ),
     );
   }
