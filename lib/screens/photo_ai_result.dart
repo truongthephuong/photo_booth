@@ -20,6 +20,8 @@ class PhotoAiResult extends StatefulWidget {
 
 class _PhotoAiResultState extends State<PhotoAiResult> {
   List _items = [];
+  List<ImgList> imgListAi = [];
+  int cntImg = 0;
   String userImgPath = "";
   final ApiService apiService = ApiService();
   Uint8List resultImageUrl = Uint8List(0);
@@ -135,9 +137,12 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
 
               setState(() {
                 resultImageUrl = imageData;
+                cntImg++;
               });
 
               getImagePath('photo_with_ai');
+
+              imgListAi.add(getImagePath('photo_with_ai') as ImgList);
 
               print('Image saved successfully');
             }
@@ -226,4 +231,10 @@ class ApiService {
       throw Exception('Failed');
     }
   }
+}
+
+class ImgList {
+  String imgUrl;
+  //int id;
+  ImgList({required this.imgUrl});
 }
