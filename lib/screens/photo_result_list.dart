@@ -9,10 +9,8 @@ import '../data_sources/helper.dart';
 const _defaultColor = Color(0xFF34568B);
 
 class PhotoResultList extends StatefulWidget {
-  final String imgUrl;
   final List<String> aiImages;
-  const PhotoResultList(
-      {super.key, required this.imgUrl, required this.aiImages});
+  const PhotoResultList({super.key, required this.aiImages});
 
   @override
   State<StatefulWidget> createState() => _PhotoResultListState();
