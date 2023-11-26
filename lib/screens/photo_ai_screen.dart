@@ -31,10 +31,10 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //List imgList = ModalRoute.of(context)!.settings.arguments as List;
-    List<ImageModel> imgList = widget.images;
-    print('on build widget ');
-    print(imgList[0]);
+    List imgList = ModalRoute.of(context)!.settings.arguments as List;
+    //List<ImageModel> imgList = widget.images;
+    // print('on build widget ');
+    // print(imgList[0]);
     return MaterialApp(
       //debugShowCheckedModeBanner: false,
       //darkTheme: ThemeData.dark(),
@@ -65,8 +65,8 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
                       imgSelect = item.imgUrl;
                     });
 
-                    print('Select image');
-                    print(imgSelect);
+                    // print('Select image');
+                    // print(imgSelect);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
                       'You had choise : ' + item.imgUrl,
@@ -77,32 +77,37 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
                     )));
                   },
                   child: Image.file(File(item.imgUrl), fit: BoxFit.fitWidth),
+                  //child: Image.asset(item.imgUrl, fit: BoxFit.fitWidth),
                 ),
               );
             }).toList(),
           ),
           const SizedBox(height: 30),
-          const Text(
-            'Other Content',
-            style: TextStyle(
-              fontSize: 24,
-            ),
-            textAlign: TextAlign.center,
-          ),
+          // const Text(
+          //   'Other Content',
+          //   style: TextStyle(
+          //     fontSize: 24,
+          //   ),
+          //   textAlign: TextAlign.center,
+          // ),
           isImageSelected
               ? Expanded(
                   child: Container(
+                    height: 512,
+                    width: 512,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.file(File(imgSelect)),
+                          //child: Image.asset(imgSelect),
                         ),
                       ],
                     ),
                   ),
                 )
               : Container(
+                  /*
                   child: const Text(
                     'Not yet select picture, please choose picture',
                     style: TextStyle(
@@ -111,6 +116,7 @@ class _PhotoAiScreenState extends State<PhotoAiScreen> {
                     ),
                     textAlign: TextAlign.center,
                   ),
+                */
                 ),
           FloatingActionButton(
             onPressed: () {
