@@ -177,21 +177,21 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
               )
             : CircularProgressIndicator(),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Add Frame'),
-        backgroundColor: Colors.blueAccent,
-        icon: Icon(Icons.confirmation_num, size: 24.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => FrameScreen(
-                      imgUrl: userImgPath,
-                    )),
-          );
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton.extended(
+      //   label: Text('Add Frame'),
+      //   backgroundColor: Colors.blueAccent,
+      //   icon: Icon(Icons.confirmation_num, size: 24.0),
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => FrameScreen(
+      //                 imgUrl: userImgPath,
+      //               )),
+      //     );
+      //   },
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
