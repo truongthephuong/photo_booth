@@ -93,55 +93,55 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   final List<Map<String, dynamic>> _items = [
     {
       "id": 0,
-      "title": "Item 0",
+      "title": "Anime",
       "actPage": '/home',
       "imgUrl": "assets/images/list-doc/anime.gif"
     },
     {
       'id': 1,
-      'title': "Item 1",
+      'title': "Caricature",
       'actPage': 'cate1',
       "imgUrl": 'assets/images/list-doc/caricature.gif'
     },
     {
       'id': 2,
-      'title': "Item 2",
+      'title': "Cartoon",
       'actPage': 'cate2',
       "imgUrl": 'assets/images/list-doc/cartoon.gif'
     },
     {
       'id': 3,
-      'title': "Item 3",
+      'title': "Comic",
       'actPage': 'cate3',
       "imgUrl": 'assets/images/list-doc/comic.gif'
     },
     {
       'id': 4,
-      'title': "Item 4",
+      'title': "Pixar",
       'actPage': 'cate4',
       "imgUrl": 'assets/images/list-doc/pixar.gif'
     },
     {
       'id': 5,
-      'title': "Item 5",
+      'title': "Slamdunk",
       'actPage': 'cate5',
       "imgUrl": 'assets/images/list-doc/slamdunk.gif'
     },
     {
       'id': 6,
-      'title': "Item 6",
+      'title': "Anime",
       'actPage': 'cate6',
       "imgUrl": 'assets/images/list-doc/anime.gif'
     },
     {
       'id': 7,
-      'title': "Item 7",
+      'title': "Caricature",
       'actPage': 'cate7',
       "imgUrl": 'assets/images/list-doc/caricature.gif'
     },
     {
       'id': 8,
-      'title': "Item 8",
+      'title': "slamdunk",
       'actPage': 'cate8',
       "imgUrl": 'assets/images/list-doc/slamdunk.gif'
     },
@@ -151,7 +151,8 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Photo Editor Section"),
+        title: const Text("Choose effect"),
+        backgroundColor: Colors.amberAccent,
         centerTitle: true,
       ),
       body: MasonryGridView.count(
@@ -188,9 +189,11 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
                 },
                 child: Column(
                   children: [
-                    //Image.network(_items[index]['imgUrl']),
                     Image.asset(_items[index]['imgUrl']),
-                    Text(_items[index]['title']),
+                    //Image.asset(_items[index]['imgUrl']),
+                    Text(_items[index]['title'],
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -198,30 +201,6 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
           );
         },
       ),
-      drawer: const NavDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_box_outlined),
-              label: 'Business',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Camera',
-            ),
-          ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.green,
-          unselectedItemColor: Colors.grey,
-          iconSize: 40,
-          onTap: _onItemTapped,
-          elevation: 5),
     );
   }
 }

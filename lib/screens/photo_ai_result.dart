@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:photobooth_section1/screens/frame_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'dart:convert';
@@ -21,13 +22,17 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   List _items = [];
   String userImgPath = "";
   final ApiService apiService = ApiService();
+  Uint8List resultImageUrl = Uint8List(0);
 
   @override
   void initState() {
     super.initState();
+
+    // API call
+    fetchDataAndSaveImage();
   }
 
-  Future<String> getImagePath(String fileName) async {
+  Future<void> getImagePath(String fileName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
@@ -42,7 +47,6 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     setState(() {
       userImgPath = userPath;
     });
-    return userPath;
   }
 
   Future<void> readJson() async {
@@ -70,61 +74,76 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
       String usrImgUrl = widget.imgUrl;
       File _imageFile = File(usrImgUrl);
       final Uint8List _bytes = await _imageFile.readAsBytes();
-      final String imgBase64 = base64.encode(_bytes);
+      if (_bytes.isNotEmpty) {
+        final String imgBase64 = base64.encode(_bytes);
+        if (imgBase64.isNotEmpty) {
+          final Map<String, dynamic> payload = {
+            'prompt':
+                "(((best quality, high quality, highres))), 1boy, handsome, beautiful, young, celebrity, angular face",
+            'negativePrompt':
+                "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation))",
+            'samplerName': "Euler",
+            'batchSize': 2,
+            'steps': 20,
+            'cfgScale': 7,
+            'width': 512,
+            'height': 512,
+            'overrideSettingsRestoreAfterwards': true,
+            'samplerIndex': "Euler",
+            'scriptArgs': [],
+            'sendImages': true,
+            'saveImages': true,
+            'alwaysonScripts': {
+              'controlNet': {
+                'args': [
+                  {
+                    'controlMode': "Balanced",
+                    'enabled': true,
+                    'guidanceEnd': 1,
+                    'guidanceStart': 0,
+                    'inputImage': 'data:image/png;base64,' + imgBase64,
+                    'inputMode': "simple",
+                    'isUi': true,
+                    'loopback': false,
+                    'lowVram': false,
+                    'model': "control_v11p_sd15_lineart [43d4be0d]",
+                    'module': "lineart_standard (from white bg & black line)",
+                    'outputDir': "",
+                    'pixelPerfect': true,
+                    'processorRes': 512,
+                    'resizeMode': "Crop and Resize",
+                    'thresholdA': -1,
+                    'thresholdB': -1,
+                    'weight': 0.8,
+                  }
+                ]
+              },
+            },
+          };
 
-      final Map<String, dynamic> payload = {
-        'prompt':
-            "(((best quality, high quality, highres))), 1boy, handsome, beautiful, young, celebrity, angular face",
-        'negativePrompt':
-            "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation))",
-        'samplerName': "Euler",
-        'batchSize': 2,
-        'steps': 20,
-        'cfgScale': 7,
-        'width': 512,
-        'height': 512,
-        'overrideSettingsRestoreAfterwards': true,
-        'samplerIndex': "Euler",
-        'scriptArgs': [],
-        'sendImages': true,
-        'saveImages': true,
-        'alwaysonScripts': {
-          'controlNet': {
-            'args': [
-              {
-                'controlMode': "Balanced",
-                'enabled': true,
-                'guidanceEnd': 1,
-                'guidanceStart': 0,
-                'inputImage': 'data:image/png;base64,' + imgBase64,
-                'inputMode': "simple",
-                'isUi': true,
-                'loopback': false,
-                'lowVram': false,
-                'model': "control_v11p_sd15_lineart [43d4be0d]",
-                'module': "lineart_standard (from white bg & black line)",
-                'outputDir': "",
-                'pixelPerfect': true,
-                'processorRes': 512,
-                'resizeMode': "Crop and Resize",
-                'thresholdA': -1,
-                'thresholdB': -1,
-                'weight': 0.8,
-              }
-            ]
-          },
-        },
-      };
+          final Map<String, dynamic> response =
+              await apiService.postData(payload);
 
-      final Map<String, dynamic> response = await apiService.postData(payload);
+          if (response.isNotEmpty && response['images'] != null) {
+            _items = response['images'];
+            List<String> dynamicData = _items.cast<String>();
+            final Uint8List imageData =
+                base64Decode(dynamicData.firstOrNull ?? "");
 
-      _items = response['images'];
-      List<String> dynamicData = _items.cast<String>();
-      final Uint8List imageData = base64Decode(dynamicData.firstOrNull ?? "");
+            if (imageData.isNotEmpty) {
+              await ImageSaver.saveImage('photo_with_ai', imageData);
 
-      await ImageSaver.saveImage('photo_with_ai', imageData);
+              setState(() {
+                resultImageUrl = imageData;
+              });
 
-      print('Image saved successfully');
+              getImagePath('photo_with_ai');
+
+              print('Image saved successfully');
+            }
+          }
+        }
+      }
     } catch (e) {}
   }
 
@@ -132,36 +151,47 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Photo Result From AI"),
+        title: const Text(
+          "Photo AI",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.amberAccent,
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Expanded(
-              child: Container(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("aaa"),
+        child: resultImageUrl.isNotEmpty
+            ? Card(
+                elevation: 5,
+                child: Container(
+                  width: 512,
+                  height: 512,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(
+                        resultImageUrl,
+                      ),
+                      fit: BoxFit.cover,
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
+              )
+            : CircularProgressIndicator(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          fetchDataAndSaveImage();
-        },
-        child: new Icon(Icons.check),
-        backgroundColor: Colors.greenAccent,
-        elevation: 0.0,
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   label: Text('Add Frame'),
+      //   backgroundColor: Colors.blueAccent,
+      //   icon: Icon(Icons.confirmation_num, size: 24.0),
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => FrameScreen(
+      //                 imgUrl: userImgPath,
+      //               )),
+      //     );
+      //   },
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

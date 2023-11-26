@@ -193,8 +193,9 @@ class _IntroScreenState extends State<IntroScreen> {
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20),
-                        height: 80,
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        height: 100,
                         width: 200,
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -228,44 +229,44 @@ class _IntroScreenState extends State<IntroScreen> {
                           },
                         ),
                       ),
-                      Container(
-                        margin:
-                            const EdgeInsets.only(top: 10, left: 20, right: 20),
-                        height: 80,
-                        width: 200,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                            ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20))),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.grey.withOpacity(0.1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'Photo List',
-                              style: kBodyText,
-                            ),
-                          ),
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const PhotoListScreen(
-                                        imgUrl: '',
-                                      )),
-                            );
-                          },
-                        ),
-                      ),
+                      // Container(
+                      //   margin:
+                      //       const EdgeInsets.only(top: 10, left: 20, right: 20),
+                      //   height: 80,
+                      //   width: 200,
+                      //   decoration: BoxDecoration(
+                      //       border: Border.all(
+                      //         color: Colors.black,
+                      //       ),
+                      //       borderRadius:
+                      //           const BorderRadius.all(Radius.circular(20))),
+                      //   child: ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //       foregroundColor: Colors.white,
+                      //       backgroundColor: Colors.grey.withOpacity(0.1),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(20),
+                      //       ),
+                      //     ),
+                      //     child: const Padding(
+                      //       padding: EdgeInsets.symmetric(vertical: 10),
+                      //       child: Text(
+                      //         'Photo List',
+                      //         style: kBodyText,
+                      //       ),
+                      //     ),
+                      //     onPressed: () async {
+                      //       Navigator.pop(context);
+                      //       Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => const PhotoListScreen(
+                      //                   imgUrl: '',
+                      //                 )),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 )),
@@ -273,30 +274,6 @@ class _IntroScreenState extends State<IntroScreen> {
             )
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.white,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_box_outlined),
-                label: 'Photo List',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.camera),
-                label: 'Camera',
-              ),
-            ],
-            type: BottomNavigationBarType.shifting,
-            backgroundColor: Colors.black.withOpacity(0.1),
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.grey,
-            iconSize: 40,
-            onTap: _onItemTapped,
-            elevation: 5),
       ),
     );
   }
