@@ -10,6 +10,8 @@ import 'package:path/path.dart' as path;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../data_sources/api_services.dart';
+
 class PhotoAiResult extends StatefulWidget {
   final String imgUrl;
   PhotoAiResult({required this.imgUrl});
@@ -116,8 +118,8 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
         },
       };
 
-      final Map<String, dynamic> response = await apiService.postData(payload);
-
+      //final Map<String, dynamic> response = await apiService.postData(payload);
+      final Map<String, dynamic> response = await ApiServices().postData(payload);
       _items = response['images'];
       List<String> dynamicData = _items.cast<String>();
       final Uint8List imageData = base64Decode(dynamicData.firstOrNull ?? "");

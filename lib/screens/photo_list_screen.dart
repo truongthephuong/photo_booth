@@ -200,6 +200,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
         },
       ),
       drawer: const NavDrawer(),
+      /*
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -223,6 +224,8 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
           iconSize: 40,
           onTap: _onItemTapped,
           elevation: 5),
+
+       */
     );
   }
 }

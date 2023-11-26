@@ -47,6 +47,17 @@ class ApiServices{
     return apiResponse;
   }
 
+  Future<Map<String, dynamic>> postData(Map<String, dynamic> payload) async {
+    final response = await http.post(ApiUrls().API_ANIME_AI_PHOTO,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(payload));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed');
+    }
+  }
+
   /*
   //For fetching user from database to list
   Future<List<User>> fetchUser() {
