@@ -214,7 +214,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: Text(
-                              'Get Photo',
+                              'Take Photo',
                               style: kBodyText,
                             ),
                           ),
