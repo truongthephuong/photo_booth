@@ -117,7 +117,10 @@ class _IntroScreenState extends State<IntroScreen> {
     if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => PhotoSectionScreen()),
+        MaterialPageRoute(
+            builder: (context) => PhotoSectionScreen(
+                  images: [],
+                )),
       );
     }
     if (index == 2) {
@@ -256,8 +259,9 @@ class _IntroScreenState extends State<IntroScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PhotoListScreen()),
+                                  builder: (context) => const PhotoListScreen(
+                                        imgUrl: '',
+                                      )),
                             );
                           },
                         ),
@@ -425,7 +429,10 @@ class _IntroScreenState extends State<IntroScreen> {
             Navigator.pop(context);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const PhotoListScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const PhotoListScreen(
+                        imgUrl: '',
+                      )),
             );
           },
         ),

@@ -102,14 +102,13 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
   // ];
 
   List<ImgList> imgList1 = [
-    ImgList(id : 6, imgUrl: 'assets/images/bonsai.jpg'),
-    ImgList(id : 1, imgUrl: 'assets/images/thuycanh.jpg'),
-    ImgList(id : 2, imgUrl: 'assets/images/Berries01.jpg'),
-    ImgList(id : 3, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
-    ImgList(id : 4, imgUrl: 'assets/images/mohinhvac.jpg'),
-    ImgList(id : 5, imgUrl: 'assets/images/nam-an.jpg'),
+    ImgList(id: 6, imgUrl: 'assets/images/bonsai.jpg'),
+    ImgList(id: 1, imgUrl: 'assets/images/thuycanh.jpg'),
+    ImgList(id: 2, imgUrl: 'assets/images/Berries01.jpg'),
+    ImgList(id: 3, imgUrl: 'assets/images/hoa-tra-trang.jpg'),
+    ImgList(id: 4, imgUrl: 'assets/images/mohinhvac.jpg'),
+    ImgList(id: 5, imgUrl: 'assets/images/nam-an.jpg'),
   ];
-
 
   Widget _buildList() {
     List<ImageModel> imgList = widget.images;
@@ -136,7 +135,9 @@ class _PhotoSectionScreenState extends State<PhotoSectionScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PhotoAiScreen(),
+                      builder: (context) => PhotoAiScreen(
+                        images: [],
+                      ),
                       settings: RouteSettings(
                         arguments: imgList1,
                       ),
