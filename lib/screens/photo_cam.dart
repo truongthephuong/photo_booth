@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/models/image_model.dart';
-import 'package:photobooth_section1/screens/image_list.dart';
 import 'package:photobooth_section1/screens/photo_ai_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image/image.dart' as img;
 
 class CameraApp extends StatefulWidget {
   @override
@@ -80,20 +82,34 @@ class _CameraAppState extends State<CameraApp> {
         final String userPath = path.join(userDir, path.basename(file.path));
         await File(file.path).copy(userPath);
 
-        final ImageModel savedImage = ImageModel(
-          id: savedImages.length + 1,
-          title: '${_username} ${savedImages.length + 1}',
-          actPage: 'actPage1',
-          imgUrl: userPath,
-        );
+        img.Image? imageResize =
+            img.decodeImage(File(userPath).readAsBytesSync());
+        imageResize = img.copyResize(imageResize!, height: 512, width: 512);
 
-        setState(() {
-          savedImages.add(savedImage);
-        });
+        await saveImage(imageResize, userPath);
       } catch (e) {
         print('Error taking photo: $e');
       }
     }
+  }
+
+  Future<void> saveImage(img.Image? imageResize, String filePath) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _username = prefs.getString('username') ?? "";
+
+    File(filePath)
+        .writeAsBytesSync(Uint8List.fromList(img.encodeJpg(imageResize!)));
+
+    final ImageModel savedImage = ImageModel(
+      id: savedImages.length + 1,
+      title: '${_username} ${savedImages.length + 1}',
+      actPage: 'actPage1',
+      imgUrl: filePath,
+    );
+
+    setState(() {
+      savedImages.add(savedImage);
+    });
   }
 
   @override
