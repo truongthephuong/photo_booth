@@ -59,56 +59,51 @@ class _PhotoResultListState extends State<PhotoResultList> {
     {
       "id": 0,
       "title": "Anime",
+      "effect": "anime",
       "actPage": '/home',
       "imgUrl": "assets/images/list-doc/anime.gif"
     },
     {
       'id': 1,
       'title': "Caricature",
+      "effect": "caricature",
       'actPage': 'cate1',
       "imgUrl": 'assets/images/list-doc/caricature.gif'
     },
     {
       'id': 2,
       'title': "Cartoon",
+      "effect": "cartoon",
       'actPage': 'cate2',
       "imgUrl": 'assets/images/list-doc/cartoon.gif'
     },
     {
       'id': 3,
       'title': "Comic",
+      "effect": "comic",
       'actPage': 'cate3',
       "imgUrl": 'assets/images/list-doc/comic.gif'
     },
     {
       'id': 4,
       'title': "Pixar",
+      "effect": "pixar",
       'actPage': 'cate4',
       "imgUrl": 'assets/images/list-doc/pixar.gif'
     },
     {
       'id': 5,
       'title': "Slamdunk",
+      "effect": "slamdunk",
       'actPage': 'cate5',
       "imgUrl": 'assets/images/list-doc/slamdunk.gif'
     },
     {
       'id': 6,
       'title': "Anime",
+      "effect": "anime",
       'actPage': 'cate6',
       "imgUrl": 'assets/images/list-doc/anime.gif'
-    },
-    {
-      'id': 7,
-      'title': "Caricature",
-      'actPage': 'cate7',
-      "imgUrl": 'assets/images/list-doc/caricature.gif'
-    },
-    {
-      'id': 8,
-      'title': "slamdunk",
-      'actPage': 'cate8',
-      "imgUrl": 'assets/images/list-doc/slamdunk.gif'
     },
   ];
 
@@ -144,8 +139,8 @@ class _PhotoResultListState extends State<PhotoResultList> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          PhotoAiResult(imgUrl: imgList[index], aiEffectId: 0),
+                      builder: (context) => PhotoAiResult(
+                          imgUrl: imgList[index], effectName: 'anime'),
                     ),
                   );
                   // Navigator.pushNamedAndRemoveUntil(
