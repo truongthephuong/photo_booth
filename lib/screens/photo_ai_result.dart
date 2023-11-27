@@ -11,10 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/ai_payload.dart';
 
 class PhotoAiResult extends StatefulWidget {
   final String imgUrl;
-  PhotoAiResult({required this.imgUrl});
+  final int aiEffectId;
+  PhotoAiResult({required this.imgUrl, required this.aiEffectId});
   @override
   _PhotoAiResultState createState() => _PhotoAiResultState();
 }
@@ -33,7 +35,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     super.initState();
 
     // API call
-    fetchDataAndSaveImage();
+    fetchDataAndSaveImage(widget.aiEffectId);
   }
 
   Future<void> getImagePath(String fileName) async {
@@ -74,7 +76,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     }
   }
 
-  Future<void> fetchDataAndSaveImage() async {
+  Future<void> fetchDataAndSaveImage(int aiEffectId) async {
     try {
       String usrImgUrl = widget.imgUrl;
       File _imageFile = File(usrImgUrl);
@@ -82,49 +84,114 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
       if (_bytes.isNotEmpty) {
         final String imgBase64 = base64.encode(_bytes);
         if (imgBase64.isNotEmpty) {
+          //print(imgBase64);
+
+          //
+          switch(aiEffectId) {
+            case 1:
+
+              break;
+            case 2:
+              break;
+            case 3:
+              break;
+            case 4:
+              break;
+            case 5:
+              break;
+            case 6:
+              break;
+            default:
+              break;
+          }
+
           final Map<String, dynamic> payload = {
             'prompt':
-                "(((best quality, high quality, highres))), 1boy, handsome, beautiful, young, celebrity, angular face",
-            'negativePrompt':
+                "(((best quality, high quality, highres))), 1man, handsome, beautiful, young, celebrity, angular face",
+            'negative_prompt':
                 "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation))",
-            'samplerName': "Euler",
-            'batchSize': 2,
+            'sampler_name': "Euler a",
+            'batch_size': 1,
             'steps': 20,
-            'cfgScale': 7,
-            'width': 512,
-            'height': 512,
-            'overrideSettingsRestoreAfterwards': true,
-            'samplerIndex': "Euler",
-            'scriptArgs': [],
-            'sendImages': true,
-            'saveImages': true,
-            'alwaysonScripts': {
-              'controlNet': {
+            'cfg_scale': 7,
+            'width': 640,
+            'height': 360,
+            'override_settings_restore_afterwards': true,
+            'sampler_index': "Euler a",
+            'script_args': [],
+            'send_images': true,
+            'save_images': true,
+            'alwayson_scripts': {
+              'ControlNet': {
                 'args': [
                   {
-                    'controlMode': "Balanced",
+                    'control_mode': "Balanced",
                     'enabled': true,
-                    'guidanceEnd': 1,
-                    'guidanceStart': 0,
-                    'inputImage': 'data:image/png;base64,' + imgBase64,
-                    'inputMode': "simple",
-                    'isUi': true,
+                    'guidance_end': 1,
+                    'guidance_start': 0,
+                    'input_image': 'data:image/jpeg;base64,' + imgBase64,
+                    'input_mode': "simple",
+                    'is_ui': true,
                     'loopback': false,
-                    'lowVram': false,
+                    'low_vram': false,
                     'model': "control_v11p_sd15_lineart [43d4be0d]",
                     'module': "lineart_standard (from white bg & black line)",
-                    'outputDir': "",
-                    'pixelPerfect': true,
-                    'processorRes': 512,
-                    'resizeMode': "Crop and Resize",
-                    'thresholdA': -1,
-                    'thresholdB': -1,
-                    'weight': 0.8,
+                    'output_dir': "",
+                    'pixel_perfect': true,
+                    'processor_res': 512,
+                    'resize_mode': "Crop and Resize",
+                    'threshold_a': -1,
+                    'threshold_b': -1,
+                    'weight': 1.5,
                   }
                 ]
               },
             },
           };
+
+/*
+          AnimePayload payload = AnimePayload(
+            prompt: "(((best quality, high quality, highres))), 1boy, handsome, beautiful, young, celebrity, angular face",
+            negativePrompt:
+            "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation))",
+            samplerName: "Euler",
+            batchSize: 2,
+            steps: 20,
+            cfgScale: 7,
+            width: 512,
+            height: 512,
+            overrideSettingsRestoreAfterwards: true,
+            samplerIndex: "Euler",
+            scriptArgs: [],
+            sendImages: true,
+            saveImages: true,
+            alwaysonScripts: AlwaysonScripts(
+              controlNet: ControlNetArgs(
+                controlMode: "Balanced",
+                enabled: true,
+                guidanceEnd: 1,
+                guidanceStart: 0,
+                inputImage: 'data:image/png;base64,' + imgBase64,
+                inputMode: "simple",
+                isUi: true,
+                loopback: false,
+                lowVram: false,
+                model: "control_v11p_sd15_lineart [43d4be0d]",
+                module: "lineart_standard (from white bg & black line)",
+                outputDir: "",
+                pixelPerfect: true,
+                processorRes: 512,
+                resizeMode: "Crop and Resize",
+                thresholdA: -1,
+                thresholdB: -1,
+                weight: 0.8,
+              ),
+            ),
+          );
+ */
+
+print('payload ');
+print(payload);
 
           final Map<String, dynamic> response =
               await apiService.postData(payload);
@@ -171,8 +238,8 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
             ? Card(
                 elevation: 5,
                 child: Container(
-                  width: 512,
-                  height: 512,
+                  width: 640,
+                  height: 360,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: MemoryImage(
@@ -206,6 +273,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
 }
 
 class ImageSaver {
@@ -245,3 +313,5 @@ class ImgList {
   //int id;
   ImgList({required this.imgUrl});
 }
+
+

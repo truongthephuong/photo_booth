@@ -82,11 +82,22 @@ class _CameraAppState extends State<CameraApp> {
         final String userPath = path.join(userDir, path.basename(file.path));
         await File(file.path).copy(userPath);
 
-        img.Image? imageResize =
-            img.decodeImage(File(userPath).readAsBytesSync());
-        imageResize = img.copyResize(imageResize!, height: 512, width: 512);
+        final ImageModel savedImage = ImageModel(
+          id: savedImages.length + 1,
+          title: '${_username} ${savedImages.length + 1}',
+          actPage: 'actPage1',
+          imgUrl: userPath,
+        );
 
-        await saveImage(imageResize, userPath);
+        setState(() {
+          savedImages.add(savedImage);
+        });
+
+        // img.Image? imageResize =
+        //     img.decodeImage(File(userPath).readAsBytesSync());
+        // imageResize = img.copyResize(imageResize!, height: 512, width: 512);
+
+        //await saveImage(imageResize, userPath);
       } catch (e) {
         print('Error taking photo: $e');
       }

@@ -92,57 +92,39 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
 */
   final List<Map<String, dynamic>> _items = [
     {
-      "id": 0,
+      "id": 1,
       "title": "Anime",
       "actPage": '/home',
       "imgUrl": "assets/images/list-doc/anime.gif"
     },
     {
-      'id': 1,
+      'id': 2,
       'title': "Caricature",
       'actPage': 'cate1',
       "imgUrl": 'assets/images/list-doc/caricature.gif'
     },
     {
-      'id': 2,
+      'id': 3,
       'title': "Cartoon",
       'actPage': 'cate2',
       "imgUrl": 'assets/images/list-doc/cartoon.gif'
     },
     {
-      'id': 3,
+      'id': 4,
       'title': "Comic",
       'actPage': 'cate3',
       "imgUrl": 'assets/images/list-doc/comic.gif'
     },
     {
-      'id': 4,
+      'id': 5,
       'title': "Pixar",
       'actPage': 'cate4',
       "imgUrl": 'assets/images/list-doc/pixar.gif'
     },
     {
-      'id': 5,
+      'id': 6,
       'title': "Slamdunk",
       'actPage': 'cate5',
-      "imgUrl": 'assets/images/list-doc/slamdunk.gif'
-    },
-    {
-      'id': 6,
-      'title': "Anime",
-      'actPage': 'cate6',
-      "imgUrl": 'assets/images/list-doc/anime.gif'
-    },
-    {
-      'id': 7,
-      'title': "Caricature",
-      'actPage': 'cate7',
-      "imgUrl": 'assets/images/list-doc/caricature.gif'
-    },
-    {
-      'id': 8,
-      'title': "slamdunk",
-      'actPage': 'cate8',
       "imgUrl": 'assets/images/list-doc/slamdunk.gif'
     },
   ];
@@ -179,7 +161,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          PhotoAiResult(imgUrl: widget.imgUrl),
+                          PhotoAiResult(imgUrl: widget.imgUrl, aiEffectId: _items[index]['id']),
                     ),
                   );
                   // Navigator.pushNamedAndRemoveUntil(

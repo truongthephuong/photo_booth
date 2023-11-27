@@ -145,7 +145,7 @@ class _PhotoResultListState extends State<PhotoResultList> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          PhotoAiResult(imgUrl: imgList[index]),
+                          PhotoAiResult(imgUrl: imgList[index], aiEffectId: 0),
                     ),
                   );
                   // Navigator.pushNamedAndRemoveUntil(
