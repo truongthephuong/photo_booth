@@ -15,13 +15,14 @@ import '../models/ai_payload.dart';
 
 class PhotoAiResult extends StatefulWidget {
   final String imgUrl;
-  final int aiEffectId;
-  PhotoAiResult({required this.imgUrl, required this.aiEffectId});
+  final String effectName;
+  PhotoAiResult({required this.imgUrl, required this.effectName});
   @override
   _PhotoAiResultState createState() => _PhotoAiResultState();
 }
 
 class _PhotoAiResultState extends State<PhotoAiResult> {
+  List<dynamic> payloadArr = [];
   List _items = [];
   List<ImgList> imgListAi = [];
   int cntImg = 0;
@@ -35,7 +36,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     super.initState();
 
     // API call
-    fetchDataAndSaveImage(widget.aiEffectId);
+    fetchDataAndSaveImage(widget.effectName);
   }
 
   Future<void> getImagePath(String fileName) async {
@@ -56,12 +57,11 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     });
   }
 
-  Future<void> readJson() async {
+  Future<void> readJson(String payloadFile) async {
     String data = await DefaultAssetBundle.of(context)
-        .loadString("assets/api/response.json");
-    final jsonResult = jsonDecode(data);
+        .loadString("assets/ai/$payloadFile-payload.json");
     setState(() {
-      _items = jsonResult["images"];
+      payloadArr = json.decode(data);
     });
   }
 
@@ -76,7 +76,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
     }
   }
 
-  Future<void> fetchDataAndSaveImage(int aiEffectId) async {
+  Future<void> fetchDataAndSaveImage(String effectName) async {
     try {
       String usrImgUrl = widget.imgUrl;
       File _imageFile = File(usrImgUrl);
@@ -86,68 +86,14 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
         if (imgBase64.isNotEmpty) {
           //print(imgBase64);
 
-          //
-          switch(aiEffectId) {
-            case 1:
+          readJson(widget.effectName);
 
-              break;
-            case 2:
-              break;
-            case 3:
-              break;
-            case 4:
-              break;
-            case 5:
-              break;
-            case 6:
-              break;
-            default:
-              break;
+          if (payloadArr.isNotEmpty) {
+            payloadArr[0]['alwayson_scripts']['ControlNet']['args'][0]
+                ['input_image'] = 'data:image/jpeg;base64,' + imgBase64;
           }
 
-          final Map<String, dynamic> payload = {
-            'prompt':
-                "(((best quality, high quality, highres))), 1man, handsome, beautiful, young, celebrity, angular face",
-            'negative_prompt':
-                "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation))",
-            'sampler_name': "Euler a",
-            'batch_size': 1,
-            'steps': 20,
-            'cfg_scale': 7,
-            'width': 640,
-            'height': 360,
-            'override_settings_restore_afterwards': true,
-            'sampler_index': "Euler a",
-            'script_args': [],
-            'send_images': true,
-            'save_images': true,
-            'alwayson_scripts': {
-              'ControlNet': {
-                'args': [
-                  {
-                    'control_mode': "Balanced",
-                    'enabled': true,
-                    'guidance_end': 1,
-                    'guidance_start': 0,
-                    'input_image': 'data:image/jpeg;base64,' + imgBase64,
-                    'input_mode': "simple",
-                    'is_ui': true,
-                    'loopback': false,
-                    'low_vram': false,
-                    'model': "control_v11p_sd15_lineart [43d4be0d]",
-                    'module': "lineart_standard (from white bg & black line)",
-                    'output_dir': "",
-                    'pixel_perfect': true,
-                    'processor_res': 512,
-                    'resize_mode': "Crop and Resize",
-                    'threshold_a': -1,
-                    'threshold_b': -1,
-                    'weight': 1.5,
-                  }
-                ]
-              },
-            },
-          };
+          final Map<String, dynamic> payload = {'data': payloadArr};
 
 /*
           AnimePayload payload = AnimePayload(
@@ -190,8 +136,8 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
           );
  */
 
-print('payload ');
-print(payload);
+          // print('payload ');
+          // print(payload);
 
           final Map<String, dynamic> response =
               await apiService.postData(payload);
@@ -273,7 +219,6 @@ print(payload);
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-
 }
 
 class ImageSaver {
@@ -299,7 +244,7 @@ class ApiService {
   Future<Map<String, dynamic>> postData(Map<String, dynamic> payload) async {
     final response = await http.post(Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(payload));
+        body: jsonEncode(payload['data']));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -313,5 +258,3 @@ class ImgList {
   //int id;
   ImgList({required this.imgUrl});
 }
-
-
