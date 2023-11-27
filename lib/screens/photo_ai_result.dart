@@ -22,7 +22,7 @@ class PhotoAiResult extends StatefulWidget {
 }
 
 class _PhotoAiResultState extends State<PhotoAiResult> {
-  List<dynamic> payloadArr = [];
+  List payloadArr = [];
   List _items = [];
   List<ImgList> imgListAi = [];
   int cntImg = 0;
@@ -30,6 +30,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   final ApiService apiService = ApiService();
   Uint8List resultImageUrl = Uint8List(0);
   List<String> aiImages = [];
+  Map<String, dynamic> payload = {};
 
   @override
   void initState() {
@@ -59,9 +60,10 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
 
   Future<void> readJson(String payloadFile) async {
     String data = await DefaultAssetBundle.of(context)
-        .loadString("assets/ai/$payloadFile-payload.json");
+        .loadString("assets/ai/$payloadFile.json");
+    final debugJson = jsonDecode(data);
     setState(() {
-      payloadArr = json.decode(data);
+      payloadArr = debugJson;
     });
   }
 
@@ -86,58 +88,16 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
         if (imgBase64.isNotEmpty) {
           //print(imgBase64);
 
-          readJson(widget.effectName);
+          String jsonString = await rootBundle
+              .loadString("assets/ai/${widget.effectName}.json");
+          payload = json.decode(jsonString);
 
-          if (payloadArr.isNotEmpty) {
-            payloadArr[0]['alwayson_scripts']['ControlNet']['args'][0]
-                ['input_image'] = 'data:image/jpeg;base64,' + imgBase64;
-          }
+          // if (payload.isNotEmpty) {
+          // Modify an element in the array (for example, updating the first element)
+          payload['alwayson_scripts']['ControlNet']['args'][0]['input_image'] =
+              'data:image/jpeg;base64,' + imgBase64;
 
-          final Map<String, dynamic> payload = {'data': payloadArr};
-
-/*
-          AnimePayload payload = AnimePayload(
-            prompt: "(((best quality, high quality, highres))), 1boy, handsome, beautiful, young, celebrity, angular face",
-            negativePrompt:
-            "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation))",
-            samplerName: "Euler",
-            batchSize: 2,
-            steps: 20,
-            cfgScale: 7,
-            width: 512,
-            height: 512,
-            overrideSettingsRestoreAfterwards: true,
-            samplerIndex: "Euler",
-            scriptArgs: [],
-            sendImages: true,
-            saveImages: true,
-            alwaysonScripts: AlwaysonScripts(
-              controlNet: ControlNetArgs(
-                controlMode: "Balanced",
-                enabled: true,
-                guidanceEnd: 1,
-                guidanceStart: 0,
-                inputImage: 'data:image/png;base64,' + imgBase64,
-                inputMode: "simple",
-                isUi: true,
-                loopback: false,
-                lowVram: false,
-                model: "control_v11p_sd15_lineart [43d4be0d]",
-                module: "lineart_standard (from white bg & black line)",
-                outputDir: "",
-                pixelPerfect: true,
-                processorRes: 512,
-                resizeMode: "Crop and Resize",
-                thresholdA: -1,
-                thresholdB: -1,
-                weight: 0.8,
-              ),
-            ),
-          );
- */
-
-          // print('payload ');
-          // print(payload);
+          //final Map<String, dynamic> payload = payloadArr;
 
           final Map<String, dynamic> response =
               await apiService.postData(payload);
@@ -163,6 +123,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
               print('Image saved successfully');
             }
           }
+          // }
         }
       }
     } catch (e) {}
@@ -244,7 +205,7 @@ class ApiService {
   Future<Map<String, dynamic>> postData(Map<String, dynamic> payload) async {
     final response = await http.post(Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(payload['data']));
+        body: jsonEncode(payload));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
