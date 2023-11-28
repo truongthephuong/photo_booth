@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -5,13 +6,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:photobooth_section1/screens/frame_screen.dart';
+//import 'package:photobooth_section1/screens/frame_screen.dart';
 import 'package:photobooth_section1/screens/photo_result_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/ai_payload.dart';
+
 
 class PhotoAiResult extends StatefulWidget {
   final String imgUrl;
@@ -31,11 +31,17 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   Uint8List resultImageUrl = Uint8List(0);
   List<String> aiImages = [];
   Map<String, dynamic> payload = {};
+  late bool _loading;
+  late double _progressValue;
 
   @override
   void initState() {
     super.initState();
+    _loading = false;
+    _progressValue = 0.0;
 
+    _loading = !_loading;
+    _updateProgress();
     // API call
     fetchDataAndSaveImage(widget.effectName);
   }
@@ -157,7 +163,32 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
                   ),
                 ),
               )
-            : CircularProgressIndicator(),
+            //: CircularProgressIndicator(),
+            : Container(
+                padding: EdgeInsets.all(12.0),
+                child: _loading
+                    ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        height: 15,
+                        child: LinearProgressIndicator(
+                          minHeight: 20.0,
+                          backgroundColor: Colors.limeAccent,
+                          valueColor: new AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                          value: _progressValue,
+                        ),
+
+                      ),
+                    ),
+                    Text('${(_progressValue * 100).round()}%',
+                        style: TextStyle(fontSize: 18, color:Colors.deepOrange)),
+                  ],
+                )
+                    : Text("", style: TextStyle(fontSize: 25)),
+              ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Photos Created'),
@@ -180,6 +211,24 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
+  // this function updates the progress value
+  void _updateProgress() {
+    const oneSec = const Duration(seconds: 1);
+    new Timer.periodic(oneSec, (Timer t) {
+      setState(() {
+        _progressValue += 0.01;
+        // we "finish" downloading here
+        if (_progressValue.toStringAsFixed(1) == '1.0') {
+          //_loading = false;
+          t.cancel();
+          return;
+        }
+      });
+    });
+  }
+
+
 }
 
 class ImageSaver {

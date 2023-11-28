@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:photobooth_section1/screens/photo_cam.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_player_win/video_player_win.dart';
+//import 'package:video_player_win/video_player_win.dart';
 
 import '../palatter.dart';
 import '../screens/photo_list_screen.dart';
-import '../screens/photo_capture.dart';
+//import '../screens/photo_capture.dart';
 import '../widgets/background-image.dart';
 import '../screens/photo_section_screen.dart';
 
@@ -55,15 +55,6 @@ class _IntroScreenState extends State<IntroScreen> {
         });
       });
     });
-/*
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-
- */
 
     //reload();
     super.initState();
@@ -101,6 +92,7 @@ class _IntroScreenState extends State<IntroScreen> {
     _controller.dispose();
   }
 
+/*
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Text('Home Page',
@@ -132,6 +124,7 @@ class _IntroScreenState extends State<IntroScreen> {
       _selectedIndex = index;
     });
   }
+ */
 
   @override
   Widget build(BuildContext context) {
@@ -167,32 +160,25 @@ class _IntroScreenState extends State<IntroScreen> {
               backgroundColor: Colors.transparent,
               body: SingleChildScrollView(
                 child: SafeArea(
-                    child: Container(
-                  margin:
-                      const EdgeInsets.only(left: 30.0, right: 30.0, top: 40.0),
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 50.0,
-                      ),
-                      /*
-        const Image(
-          image: AssetImage("assets/images/logo.png"),
-          width: 150.0,
-        ),
-         */
-                      const Text(
-                        "MONGTAMEDIA",
-                        style: TextStyle(color: Colors.white, fontSize: 40),
-                      ),
-                      const Text(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 40.0),
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        const Text(
+                          "MONGTAMEDIA",
+                          style: TextStyle(color: Colors.white, fontSize: 40),
+                        ),
+                        const Text(
                         "Photo - Booth",
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       ),
-                      Container(
+                        Container(
                         margin:
                             const EdgeInsets.only(left: 20, right: 20, top: 20),
                         height: 100,
@@ -229,47 +215,13 @@ class _IntroScreenState extends State<IntroScreen> {
                           },
                         ),
                       ),
-                      // Container(
-                      //   margin:
-                      //       const EdgeInsets.only(top: 10, left: 20, right: 20),
-                      //   height: 80,
-                      //   width: 200,
-                      //   decoration: BoxDecoration(
-                      //       border: Border.all(
-                      //         color: Colors.black,
-                      //       ),
-                      //       borderRadius:
-                      //           const BorderRadius.all(Radius.circular(20))),
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //       foregroundColor: Colors.white,
-                      //       backgroundColor: Colors.grey.withOpacity(0.1),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(20),
-                      //       ),
-                      //     ),
-                      //     child: const Padding(
-                      //       padding: EdgeInsets.symmetric(vertical: 10),
-                      //       child: Text(
-                      //         'Photo List',
-                      //         style: kBodyText,
-                      //       ),
-                      //     ),
-                      //     onPressed: () async {
-                      //       Navigator.pop(context);
-                      //       Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => const PhotoListScreen(
-                      //                   imgUrl: '',
-                      //                 )),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                    ],
+                        // Container(
+                        // ),
+
+                      ],
+                    ),
                   ),
-                )),
+                ),
               ),
             )
           ],
@@ -416,4 +368,5 @@ class _IntroScreenState extends State<IntroScreen> {
       ),
     ];
   }
+  
 }
