@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:photobooth_section1/screens/screen1.dart';
+import 'package:photobooth_section1/screens/screen_1.dart';
 import 'package:window_manager/window_manager.dart';
 import './screens/screen2.dart';
-import './screens/photo_cam.dart';
-import './screens/login_screen.dart';
 import 'package:camera/camera.dart';
 //import 'package:camera_windows/camera_windows.dart';
 import 'package:camera_platform_interface/camera_platform_interface.dart';
@@ -61,9 +59,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Photo Booth',
       routes: {
-        '/': (context) => const Screen1(),
-        //'/': (context) => UserLoginScreen(),
-        '/photo_cam': (context) => CameraApp(),
+        //'/': (context) => const IntroScreen(),
+        '/': (context) => Screen1(),
         '/home': (context) => const Screen2(),
         //'/detail_content': (context) => DetailContentScreen(0),
       },

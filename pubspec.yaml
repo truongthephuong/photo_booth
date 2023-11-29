@@ -103,13 +103,20 @@ flutter:
     - assets/images/effective/Ultraviolet/
     - assets/images/effective/WalkingDead/
     - assets/images/effective/Witch/
+    - assets/template/
 
   fonts:
     - family: Header
       fonts:
-      - asset: fonts/Header.otf
+      - asset: fonts/Header.otf    
 
-
+  fonts:
+    - family: GulyFont
+      fonts:
+        - asset: fonts/titlefont.otf
+    - family: GulyButtonFont
+      fonts:
+        - asset: fonts/gulimky.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
