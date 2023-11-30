@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen_1.dart';
+import 'package:photobooth_section1/screens/screen_3.dart';
 import 'package:window_manager/window_manager.dart';
 import './screens/screen2.dart';
 import 'package:camera/camera.dart';
@@ -61,7 +62,8 @@ class MyApp extends StatelessWidget {
       routes: {
         //'/': (context) => const IntroScreen(),
         '/': (context) => Screen1(),
-        '/home': (context) => const Screen2(),
+        '/photo_cam': (context) => CameraApp(),
+        '/home': (context) => const IntroScreen(),
         //'/detail_content': (context) => DetailContentScreen(0),
       },
       theme: ThemeData(
