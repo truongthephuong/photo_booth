@@ -17,7 +17,7 @@ class BackGroundImage extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/bg-img-1.gif'),
+              image: AssetImage('assets/images/bg.png'),
               fit: BoxFit.cover,
               //colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken)
           ),

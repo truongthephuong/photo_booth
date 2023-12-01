@@ -14,7 +14,7 @@ import '../models/api_response.dart';
 import '../services/api.dart';
 import '../widgets/nav-drawer.dart';
 import '../widgets/widgets.dart';
-import 'home.dart';
+import 'screen2.dart';
 
 class UserLoginScreen extends StatefulWidget {
   const UserLoginScreen({super.key});
@@ -231,7 +231,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
           await prefs.setString("username", emailController.text);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => IntroScreen()),
+            MaterialPageRoute(builder: (context) => Screen2()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -239,7 +239,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
           await prefs.setString("username", emailController.text);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => IntroScreen()),
+            MaterialPageRoute(builder: (context) => Screen2()),
           );
         }
       }

@@ -8,10 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 //import 'package:photobooth_section1/screens/frame_screen.dart';
 import 'package:photobooth_section1/screens/photo_result_list.dart';
+import 'package:photobooth_section1/screens/screen5.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
+import '../palatter.dart';
+import '../widgets/background-image.dart';
 
 class PhotoAiResult extends StatefulWidget {
   final String imgUrl;
@@ -22,6 +25,7 @@ class PhotoAiResult extends StatefulWidget {
 }
 
 class _PhotoAiResultState extends State<PhotoAiResult> {
+
   List payloadArr = [];
   List _items = [];
   List<ImgList> imgListAi = [];
@@ -31,6 +35,7 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
   Uint8List resultImageUrl = Uint8List(0);
   List<String> aiImages = [];
   Map<String, dynamic> payload = {};
+
   late bool _loading;
   late double _progressValue;
 
@@ -42,9 +47,11 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
 
     _loading = !_loading;
     _updateProgress();
+
     // API call
     fetchDataAndSaveImage(widget.effectName);
   }
+
 
   Future<void> getImagePath(String fileName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -86,6 +93,8 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
 
   Future<void> fetchDataAndSaveImage(String effectName) async {
     try {
+      print('on ai result');
+      print(widget.imgUrl);
       String usrImgUrl = widget.imgUrl;
       File _imageFile = File(usrImgUrl);
       final Uint8List _bytes = await _imageFile.readAsBytes();
@@ -137,99 +146,112 @@ class _PhotoAiResultState extends State<PhotoAiResult> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Photo AI",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.amberAccent,
-        centerTitle: true,
-      ),
-      body: Center(
-        child: resultImageUrl.isNotEmpty
-            ? Card(
-                elevation: 5,
-                child: Container(
-                  width: 640,
-                  height: 360,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: MemoryImage(
-                        resultImageUrl,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              )
-            //: CircularProgressIndicator(),
-            : Container(
-                padding: EdgeInsets.all(12.0),
-                child: _loading
-                    ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        height: 15,
-                        child: LinearProgressIndicator(
-                          minHeight: 20.0,
-                          backgroundColor: Colors.limeAccent,
-                          valueColor: new AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-                          value: _progressValue,
-                        ),
-
-                      ),
-                    ),
-                    Text('${(_progressValue * 100).round()}%',
-                        style: TextStyle(fontSize: 18, color:Colors.deepOrange)),
-                  ],
-                )
-                    : Text("", style: TextStyle(fontSize: 25)),
-              ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Photos Created'),
-        backgroundColor: Colors.blueAccent,
-        icon: Icon(Icons.confirmation_num, size: 24.0),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PhotoResultList(
-                aiImages: aiImages,
-              ),
-              settings: RouteSettings(
-                arguments: imgListAi,
-              ),
+    return Stack(
+      children: [
+        BackGroundImage(),
+        Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              "Photo AI",
+              style: TextStyle(color: Colors.black),
             ),
-          );
-        },
-      ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            backgroundColor: Colors.amberAccent,
+            centerTitle: true,
+          ),
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+              child: SafeArea(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: '인공지능 ',
+                              style: kHeading,
+                              children: <TextSpan>[
+                                TextSpan(text: '은 어떻게 ', style: kHeading1),
+                                TextSpan(text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                          width: 1200,
+                          height: 480,
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                '/images/welcome.png',
+                                width: 1200,
+                                height: 480,
+                              ),
+                            ],
+                          ),
+                        ),
+                      Container(
+                        padding: EdgeInsets.all(12.0),
+                        child: _loading
+                          ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  height: 20,
+                                  width: 256,
+                                  child: LinearProgressIndicator(
+                                    minHeight: 20.0,
+                                    backgroundColor: Colors.limeAccent,
+                                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                                    value: _progressValue,
+                                  ),
+                                ),
+                              ),
+                              Text('${(_progressValue * 100).round()}%',
+                                  style: TextStyle(fontSize: 18, color:Colors.deepOrange)),
+                            ],
+                        ) : Text(
+                            "", style: TextStyle(fontSize: 25)
+                          ),
+                      ),
+                    ],
+                  )
+              ),
+          ),
+        ),
+
+      ],
     );
   }
+
 
   // this function updates the progress value
   void _updateProgress() {
     const oneSec = const Duration(seconds: 1);
     new Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        _progressValue += 0.01;
+        _progressValue += 0.1;
         // we "finish" downloading here
         if (_progressValue.toStringAsFixed(1) == '1.0') {
           //_loading = false;
           t.cancel();
+          print('Load 100% goto other screen');
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Screen5()),
+          );
           return;
         }
       });
     });
   }
 
-
 }
+
 
 class ImageSaver {
   static Future<void> saveImage(String fileName, Uint8List imageData) async {
