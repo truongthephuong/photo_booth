@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen_1.dart';
-import 'package:photobooth_section1/screens/screen_3.dart';
+import 'package:photobooth_section1/screens/screen3.dart';
 import 'package:window_manager/window_manager.dart';
 import './screens/screen2.dart';
 import 'package:camera/camera.dart';
