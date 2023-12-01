@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 
-const TextStyle kHeading = TextStyle (
-  fontSize: 40,
+const TextStyle kHeading = TextStyle(
+  fontSize: 60,
   fontWeight: FontWeight.bold,
   color: Colors.lime,
+  fontFamily: 'GulyFont',
 );
 
-const TextStyle kHeading1 = TextStyle (
-  fontSize: 40,
+const TextStyle kHeading1 = TextStyle(
+  fontSize: 60,
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
 
-const TextStyle kHeading2 = TextStyle (
-  fontSize: 40,
+const TextStyle kHeading2 = TextStyle(
+  fontSize: 60,
   fontWeight: FontWeight.bold,
   color: Colors.teal,
 );
 
-const TextStyle kButton = TextStyle (
-  fontSize: 40,
+const TextStyle kButton = TextStyle(
+  fontSize: 60,
   fontWeight: FontWeight.bold,
   color: Colors.deepOrange,
 );
 
-const TextStyle kBodyText = TextStyle (
-  fontSize: 20,
+const TextStyle kBodyText = TextStyle(
+  fontSize: 60,
   color: Colors.white,
 );

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:photobooth_section1/screens/screen1.dart';
+import 'package:photobooth_section1/screens/screen6.dart';
 
 import '../palatter.dart';
 import '../widgets/background-image.dart';
@@ -39,25 +39,18 @@ class _Screen5State extends State<Screen5> {
         BackGroundImage(),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: Text(
-              "Photo Booth System",
-              style: TextStyle(color: Colors.black),
-            ),
-            backgroundColor: Colors.amberAccent,
-            centerTitle: true,
-          ),
           body: SingleChildScrollView(
             child: SafeArea(
               child: Container(
-                margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 0.0),
+                margin:
+                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 0.0),
                 alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 10.0,
+                      height: 80.0,
                     ),
                     Center(
                       child: RichText(
@@ -66,7 +59,8 @@ class _Screen5State extends State<Screen5> {
                           style: kHeading,
                           children: <TextSpan>[
                             TextSpan(text: '은 어떻게 ', style: kHeading1),
-                            TextSpan(text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
+                            TextSpan(
+                                text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
                           ],
                         ),
                       ),
@@ -84,14 +78,14 @@ class _Screen5State extends State<Screen5> {
                             //color: Colors.green[200],
                             width: 448,
                             height: 440,
-                            decoration:  BoxDecoration(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.green[200],
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               child: Image.asset(
-                                '/images/screen2.gif',
+                                'assets/images/screen2.gif',
                                 width: 450,
                                 height: 450,
                               ),
@@ -106,30 +100,32 @@ class _Screen5State extends State<Screen5> {
                               child: GridView(
                                 padding: const EdgeInsets.all(5),
                                 scrollDirection: Axis.vertical,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
                                   mainAxisSpacing: 2,
                                 ),
                                 children: [
                                   //Anime
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Go to list cate");
-
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Anime/Anime_man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Anime/Anime_man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Anime-man',
@@ -144,23 +140,24 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Go to list cate");
-
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Anime/Anime-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Anime/Anime-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Anime-woman',
@@ -177,29 +174,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //3DCartoon
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto bon sai");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'test',
+                                                effectName: 'aa'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/3dcartoon/3dcartoon-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/3dcartoon/3dcartoon-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             '3Dcartoon-man',
@@ -214,29 +214,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto chan nuoi");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/3dcartoon/3dcartoon-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/3dcartoon/3dcartoon-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             '3Dcartoon-woman',
@@ -253,26 +256,31 @@ class _Screen5State extends State<Screen5> {
 
                                   //AdorableGhost
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'test',
+                                                effectName: 'aaa')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/AdorableGhost/AdorableGhost-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/AdorableGhost/AdorableGhost-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'AdorableGhost-man',
@@ -287,26 +295,31 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'Test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/AdorableGhost/AdorableGhost-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/AdorableGhost/AdorableGhost-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'AdorableGhost-woman',
@@ -323,26 +336,31 @@ class _Screen5State extends State<Screen5> {
 
                                   //Caricature
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Caricature/Caricature-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Caricature/Caricature-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Caricature-man',
@@ -357,29 +375,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Go to list cate");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );// create action handling method
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          )); // create action handling method
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Caricature/Caricature-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Caricature/Caricature-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Caricature-woman',
@@ -396,29 +417,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //Cartoon
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto nam an");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Cartoon/Cartoon-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Cartoon/Cartoon-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Cartoon-man',
@@ -433,29 +457,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto bon sai");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Cartoon/Cartoon-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Cartoon/Cartoon-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Cartoon-woman',
@@ -472,29 +499,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //Comic
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto chan nuoi");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Comic/Comic-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Comic/Comic-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Comic-man',
@@ -509,26 +539,31 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Comic/Comic-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Comic/Comic-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Comic-woman',
@@ -545,26 +580,31 @@ class _Screen5State extends State<Screen5> {
 
                                   //GreenGoblin
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/GreenGoblin/GreenGoblin-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/GreenGoblin/GreenGoblin-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'GreenGoblin-man',
@@ -579,26 +619,31 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/GreenGoblin/GreenGoblin-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/GreenGoblin/GreenGoblin-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'GreenGoblin-woman',
@@ -615,29 +660,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //HellFire
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Go to list cate");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );// create action handling method
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          )); // create action handling method
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/HellFire/HellFire-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/HellFire/HellFire-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'HellFire-man',
@@ -652,29 +700,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto nam an");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/HellFire/HellFire-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/HellFire/HellFire-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'HellFire-woman',
@@ -691,29 +742,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //Necromancer
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto bon sai");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Necromancer/Necromancer-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Necromancer/Necromancer-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Necromancer-man',
@@ -728,29 +782,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto chan nuoi");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Necromancer/Necromancer-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Necromancer/Necromancer-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Necromancer-woman',
@@ -767,26 +824,31 @@ class _Screen5State extends State<Screen5> {
 
                                   //Nightcrawler
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Nightcrawler/Nightcrawler-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Nightcrawler/Nightcrawler-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Nightcrawler-man',
@@ -801,26 +863,31 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Nightcrawler/Nightcrawler-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Nightcrawler/Nightcrawler-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Nightcrawler-woman',
@@ -837,26 +904,31 @@ class _Screen5State extends State<Screen5> {
 
                                   //Pixar
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Pixar/Pixar-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Pixar/Pixar-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Pixar-man',
@@ -871,29 +943,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Go to list cate");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );// create action handling method
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          )); // create action handling method
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Pixar/Pixar-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Pixar/Pixar-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Pixar-woman',
@@ -910,29 +985,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //Romantic
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto nam an");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Romantic/Romantic-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Romantic/Romantic-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Romantic-man',
@@ -947,29 +1025,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto bon sai");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Romantic/Romantic-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Romantic/Romantic-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Romantic-woman',
@@ -986,29 +1067,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //Ultraviolet
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto chan nuoi");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Ultraviolet/Ultraviolet-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Ultraviolet/Ultraviolet-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Ultraviolet-man',
@@ -1023,26 +1107,31 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Ultraviolet/Ultraviolet-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Ultraviolet/Ultraviolet-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Ultraviolet-woman',
@@ -1059,26 +1148,31 @@ class _Screen5State extends State<Screen5> {
 
                                   //WalkingDead
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/WalkingDead/WalkingDead-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/WalkingDead/WalkingDead-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'WalkingDead-man',
@@ -1093,26 +1187,31 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("pressed open google map");
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute( builder: (context) => Screen1()),
+                                        MaterialPageRoute(
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test')),
                                       );
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/WalkingDead/WalkingDead-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/WalkingDead/WalkingDead-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'WalkingDead-woman',
@@ -1129,29 +1228,32 @@ class _Screen5State extends State<Screen5> {
 
                                   //Witch
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Go to list cate");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );// create action handling method
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          )); // create action handling method
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Witch/Witch-man.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Witch/Witch-man.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Witch-man',
@@ -1166,29 +1268,32 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       print("Goto nam an");
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Screen1(),
-                                          )
-                                      );
+                                            builder: (context) => Screen6(
+                                                imgUrl: 'aaa',
+                                                effectName: 'test'),
+                                          ));
                                     },
                                     child: Card(
                                       color: Colors.green[50],
                                       elevation: 8.0,
                                       margin: EdgeInsets.all(2.0),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset('assets/images/effective/Witch/Witch-woman.gif',
+                                            child: Image.asset(
+                                                'assets/images/effective/Witch/Witch-woman.gif',
                                                 height: 145,
-                                                fit:BoxFit.fill
-                                            ),
+                                                fit: BoxFit.fill),
                                           ),
                                           Text(
                                             'Witch-woman',
@@ -1209,7 +1314,6 @@ class _Screen5State extends State<Screen5> {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -1219,5 +1323,4 @@ class _Screen5State extends State<Screen5> {
       ],
     );
   }
-
 }

@@ -108,9 +108,7 @@ flutter:
   fonts:
     - family: Header
       fonts:
-      - asset: fonts/Header.otf    
-
-  fonts:
+        - asset: fonts/Header.otf
     - family: GulyFont
       fonts:
         - asset: fonts/titlefont.otf
