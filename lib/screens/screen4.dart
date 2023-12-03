@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:photobooth_section1/models/image_model.dart';
 import 'package:photobooth_section1/screens/screen5.dart';
 import 'package:flutter/painting.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
 
 class Screen4 extends StatefulWidget {
   List<ImageModel> images = [];
@@ -24,7 +26,31 @@ class _Screen4State extends State<Screen4> {
     super.initState();
   }
 
+  /**
+   * If user choose photo -> go into 'myphotos/{userID}/Target'
+   */
   _chooseImg(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _username = prefs.getString('username') ?? "";
+
+    Directory current = Directory.current;
+
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    await Directory(internalFolder).create(recursive: true);
+
+    // User folder
+    final String userDir = path.join(internalFolder, _username);
+    await Directory(userDir).create(recursive: true);
+
+    // Target folder
+    final String tempUserDir = path.join(userDir, 'Target');
+    await Directory(tempUserDir).create(recursive: true);
+
+    // Save photo
+    final String userPath = path.join(tempUserDir, 'photo.jpg');
+    await File(widget.images[id].imgUrl).copy(userPath);
+
     setState(() {
       chooseImgId = id;
       chooseImgUrl = widget.images[id].imgUrl;

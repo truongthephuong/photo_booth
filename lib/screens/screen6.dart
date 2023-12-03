@@ -50,18 +50,26 @@ class _Screen6State extends State<Screen6> {
     fetchDataAndSaveImage(widget.effectName);
   }
 
-  Future<void> getImagePath(String fileName) async {
+  Future<void> getImagePath(int fileName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
-    Directory _documentDir = Directory('');
-    _documentDir = await getApplicationDocumentsDirectory();
+    Directory current = Directory.current;
 
-    final String userDir = path.join(_documentDir.path, _username);
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    await Directory(internalFolder).create(recursive: true);
+
+    // User Dir
+    final String userDir = path.join(internalFolder, _username);
     await Directory(userDir).create(recursive: true);
 
+    // Result folder
+    final String resultUserDir = path.join(userDir, 'Result');
+    await Directory(resultUserDir).create(recursive: true);
+
     String fileNameWithPath = '$fileName.jpg';
-    final String userPath = path.join(userDir, fileNameWithPath);
+    final String userPath = path.join(resultUserDir, fileNameWithPath);
     setState(() {
       aiImages.add(userPath);
       userImgPath = userPath;
@@ -98,18 +106,12 @@ class _Screen6State extends State<Screen6> {
       if (_bytes.isNotEmpty) {
         final String imgBase64 = base64.encode(_bytes);
         if (imgBase64.isNotEmpty) {
-          //print(imgBase64);
-
           String jsonString = await rootBundle
-              .loadString("assets/ai/${widget.effectName}.json");
+              .loadString("assets/ai/v2/${widget.effectName}.json");
           payload = json.decode(jsonString);
 
-          // if (payload.isNotEmpty) {
-          // Modify an element in the array (for example, updating the first element)
           payload['alwayson_scripts']['ControlNet']['args'][0]['input_image'] =
               'data:image/jpeg;base64,' + imgBase64;
-
-          //final Map<String, dynamic> payload = payloadArr;
 
           final Map<String, dynamic> response =
               await apiService.postData(payload);
@@ -121,14 +123,14 @@ class _Screen6State extends State<Screen6> {
                 base64Decode(dynamicData.firstOrNull ?? "");
 
             if (imageData.isNotEmpty) {
-              await ImageSaver.saveImage('photo_with_ai', imageData);
+              await ImageSaver.saveImage(aiEffectIDSess, imageData);
 
               setState(() {
                 resultImageUrl = imageData;
                 cntImg++;
               });
 
-              getImagePath('photo_with_ai');
+              getImagePath(aiEffectIDSess);
 
               imgListAi.add(getImagePath('photo_with_ai') as ImgList);
             }
@@ -244,15 +246,23 @@ class _Screen6State extends State<Screen6> {
 }
 
 class ImageSaver {
-  static Future<void> saveImage(String fileName, Uint8List imageData) async {
+  static Future<void> saveImage(int fileName, Uint8List imageData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
-    Directory _documentDir = Directory('');
-    _documentDir = await getApplicationDocumentsDirectory();
+    Directory current = Directory.current;
 
-    final String userDir = path.join(_documentDir.path, _username);
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    await Directory(internalFolder).create(recursive: true);
+
+    // User Dir
+    final String userDir = path.join(internalFolder, _username);
     await Directory(userDir).create(recursive: true);
+
+    // Result folder
+    final String resultUserDir = path.join(userDir, 'Result');
+    await Directory(resultUserDir).create(recursive: true);
 
     String fileNameWithPath = '$fileName.jpg';
     final String userPath = path.join(userDir, fileNameWithPath);

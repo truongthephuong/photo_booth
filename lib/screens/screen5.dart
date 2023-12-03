@@ -94,7 +94,7 @@ class _Screen5State extends State<Screen5> {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
-    for (int i = 1; i < models.length; i++) {
+    for (int i = 0; i < models.length; i++) {
       widgets.add(
         GestureDetector(
           onTap: () {

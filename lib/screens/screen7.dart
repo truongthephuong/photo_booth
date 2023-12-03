@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:path/path.dart' as path;
 
 class Screen7 extends StatefulWidget {
   String imgUrl;
@@ -18,6 +19,16 @@ class _Screen7State extends State<Screen7> {
   @override
   void initState() {
     super.initState();
+    _freshPhotoDir();
+  }
+
+  _freshPhotoDir() {
+    Directory current = Directory.current;
+
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    final Directory dir = Directory(internalFolder);
+    dir.deleteSync(recursive: true);
   }
 
   Widget build(BuildContext context) {
@@ -70,12 +81,35 @@ class _Screen7State extends State<Screen7> {
                               imageCardUrl: widget.imgUrl,
                             ),
                           ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Screen1()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
+                              child: Text('시작',
+                                  style: TextStyle(
+                                      fontSize: 50,
+                                      color: Colors.red,
+                                      fontFamily: 'GulyFont')),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 50, top: 120),
+                            margin: EdgeInsets.only(left: 50, top: 20),
                             alignment: Alignment.bottomCenter,
                             child: ElevatedButton(
                               onPressed: () {
@@ -99,7 +133,7 @@ class _Screen7State extends State<Screen7> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: 50, top: 2),
+                            margin: EdgeInsets.only(left: 50, top: 5),
                             height: 263,
                             width: 272,
                             child: ClipRRect(

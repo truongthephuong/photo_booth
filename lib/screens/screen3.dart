@@ -90,9 +90,6 @@ class _Screen3State extends State<Screen3> {
         final XFile file = await _controller.takePicture();
 
         // Get directory to save
-        Directory _tempDir = Directory('');
-        _tempDir = await getTemporaryDirectory();
-
         Directory current = Directory.current;
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
