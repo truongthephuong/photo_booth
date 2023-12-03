@@ -6,7 +6,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-//import 'package:photobooth_section1/screens/frame_screen.dart';
 import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
@@ -132,10 +131,9 @@ class _Screen6State extends State<Screen6> {
 
               getImagePath(aiEffectIDSess);
 
-              imgListAi.add(getImagePath('photo_with_ai') as ImgList);
+              imgListAi.add(getImagePath(aiEffectIDSess) as ImgList);
             }
           }
-          // }
         }
       }
     } catch (e) {}
