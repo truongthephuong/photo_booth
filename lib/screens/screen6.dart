@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 //import 'package:photobooth_section1/screens/frame_screen.dart';
-import 'package:photobooth_section1/screens/screen5.dart';
+import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
@@ -90,8 +90,8 @@ class _Screen6State extends State<Screen6> {
 
   Future<void> fetchDataAndSaveImage(String effectName) async {
     try {
-      print('on ai result');
-      print(widget.imgUrl);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int aiEffectIDSess = prefs.getInt('aiEffectIDSess') ?? 1;
       String usrImgUrl = widget.imgUrl;
       File _imageFile = File(usrImgUrl);
       final Uint8List _bytes = await _imageFile.readAsBytes();
@@ -131,8 +131,6 @@ class _Screen6State extends State<Screen6> {
               getImagePath('photo_with_ai');
 
               imgListAi.add(getImagePath('photo_with_ai') as ImgList);
-
-              print('Image saved successfully');
             }
           }
           // }
@@ -233,7 +231,10 @@ class _Screen6State extends State<Screen6> {
           Navigator.pop(context);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Screen5()),
+            MaterialPageRoute(
+                builder: (context) => Screen7(
+                      imgUrl: widget.imgUrl,
+                    )),
           );
           return;
         }

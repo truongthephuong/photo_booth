@@ -178,14 +178,11 @@ class _Screen2State extends State<Screen2> {
 
   _loadStoredValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('on home screen');
     print(prefs.getString('username'));
 
     setState(() {
       _storedUserValue = prefs.getString('username') ?? '';
     });
-    print('_storedUserValue');
-    print(_storedUserValue);
   }
 
   _getVideoBackground() {

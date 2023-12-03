@@ -1,14 +1,18 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/models/image_model.dart';
+import 'package:photobooth_section1/palatter.dart';
 import 'package:photobooth_section1/screens/screen4.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 import 'package:path/path.dart' as path;
+import 'package:image/image.dart' as img;
 
 class Screen3 extends StatefulWidget {
   @override
@@ -19,7 +23,14 @@ class _Screen3State extends State<Screen3> {
   late CameraController _controller;
   late List<CameraDescription> cameras;
   bool isCameraReady = false;
+
   List<ImageModel> savedImages = [];
+  File? _imageFile;
+  String userDirPath = '';
+
+  int _countdown = 6;
+  late Timer _timer;
+  bool startCount = false;
 
   @override
   void initState() {
@@ -47,13 +58,28 @@ class _Screen3State extends State<Screen3> {
   }
 
   void startTimer() {
-    takePhoto();
+    const oneSec = const Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (Timer timer) {
+      if (_countdown == 0) {
+        timer.cancel();
+        takePhoto();
+        _countdown = 6;
+        startCount = false;
+      } else {
+        setState(() {
+          _countdown--;
+          startCount = true;
+        });
+      }
+    });
   }
 
   /**
    * Create folder inside root directory
    * 
-   * Snap photo -> go to 'myphotos/{userID}/temp'
+   * Snap photo -> go to 'myphotos/{userID}/Temp'
+   * Crop photo(s) -> save to 'myphotos/{userID}/User'
+   * If photos reach (4) -> go to Screen4
    * If user choose photo -> go into 'myphotos/{userID}/Target'
    * If photo apply AI -> go to Result with format 'myphotos/{userID}/Result/{Effect-ID}.png'
    */
@@ -69,9 +95,6 @@ class _Screen3State extends State<Screen3> {
 
         Directory current = Directory.current;
 
-        print('current dir');
-        print(current.path);
-
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
         // Parent folder
@@ -86,8 +109,12 @@ class _Screen3State extends State<Screen3> {
         final String userDir = path.join(internalFolder, _username);
         await Directory(userDir).create(recursive: true);
 
+        setState(() {
+          userDirPath = userDir;
+        });
+
         // Temp folder
-        final String tempUserDir = path.join(userDir, 'temp');
+        final String tempUserDir = path.join(userDir, 'Temp');
         await Directory(tempUserDir).create(recursive: true);
 
         // Save photo
@@ -95,33 +122,57 @@ class _Screen3State extends State<Screen3> {
             path.join(tempUserDir, path.basename(file.path));
         await File(file.path).copy(userPath);
 
-        _resizePhoto(userPath);
-
-        final ImageModel savedImage = ImageModel(
-          id: savedImages.length + 1,
-          title: '${_username} ${savedImages.length + 1}',
-          actPage: 'actPaged1',
-          imgUrl: userPath,
-        );
-
         setState(() {
-          savedImages.add(savedImage);
+          _imageFile = File(userPath);
         });
+
+        _cropPhoto();
       } catch (e) {
         print("Error taking photo: $e");
       }
     }
   }
 
-  Future<String> _resizePhoto(String filePath) async {
-    ImageProperties properties =
-        await FlutterNativeImage.getImageProperties(filePath);
-    int? width = properties.width;
-    File compressedFile = await FlutterNativeImage.compressImage(filePath,
-        quality: 80, targetWidth: 640, targetHeight: 628);
-    print('resize path');
-    print(compressedFile.path);
-    return compressedFile.path;
+  Future<void> _cropPhoto() async {
+    if (_imageFile == null) {
+      return;
+    }
+
+    final image = img.decodeImage(await _imageFile!.readAsBytes())!;
+    var cropSize = min(image.width, image.height);
+    int offsetX = (image.width - cropSize) ~/ 2;
+    int offsetY = (image.height - cropSize) ~/ 2;
+
+    final croppedImage = img.copyCrop(image, offsetX, offsetY, 640, 628);
+
+    // Temp folder
+    final String tempUserDir = path.join(userDirPath, 'User');
+    await Directory(tempUserDir).create(recursive: true);
+
+    // Save photo
+    int userPhotoId = savedImages.length + 1;
+    final String userPath =
+        path.join(tempUserDir, 'user_photo_$userPhotoId.jpg');
+    File(userPath).writeAsBytesSync(img.encodeJpg(croppedImage));
+
+    final ImageModel savedImage = ImageModel(
+      id: userPhotoId,
+      title: 'user_photo_$userPhotoId',
+      imgUrl: userPath,
+    );
+
+    setState(() {
+      savedImages.add(savedImage);
+    });
+
+    if (savedImages.length >= 4) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Screen4(
+                    images: savedImages,
+                  )));
+    }
   }
 
   Widget build(BuildContext context) {
@@ -182,37 +233,41 @@ class _Screen3State extends State<Screen3> {
                                 child: CameraPreview(_controller),
                               ),
                             ),
-                          )
-                          // Container(
-                          //   child: AspectRatio(
-                          //     aspectRatio: 0.75,
-                          //     child: CameraPreview(_controller),
-                          //   ),
-                          // )
-                          // Container(
-                          //   margin: EdgeInsets.only(left: 150),
-                          //   width: 841,
-                          //   height: 483,
-                          //   decoration: BoxDecoration(
-                          //     shape: BoxShape.rectangle,
-                          //     //border: Border.all(color: Colors.white, width: 4),
-                          //     image: DecorationImage(
-                          //       fit: BoxFit.cover,
-                          //       image:
-                          //           AssetImage('assets/template/screen3.png'),
-                          //     ),
-                          //   ),
-                          // ),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 200, top: 10),
+                              child: startCount
+                                  ? Container(
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                      child: Text(
+                                        '$_countdown',
+                                        style: TextStyle(
+                                            fontSize: 50,
+                                            color: Colors.white,
+                                            fontFamily: 'GulyFont'),
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
+                          ),
                         ],
                       ),
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10, top: 390),
+                            margin: EdgeInsets.only(
+                                left: 10, top: startCount ? 300 : 390),
                             alignment: Alignment.bottomCenter,
                             child: ElevatedButton(
                               onPressed: () {
-                                // Add
+                                // Trigger start countdown
                                 startTimer();
                               },
                               child: Padding(
@@ -236,10 +291,6 @@ class _Screen3State extends State<Screen3> {
                       )
                     ],
                   ),
-
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
                 ],
               ),
             )
@@ -247,15 +298,5 @@ class _Screen3State extends State<Screen3> {
         ),
       ),
     );
-  }
-}
-
-class PhotoCamForm extends StatelessWidget {
-  PhotoCamForm(this._controller);
-
-  final CameraController _controller;
-
-  Widget build(BuildContext context) {
-    return CameraPreview(_controller);
   }
 }
