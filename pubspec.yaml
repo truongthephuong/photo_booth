@@ -57,6 +57,10 @@ dependencies:
   window_manager: ^0.2.7
   carousel_slider: ^4.2.1
   image: ^3.0.1
+  intl: ^0.18.1
+  flutter_native_image: ^0.0.6
+  flutter_countdown_timer: ^4.1.0
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -88,7 +92,33 @@ flutter:
     - assets/videos/
     - assets/api/response.json
     - assets/ai/
+    - assets/images/effective/Anime/
+    - assets/images/effective/3dcartoon/
+    - assets/images/effective/AdorableGhost/
+    - assets/images/effective/Caricature/
+    - assets/images/effective/Cartoon/
+    - assets/images/effective/Comic/
+    - assets/images/effective/GreenGoblin/
+    - assets/images/effective/HellFire/
+    - assets/images/effective/Necromancer/
+    - assets/images/effective/Nightcrawler/
+    - assets/images/effective/Pixar/
+    - assets/images/effective/Romantic/
+    - assets/images/effective/Ultraviolet/
+    - assets/images/effective/WalkingDead/
+    - assets/images/effective/Witch/
+    - assets/template/
 
+  fonts:
+    - family: Header
+      fonts:
+        - asset: fonts/Header.otf
+    - family: GulyFont
+      fonts:
+        - asset: fonts/titlefont.otf
+    - family: GulyButtonFont
+      fonts:
+        - asset: fonts/gulimky.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
