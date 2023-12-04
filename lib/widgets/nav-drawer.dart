@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import '../screens/gg_map_screen.dart';
 import '../screens/screen2.dart';
 // import '../screens/intro_screen.dart';
-import '../screens/photo_list_screen.dart';
+//import '../screens/photo_list_screen.dart';
 // import '../screens/photo_section_screen.dart';
 
 class NavDrawer extends StatelessWidget {

@@ -4,6 +4,10 @@ import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:photobooth_section1/screens/screen4.dart';
+import 'package:photobooth_section1/screens/screen5.dart';
+import 'package:photobooth_section1/screens/screen6.dart';
+import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:photobooth_section1/screens/screen3.dart';
@@ -102,8 +106,8 @@ class _Screen2State extends State<Screen2> {
                           ),
                         ),
                         Container(
-                          width: 1500,
-                          height: 580,
+                          width: 750,
+                          height: 290,
                           //color: Colors.green[200],
                           alignment: Alignment.center,
                           child: Row(
@@ -111,8 +115,8 @@ class _Screen2State extends State<Screen2> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                width: 448,
-                                height: 440,
+                                width: 274,
+                                height: 270,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.green[200],
@@ -121,19 +125,19 @@ class _Screen2State extends State<Screen2> {
                                   borderRadius: BorderRadius.circular(15),
                                   child: Image.asset(
                                     'assets/images/screen2.gif',
-                                    width: 450,
-                                    height: 450,
+                                    width: 274,
+                                    height: 270,
                                   ),
                                 ),
                               ),
                               Container(
-                                width: 60,
-                                height: 450,
+                                width: 30,
+                                height: 225,
                                 //color: Colors.blue[200],
                               ),
                               Container(
-                                width: 448,
-                                height: 440,
+                                width: 274,
+                                height: 270,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: Colors.green[200],
@@ -142,19 +146,34 @@ class _Screen2State extends State<Screen2> {
                                   borderRadius: BorderRadius.circular(15),
                                   child: Image.asset(
                                     'assets/images/screen2.gif',
-                                    width: 450,
-                                    height: 450,
+                                    width: 275,
+                                    height: 275,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
+                        RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
+                              MaterialPageRoute(builder: (context) => Screen3()),
+                            );
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.teal.withOpacity(0.8),
+                          child: Icon(Icons.arrow_forward_ios_sharp, size: 35.0),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        )
                       ],
                     ),
                   ),
                 ),
               ),
+              /*
               floatingActionButton: Align(
                 child: FloatingActionButton(
                   backgroundColor: Colors.white54.withOpacity(0.2),
@@ -169,6 +188,8 @@ class _Screen2State extends State<Screen2> {
                 ),
                 alignment: Alignment(1, 0.1),
               ),
+               */
+
             ),
           ],
         ),

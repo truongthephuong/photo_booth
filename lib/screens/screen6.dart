@@ -151,10 +151,10 @@ class _Screen6State extends State<Screen6> {
                 child: Column(
               children: [
                 const SizedBox(
-                  height: 80,
+                  height: 20,
                 ),
                 Container(
-                  height: 80,
+                  height: 150,
                   child: Center(
                     child: RichText(
                       text: TextSpan(
@@ -170,20 +170,26 @@ class _Screen6State extends State<Screen6> {
                   ),
                 ),
                 Container(
-                  width: 1200,
-                  height: 480,
+                  width: 900,
+                  height: 380,
                   child: Column(
                     children: [
                       Image.asset(
                         'assets/images/welcome.png',
-                        width: 1200,
-                        height: 480,
+                        width: 900,
+                        height: 380,
                       ),
                     ],
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.all(12.0),
+                  width: 500,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   child: _loading
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -222,7 +228,7 @@ class _Screen6State extends State<Screen6> {
     const oneSec = const Duration(seconds: 1);
     new Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        _progressValue += 0.1;
+        _progressValue += 0.01;
         // we "finish" downloading here
         if (_progressValue.toStringAsFixed(1) == '1.0') {
           //_loading = false;

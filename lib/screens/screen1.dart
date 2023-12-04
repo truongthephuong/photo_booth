@@ -10,7 +10,7 @@ class Screen1 extends StatelessWidget {
           children: [
             // Background Image
             Image(
-              image: AssetImage('assets/template/theme.png'),
+              image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
             Center(
