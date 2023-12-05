@@ -83,14 +83,14 @@ class _Screen2State extends State<Screen2> {
                 child: SafeArea(
                   child: Container(
                     margin: const EdgeInsets.only(
-                        left: 30.0, right: 30.0, top: 0.0),
+                        left: 10.0, right: 0.0, top: 0.0),
                     alignment: Alignment.center,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 60.0,
+                          height: 80.0,
                         ),
                         Center(
                           child: RichText(
@@ -105,60 +105,65 @@ class _Screen2State extends State<Screen2> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: 750,
-                          height: 290,
-                          //color: Colors.green[200],
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 274,
-                                height: 270,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.green[200],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.asset(
-                                    'assets/images/screen2.gif',
-                                    width: 274,
-                                    height: 270,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 600,
+                              height: 400,
+                              //color: Colors.green[200],
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    //height: 270,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.green[200],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/images/screen2.gif',
+                                        width: 250,
+                                        //height: 270,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                width: 30,
-                                height: 225,
-                                //color: Colors.blue[200],
-                              ),
-                              Container(
-                                width: 274,
-                                height: 270,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.green[200],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.asset(
-                                    'assets/images/screen2.gif',
-                                    width: 275,
-                                    height: 275,
+                                  Container(
+                                    width: 30,
+                                    height: 225,
+                                    //color: Colors.blue[200],
                                   ),
-                                ),
+                                  Container(
+                                    width: 250,
+                                    //height: 270,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.green[200],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/images/screen2.gif',
+                                        width: 250,
+                                        //height: 275,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         RawMaterialButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
+                              //MaterialPageRoute(builder: (context) => Screen4(images: [],)),
                               MaterialPageRoute(builder: (context) => Screen3()),
                             );
                           },

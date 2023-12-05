@@ -144,7 +144,7 @@ class _Screen5State extends State<Screen5> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 20.0,
+                      height: 40.0,
                     ),
                     Center(
                       child: RichText(
@@ -164,7 +164,7 @@ class _Screen5State extends State<Screen5> {
                     ),
                     Container(
                       width: 500,
-                      height: 580,
+                      height: 800,
                       //color: Colors.green[200],
                       alignment: Alignment.center,
                       child: Column(
@@ -181,15 +181,42 @@ class _Screen5State extends State<Screen5> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.file(File(widget.image)),
+                              //child: Image.file(File(widget.image)),
                             ),
                           ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Screen6(imgUrl: '', effectName: '',)),
+                                  //MaterialPageRoute(builder: (context) => Screen3()),
+                                );
+                              },
+                              child: const Text(
+                                  '스타일 선택',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
                           Container(
+                            //color: Colors.white,
                             width: 500,
-                            height: 300,
+                            height: 500,
                             child: SizedBox(
                               width: double.infinity,
-                              height: 390,
+                              height: 500,
                               child: Container(
                                 child: GridView(
                                   padding: const EdgeInsets.all(5),
@@ -216,4 +243,5 @@ class _Screen5State extends State<Screen5> {
       ],
     );
   }
+
 }

@@ -187,108 +187,118 @@ class _Screen3State extends State<Screen3> {
               image: AssetImage('assets/template/theme.png'),
               fit: BoxFit.cover,
             ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: '인공지능',
-                      style: TextStyle(
-                          fontSize: 60,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orangeAccent,
-                          fontFamily: 'GulyFont'),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' 은 어떻게 나를 바꾸어 줄까요?',
-                          style: TextStyle(
-                              fontSize: 60,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontFamily: 'GulyFont'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  // Rounded Image
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 200),
-                            height: 483,
-                            width: 841,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: CameraPreview(_controller),
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 200, top: 10),
-                              child: startCount
-                                  ? Container(
-                                      padding: const EdgeInsets.all(20),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15)),
-                                      ),
-                                      child: Text(
-                                        '$_countdown',
-                                        style: TextStyle(
-                                            fontSize: 50,
-                                            color: Colors.white,
-                                            fontFamily: 'GulyFont'),
-                                      ),
-                                    )
-                                  : Container(),
-                            ),
+            Container(
+              margin: const EdgeInsets.only(left: 20.0, right: 0.0, top: 20.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: '인공지능',
+                        style: TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orangeAccent,
+                            fontFamily: 'GulyFont'),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: ' 은 어떻게 나를 바꾸어 줄까요?',
+                            style: TextStyle(
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontFamily: 'GulyFont'),
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: 10, top: startCount ? 300 : 390),
-                            alignment: Alignment.bottomCenter,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Trigger start countdown
-                                startTimer();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 20),
-                                child: Text('촬영',
-                                    style: TextStyle(
-                                        fontSize: 45,
-                                        color: Colors.black,
-                                        fontFamily: 'GulyFont')),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                    ),
+                    SizedBox(height: 20),
+                    // Rounded Image
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              //color: Colors.white,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(left: 0),
+                              height: 350,
+                              width: 500,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: CameraPreview(_controller),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(left: 0, top: 10),
+                                child: startCount
+                                    ? Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(15)),
+                                  ),
+                                  child: Text(
+                                    '$_countdown',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontFamily: 'GulyFont'),
+                                  ),
+                                )
+                                    : Container(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10, top: startCount ? 30 : 40),
+                              alignment: Alignment.bottomCenter,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Trigger start countdown
+                                  startTimer();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 20),
+                                  child: Text('촬영',
+                                      style: TextStyle(
+                                          fontSize: 45,
+                                          color: Colors.black,
+                                          fontFamily: 'GulyFont')),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
