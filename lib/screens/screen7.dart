@@ -37,33 +37,37 @@ class _Screen7State extends State<Screen7> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            // Background Image
+            //Background Image
             Image(
-              image: AssetImage('assets/template/theme.png'),
+              image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      text: '바뀐 나의 모습을',
-                      style: TextStyle(
-                          fontSize: 60,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'GulyFont'),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' 전송할 수 있어요!',
-                          style: TextStyle(
-                              fontSize: 60,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orangeAccent,
-                              fontFamily: 'GulyFont'),
-                        ),
-                      ],
+                  Container(
+                    margin: const EdgeInsets.only(
+                        left: 10.0, right: 0.0, top: 0.0),
+                    child: RichText(
+                      text: TextSpan(
+                        text: '바뀐 나의 모습을',
+                        style: TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontFamily: 'GulyFont'),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: ' 전송할 수 있어요!',
+                            style: TextStyle(
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orangeAccent,
+                                fontFamily: 'GulyFont'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -74,13 +78,15 @@ class _Screen7State extends State<Screen7> {
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 80),
-                            height: 426,
-                            width: 418,
+                            margin: EdgeInsets.only(left: 10),
+                            color: Colors.blueAccent,
+                            height: 250,
+                            width: 320,
                             child: ImageCard(
                               imageCardUrl: widget.imgUrl,
                             ),
                           ),
+                          /*
                           ElevatedButton(
                             onPressed: () {
                               Navigator.push(
@@ -104,56 +110,58 @@ class _Screen7State extends State<Screen7> {
                               ),
                             ),
                           ),
+                           */
                         ],
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 50, top: 20),
-                            alignment: Alignment.bottomCenter,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Trigger start countdown
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                child: Text('QR 전송',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontFamily: 'GulyFont')),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 50, top: 5),
-                            height: 263,
-                            width: 272,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: QrImageView(
-                                  data: imgUrlTest,
-                                  version: QrVersions.auto,
-                                  size: 50,
-                                  backgroundColor: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
+
                     ],
                   ),
+                  Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 10),
+                        alignment: Alignment.bottomCenter,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Trigger start countdown
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            child: Text('QR 전송',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontFamily: 'GulyFont')),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 50, top: 5),
+                        height: 263,
+                        width: 272,
+                        child: ClipRRect(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(10)),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: QrImageView(
+                              data: imgUrlTest,
+                              version: QrVersions.auto,
+                              size: 50,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             )

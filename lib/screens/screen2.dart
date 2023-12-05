@@ -4,6 +4,10 @@ import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:photobooth_section1/screens/screen4.dart';
+import 'package:photobooth_section1/screens/screen5.dart';
+import 'package:photobooth_section1/screens/screen6.dart';
+import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:photobooth_section1/screens/screen3.dart';
@@ -79,14 +83,14 @@ class _Screen2State extends State<Screen2> {
                 child: SafeArea(
                   child: Container(
                     margin: const EdgeInsets.only(
-                        left: 30.0, right: 30.0, top: 0.0),
+                        left: 10.0, right: 0.0, top: 0.0),
                     alignment: Alignment.center,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 60.0,
+                          height: 80.0,
                         ),
                         Center(
                           child: RichText(
@@ -101,60 +105,80 @@ class _Screen2State extends State<Screen2> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: 1500,
-                          height: 580,
-                          //color: Colors.green[200],
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 448,
-                                height: 440,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.green[200],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.asset(
-                                    'assets/images/screen2.gif',
-                                    width: 450,
-                                    height: 450,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 600,
+                              height: 400,
+                              //color: Colors.green[200],
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    //height: 270,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.green[200],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/images/screen2.gif',
+                                        width: 250,
+                                        //height: 270,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                width: 60,
-                                height: 450,
-                                //color: Colors.blue[200],
-                              ),
-                              Container(
-                                width: 448,
-                                height: 440,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.green[200],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.asset(
-                                    'assets/images/screen2.gif',
-                                    width: 450,
-                                    height: 450,
+                                  Container(
+                                    width: 30,
+                                    height: 225,
+                                    //color: Colors.blue[200],
                                   ),
-                                ),
+                                  Container(
+                                    width: 250,
+                                    //height: 270,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.green[200],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/images/screen2.gif',
+                                        width: 250,
+                                        //height: 275,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
+                        RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Screen7(imgUrl: '',)),
+                              //MaterialPageRoute(builder: (context) => Screen3()),
+                            );
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.teal.withOpacity(0.8),
+                          child: Icon(Icons.arrow_forward_ios_sharp, size: 35.0),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        )
                       ],
                     ),
                   ),
                 ),
               ),
+              /*
               floatingActionButton: Align(
                 child: FloatingActionButton(
                   backgroundColor: Colors.white54.withOpacity(0.2),
@@ -169,6 +193,8 @@ class _Screen2State extends State<Screen2> {
                 ),
                 alignment: Alignment(1, 0.1),
               ),
+               */
+
             ),
           ],
         ),

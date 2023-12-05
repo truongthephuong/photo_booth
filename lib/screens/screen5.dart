@@ -22,52 +22,52 @@ class _Screen5State extends State<Screen5> {
     AIModel(
         id: 1,
         img: 'assets/images/effective/Anime/Anime_man.gif',
-        name: 'Anime-man'),
+        name: 'Anime'),
     AIModel(
         id: 2,
         img: 'assets/images/effective/Anime/Anime-woman.gif',
-        name: 'Anime-woman'),
+        name: 'Anime'),
     AIModel(
         id: 3,
         img: 'assets/images/effective/3dcartoon/3dcartoon-man.gif',
-        name: '3Dcartoon-man'),
+        name: '3Dcartoon'),
     AIModel(
         id: 4,
         img: 'assets/images/effective/3dcartoon/3dcartoon-woman.gif',
-        name: '3Dcartoon-woman'),
+        name: '3Dcartoon'),
     AIModel(
         id: 5,
         img: 'assets/images/effective/AdorableGhost/AdorableGhost-man.gif',
-        name: 'AdorableGhost-man'),
+        name: 'AdorableGhost'),
     AIModel(
       id: 6,
       img: 'assets/images/effective/AdorableGhost/AdorableGhost-woman.gif',
-      name: 'AdorableGhost-woman',
+      name: 'AdorableGhost',
     ),
     AIModel(
         id: 7,
         img: 'assets/images/effective/Caricature/Caricature-man.gif',
-        name: 'Caricature-man'),
+        name: 'Caricature'),
     AIModel(
         id: 8,
         img: 'assets/images/effective/Caricature/Caricature-woman.gif',
-        name: 'Caricature-woman'),
+        name: 'Caricature'),
     AIModel(
         id: 9,
         img: 'assets/images/effective/Cartoon/Cartoon-man.gif',
-        name: 'Cartoon-man'),
+        name: 'Cartoon'),
     AIModel(
         id: 10,
         img: 'assets/images/effective/Cartoon/Cartoon-woman.gif',
-        name: 'Cartoon-woman'),
+        name: 'Cartoon'),
     AIModel(
         id: 11,
         img: 'assets/images/effective/Comic/Comic-man.gif',
-        name: 'Comic-man'),
+        name: 'Comic'),
     AIModel(
         id: 12,
         img: 'assets/images/effective/Comic/Comic-woman.gif',
-        name: 'Comic-woman'),
+        name: 'Comic'),
   ];
 
   @override
@@ -111,12 +111,12 @@ class _Screen5State extends State<Screen5> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child:
-                      Image.asset(models[i].img, height: 145, fit: BoxFit.fill),
+                      Image.asset(models[i].img, height: 110, fit: BoxFit.fill),
                 ),
                 Text(
                   models[i].name,
                   style: TextStyle(
-                    fontSize: 14.0,
+                    fontSize: 12.0,
                     fontWeight: FontWeight.w700,
                     color: Colors.pink,
                   ),
@@ -137,14 +137,14 @@ class _Screen5State extends State<Screen5> {
             child: SafeArea(
               child: Container(
                 margin:
-                    const EdgeInsets.only(left: 30.0, right: 30.0, top: 0.0),
+                    const EdgeInsets.only(left: 10.0, right: 10.0, top: 0.0),
                 alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 80.0,
+                      height: 40.0,
                     ),
                     Center(
                       child: RichText(
@@ -159,34 +159,64 @@ class _Screen5State extends State<Screen5> {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
                     Container(
-                      width: 1500,
-                      height: 580,
+                      width: 500,
+                      height: 800,
                       //color: Colors.green[200],
                       alignment: Alignment.center,
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             //color: Colors.green[200],
-                            width: 448,
-                            height: 440,
+                            width: 244,
+                            height: 240,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.green[200],
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.file(File(widget.image)),
+                              //child: Image.file(File(widget.image)),
                             ),
                           ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Screen6(imgUrl: '', effectName: '',)),
+                                  //MaterialPageRoute(builder: (context) => Screen3()),
+                                );
+                              },
+                              child: const Text(
+                                  '스타일 선택',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
                           Container(
-                            width: 600,
-                            height: 450,
+                            //color: Colors.white,
+                            width: 500,
+                            height: 500,
                             child: SizedBox(
                               width: double.infinity,
-                              height: 450,
+                              height: 500,
                               child: Container(
                                 child: GridView(
                                   padding: const EdgeInsets.all(5),
@@ -213,4 +243,5 @@ class _Screen5State extends State<Screen5> {
       ],
     );
   }
+
 }

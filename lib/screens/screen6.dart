@@ -43,7 +43,7 @@ class _Screen6State extends State<Screen6> {
     _progressValue = 0.0;
 
     _loading = !_loading;
-    _updateProgress();
+    //_updateProgress();
 
     // API call
     fetchDataAndSaveImage(widget.effectName);
@@ -149,68 +149,81 @@ class _Screen6State extends State<Screen6> {
           body: SingleChildScrollView(
             child: SafeArea(
                 child: Column(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Container(
-                  height: 80,
-                  child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: '인공지능 ',
-                        style: kHeading,
-                        children: <TextSpan>[
-                          TextSpan(text: '은 어떻게 ', style: kHeading1),
-                          TextSpan(
-                              text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                          left: 20.0, right: 0.0, top: 0.0),
+                      height: 150,
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            text: '인공지능 ',
+                            style: kHeading,
+                            children: <TextSpan>[
+                              TextSpan(text: '은 어떻게 ', style: kHeading1),
+                              TextSpan(
+                                  text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 900,
+                      height: 380,
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/welcome.png',
+                            width: 900,
+                            height: 380,
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                ),
-                Container(
-                  width: 1200,
-                  height: 480,
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/welcome.png',
-                        width: 1200,
-                        height: 480,
+                    Container(
+                      padding: EdgeInsets.all(12.0),
+                      width: 500,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(12.0),
-                  child: _loading
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                height: 20,
-                                width: 256,
-                                child: LinearProgressIndicator(
-                                  minHeight: 20.0,
-                                  backgroundColor: Colors.limeAccent,
-                                  valueColor: new AlwaysStoppedAnimation<Color>(
-                                      Colors.blueAccent),
-                                  value: _progressValue,
+                      child: _loading
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    height: 20,
+                                    width: 256,
+                                    child: LinearProgressIndicator(
+                                      minHeight: 20.0,
+                                      backgroundColor: Colors.limeAccent,
+                                      valueColor: new AlwaysStoppedAnimation<Color>(
+                                          Colors.blueAccent),
+                                      value: _progressValue,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Text('${(_progressValue * 100).round()}%',
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.deepOrange)),
-                          ],
-                        )
-                      : Text("", style: TextStyle(fontSize: 25)),
-                ),
-              ],
-            )),
+                                //Text('${(_progressValue * 100).round()}%',
+                                Text(
+                                    '외계인을 납치해 오는중...',
+                                    style: TextStyle(fontSize: 18, color: Colors.blueAccent)
+                                ),
+                              ],
+                            )
+                          : Text("", style: TextStyle(fontSize: 25)),
+                    ),
+                  ],
+              )
+            ),
           ),
         ),
       ],
@@ -222,7 +235,7 @@ class _Screen6State extends State<Screen6> {
     const oneSec = const Duration(seconds: 1);
     new Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        _progressValue += 0.1;
+        _progressValue += 0.01;
         // we "finish" downloading here
         if (_progressValue.toStringAsFixed(1) == '1.0') {
           //_loading = false;

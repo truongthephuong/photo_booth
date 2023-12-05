@@ -116,6 +116,7 @@ class _Screen4State extends State<Screen4> {
 
   Widget build(BuildContext context) {
     return widget.images.length > 0
+    //return 1 > 0
         ? MaterialApp(
             home: Scaffold(
               body: Stack(
@@ -134,7 +135,7 @@ class _Screen4State extends State<Screen4> {
                           text: TextSpan(
                             text: '합성할 사진',
                             style: TextStyle(
-                                fontSize: 60,
+                                fontSize: 45,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.orangeAccent,
                                 fontFamily: 'GulyFont'),
@@ -142,7 +143,7 @@ class _Screen4State extends State<Screen4> {
                               TextSpan(
                                 text: ' 을 선택해 주세요!',
                                 style: TextStyle(
-                                  fontSize: 60,
+                                  fontSize: 45,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
                                   fontFamily: 'GulyFont',
@@ -164,9 +165,9 @@ class _Screen4State extends State<Screen4> {
                                       _chooseImg(0);
                                     },
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 350),
-                                      width: 355,
-                                      height: 252,
+                                      margin: EdgeInsets.only(left: 0),
+                                      width: 240,
+                                      height: 180,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         borderRadius:
@@ -178,8 +179,8 @@ class _Screen4State extends State<Screen4> {
                                                 color: Colors.white, width: 4),
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: FileImage(
-                                                File(widget.images[0].imgUrl))),
+                                            image: FileImage(File(widget.images[0].imgUrl))
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -195,8 +196,8 @@ class _Screen4State extends State<Screen4> {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      width: 355,
-                                      height: 252,
+                                      width: 240,
+                                      height: 180,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         borderRadius:
@@ -208,21 +209,15 @@ class _Screen4State extends State<Screen4> {
                                                 color: Colors.white, width: 4),
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: FileImage(
-                                                File(widget.images[1].imgUrl))),
+                                            image: FileImage( File(widget.images[1].imgUrl))
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Container(
-                                  width: 355,
-                                )
-                              ],
-                            )
+
                           ],
                         ),
                         // Rounded Image
@@ -238,9 +233,9 @@ class _Screen4State extends State<Screen4> {
                                     },
                                     child: Container(
                                       margin:
-                                          EdgeInsets.only(left: 180, top: 10),
-                                      width: 355,
-                                      height: 252,
+                                          EdgeInsets.only(left: 0, top: 10),
+                                      width: 240,
+                                      height: 180,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         borderRadius:
@@ -252,8 +247,8 @@ class _Screen4State extends State<Screen4> {
                                                 color: Colors.white, width: 4),
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: FileImage(
-                                                File(widget.images[2].imgUrl))),
+                                            image: FileImage(File(widget.images[2].imgUrl))
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -270,8 +265,8 @@ class _Screen4State extends State<Screen4> {
                                     child: Container(
                                       margin:
                                           EdgeInsets.only(left: 10, top: 10),
-                                      width: 355,
-                                      height: 252,
+                                      width: 240,
+                                      height: 180,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         borderRadius:
@@ -284,44 +279,47 @@ class _Screen4State extends State<Screen4> {
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: FileImage(
-                                                File(widget.images[3].imgUrl))),
+                                                File(widget.images[3].imgUrl))
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 20, top: 170),
-                                  alignment: Alignment.bottomCenter,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // Add
-                                      _goToEffect();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 20),
-                                      child: Text('시작',
-                                          style: TextStyle(
-                                              fontSize: 50,
-                                              color: Colors.black,
-                                              fontFamily: 'GulyFont')),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.lightGreen,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+
                           ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 20, top: 10),
+                              alignment: Alignment.bottomCenter,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Add
+                                  _goToEffect();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 20),
+                                  child: Text('시작',
+                                      style: TextStyle(
+                                          fontSize: 50,
+                                          color: Colors.black,
+                                          fontFamily: 'GulyFont')),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.lightGreen,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   )
