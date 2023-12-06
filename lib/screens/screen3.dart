@@ -36,7 +36,17 @@ class _Screen3State extends State<Screen3> {
   @override
   void initState() {
     super.initState();
+    _freshPhotoDir();
     _initializeCamera();
+  }
+
+  _freshPhotoDir() {
+    Directory current = Directory.current;
+
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    final Directory dir = Directory(internalFolder);
+    dir.deleteSync(recursive: true);
   }
 
   Future<void> _initializeCamera() async {
