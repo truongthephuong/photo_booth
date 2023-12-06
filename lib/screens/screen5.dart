@@ -20,54 +20,76 @@ class Screen5 extends StatefulWidget {
 class _Screen5State extends State<Screen5> {
   List<AIModel> models = [
     AIModel(
-        id: 1,
-        img: 'assets/images/effective/Anime/Anime_man.gif',
-        name: 'Anime'),
-    AIModel(
-        id: 2,
-        img: 'assets/images/effective/Anime/Anime-woman.gif',
-        name: 'Anime'),
-    AIModel(
-        id: 3,
-        img: 'assets/images/effective/3dcartoon/3dcartoon-man.gif',
-        name: '3Dcartoon'),
-    AIModel(
-        id: 4,
-        img: 'assets/images/effective/3dcartoon/3dcartoon-woman.gif',
-        name: '3Dcartoon'),
-    AIModel(
-        id: 5,
-        img: 'assets/images/effective/AdorableGhost/AdorableGhost-man.gif',
-        name: 'AdorableGhost'),
-    AIModel(
-      id: 6,
-      img: 'assets/images/effective/AdorableGhost/AdorableGhost-woman.gif',
-      name: 'AdorableGhost',
+      id: 1,
+      img: 'assets/images/effective/Anime/Anime_man.gif',
+      name: 'Anime',
+      effect: 'anime-man',
     ),
     AIModel(
-        id: 7,
-        img: 'assets/images/effective/Caricature/Caricature-man.gif',
-        name: 'Caricature'),
+      id: 2,
+      img: 'assets/images/effective/Anime/Anime-woman.gif',
+      name: 'Anime',
+      effect: 'anime-woman',
+    ),
     AIModel(
-        id: 8,
-        img: 'assets/images/effective/Caricature/Caricature-woman.gif',
-        name: 'Caricature'),
+      id: 3,
+      img: 'assets/images/effective/3dcartoon/3dcartoon-man.gif',
+      name: '3Dcartoon',
+      effect: '3dcartoon-man',
+    ),
     AIModel(
-        id: 9,
-        img: 'assets/images/effective/Cartoon/Cartoon-man.gif',
-        name: 'Cartoon'),
+      id: 4,
+      img: 'assets/images/effective/3dcartoon/3dcartoon-woman.gif',
+      name: '3Dcartoon',
+      effect: '3dcartoon-woman',
+    ),
     AIModel(
-        id: 10,
-        img: 'assets/images/effective/Cartoon/Cartoon-woman.gif',
-        name: 'Cartoon'),
+      id: 5,
+      img: 'assets/images/effective/AdorableGhost/AdorableGhost-man.gif',
+      name: 'AdorableGhost',
+      effect: 'AdorableGhost-man',
+    ),
     AIModel(
-        id: 11,
-        img: 'assets/images/effective/Comic/Comic-man.gif',
-        name: 'Comic'),
+        id: 6,
+        img: 'assets/images/effective/AdorableGhost/AdorableGhost-woman.gif',
+        name: 'AdorableGhost',
+        effect: 'AdorableGhost-Woman'),
     AIModel(
-        id: 12,
-        img: 'assets/images/effective/Comic/Comic-woman.gif',
-        name: 'Comic'),
+      id: 7,
+      img: 'assets/images/effective/Caricature/Caricature-man.gif',
+      name: 'Caricature',
+      effect: 'Caricature-man',
+    ),
+    AIModel(
+      id: 8,
+      img: 'assets/images/effective/Caricature/Caricature-woman.gif',
+      name: 'Caricature',
+      effect: 'Caricature-woman',
+    ),
+    AIModel(
+      id: 9,
+      img: 'assets/images/effective/Cartoon/Cartoon-man.gif',
+      name: 'Cartoon',
+      effect: 'Cartoon-man',
+    ),
+    AIModel(
+      id: 10,
+      img: 'assets/images/effective/Cartoon/Cartoon-woman.gif',
+      name: 'Cartoon',
+      effect: 'Cartoon-woman',
+    ),
+    AIModel(
+      id: 11,
+      img: 'assets/images/effective/Comic/Comic-man.gif',
+      name: 'Comic',
+      effect: 'comic-man',
+    ),
+    AIModel(
+      id: 12,
+      img: 'assets/images/effective/Comic/Comic-woman.gif',
+      name: 'Comic',
+      effect: 'comic-woman',
+    ),
   ];
 
   @override
@@ -98,7 +120,7 @@ class _Screen5State extends State<Screen5> {
       widgets.add(
         GestureDetector(
           onTap: () {
-            _callEffect(widget.image, models[i].name, models[i].id);
+            _callEffect(widget.image, models[i].effect, models[i].id);
           },
           child: Card(
             color: Colors.green[50],
@@ -181,7 +203,7 @@ class _Screen5State extends State<Screen5> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              //child: Image.file(File(widget.image)),
+                              child: Image.file(File(widget.image)),
                             ),
                           ),
                           const SizedBox(
@@ -189,22 +211,25 @@ class _Screen5State extends State<Screen5> {
                           ),
                           Center(
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                              style: ElevatedButton.styleFrom(
+                                  textStyle: const TextStyle(fontSize: 20)),
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Screen6(imgUrl: '', effectName: '',)),
+                                  MaterialPageRoute(
+                                      builder: (context) => Screen6(
+                                            imgUrl: '',
+                                            effectName: '',
+                                          )),
                                   //MaterialPageRoute(builder: (context) => Screen3()),
                                 );
                               },
-                              child: const Text(
-                                  '스타일 선택',
+                              child: const Text('스타일 선택',
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.blueAccent,
                                     fontWeight: FontWeight.bold,
-                                  )
-                              ),
+                                  )),
                             ),
                           ),
                           const SizedBox(
@@ -243,5 +268,4 @@ class _Screen5State extends State<Screen5> {
       ],
     );
   }
-
 }

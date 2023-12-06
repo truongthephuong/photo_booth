@@ -31,6 +31,7 @@ class _Screen3State extends State<Screen3> {
   int _countdown = 6;
   late Timer _timer;
   bool startCount = false;
+  bool okToTimer = true;
 
   @override
   void initState() {
@@ -58,13 +59,16 @@ class _Screen3State extends State<Screen3> {
   }
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
-    _timer = Timer.periodic(oneSec, (Timer timer) {
+    const twoSec = const Duration(seconds: 2);
+    _timer = Timer.periodic(twoSec, (Timer timer) {
       if (_countdown == 0) {
         timer.cancel();
         takePhoto();
         _countdown = 6;
         startCount = false;
+        if (okToTimer) {
+          startTimer();
+        }
       } else {
         setState(() {
           _countdown--;
@@ -86,6 +90,20 @@ class _Screen3State extends State<Screen3> {
   void takePhoto() async {
     if (_controller.value.isInitialized) {
       try {
+        if (savedImages.length > 2) {
+          setState(() {
+            okToTimer = false;
+          });
+          Timer(Duration(seconds: 5), () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Screen4(
+                          images: savedImages,
+                        )));
+          });
+        }
+
         // Capture photo
         final XFile file = await _controller.takePicture();
 
@@ -110,20 +128,29 @@ class _Screen3State extends State<Screen3> {
           userDirPath = userDir;
         });
 
-        // Temp folder
-        final String tempUserDir = path.join(userDir, 'Temp');
+        // User folder
+        final String tempUserDir = path.join(userDir, 'User');
         await Directory(tempUserDir).create(recursive: true);
 
         // Save photo
+        int userPhotoId = savedImages.length + 1;
         final String userPath =
-            path.join(tempUserDir, path.basename(file.path));
+            path.join(tempUserDir, 'user_photo_$userPhotoId.jpg');
         await File(file.path).copy(userPath);
 
-        setState(() {
-          _imageFile = File(userPath);
-        });
+        // setState(() {
+        //   _imageFile = File(userPath);
+        // });
 
-        _cropPhoto();
+        final ImageModel savedImage = ImageModel(
+          id: userPhotoId,
+          title: 'user_photo_$userPhotoId',
+          imgUrl: userPath,
+        );
+
+        setState(() {
+          savedImages.add(savedImage);
+        });
       } catch (e) {
         print("Error taking photo: $e");
       }
@@ -140,7 +167,7 @@ class _Screen3State extends State<Screen3> {
     int offsetX = (image.width - cropSize) ~/ 2;
     int offsetY = (image.height - cropSize) ~/ 2;
 
-    final croppedImage = img.copyCrop(image, offsetX, offsetY, 640, 628);
+    final croppedImage = img.copyCrop(image, offsetX, offsetY, 500, 350);
 
     // Temp folder
     final String tempUserDir = path.join(userDirPath, 'User');
@@ -163,12 +190,14 @@ class _Screen3State extends State<Screen3> {
     });
 
     if (savedImages.length >= 4) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Screen4(
-                    images: savedImages,
-                  )));
+      Timer(Duration(seconds: 5), () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Screen4(
+                      images: savedImages,
+                    )));
+      });
     }
   }
 
@@ -228,7 +257,8 @@ class _Screen3State extends State<Screen3> {
                               height: 350,
                               width: 500,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
                                 child: AspectRatio(
                                   aspectRatio: 1,
                                   child: CameraPreview(_controller),
@@ -243,23 +273,23 @@ class _Screen3State extends State<Screen3> {
                             Center(
                               child: Padding(
                                 padding:
-                                const EdgeInsets.only(left: 0, top: 10),
+                                    const EdgeInsets.only(left: 0, top: 10),
                                 child: startCount
                                     ? Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(15)),
-                                  ),
-                                  child: Text(
-                                    '$_countdown',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontFamily: 'GulyFont'),
-                                  ),
-                                )
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                        child: Text(
+                                          '$_countdown',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontFamily: 'GulyFont'),
+                                        ),
+                                      )
                                     : Container(),
                               ),
                             ),
@@ -269,29 +299,32 @@ class _Screen3State extends State<Screen3> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10, top: startCount ? 30 : 40),
+                              margin: EdgeInsets.only(left: 10, top: 40),
                               alignment: Alignment.bottomCenter,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Trigger start countdown
-                                  startTimer();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 20),
-                                  child: Text('촬영',
-                                      style: TextStyle(
-                                          fontSize: 45,
-                                          color: Colors.black,
-                                          fontFamily: 'GulyFont')),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
-                              ),
+                              child: (startCount || savedImages.isNotEmpty)
+                                  ? Container()
+                                  : ElevatedButton(
+                                      onPressed: () {
+                                        // Trigger start countdown
+                                        startTimer();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 30, vertical: 20),
+                                        child: Text('촬영',
+                                            style: TextStyle(
+                                                fontSize: 45,
+                                                color: Colors.black,
+                                                fontFamily: 'GulyFont')),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ],
                         )

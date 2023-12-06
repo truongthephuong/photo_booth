@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/models/image_model.dart';
 import 'package:photobooth_section1/screens/screen5.dart';
-import 'package:flutter/painting.dart';
+// import 'package:flutter/painting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 
@@ -53,7 +53,7 @@ class _Screen4State extends State<Screen4> {
 
     setState(() {
       chooseImgId = id;
-      chooseImgUrl = widget.images[id].imgUrl;
+      chooseImgUrl = userPath;
     });
   }
 
@@ -61,13 +61,14 @@ class _Screen4State extends State<Screen4> {
     if (chooseImgUrl == '') {
       _showMyDialog();
       return;
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Screen5(
+                    image: chooseImgUrl,
+                  )));
     }
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Screen5(
-                  image: chooseImgUrl,
-                )));
   }
 
   Future<void> _showMyDialog() async {
@@ -115,218 +116,206 @@ class _Screen4State extends State<Screen4> {
   }
 
   Widget build(BuildContext context) {
-    return widget.images.length > 0
-    //return 1 > 0
-        ? MaterialApp(
-            home: Scaffold(
-              body: Stack(
-                fit: StackFit.expand,
+    return MaterialApp(
+      home: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Background Image
+            Image(
+              image: AssetImage('assets/template/theme.png'),
+              fit: BoxFit.cover,
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Background Image
-                  Image(
-                    image: AssetImage('assets/template/theme.png'),
-                    fit: BoxFit.cover,
-                  ),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: '합성할 사진',
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orangeAccent,
-                                fontFamily: 'GulyFont'),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: ' 을 선택해 주세요!',
-                                style: TextStyle(
-                                  fontSize: 45,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                  fontFamily: 'GulyFont',
-                                ),
-                              ),
-                            ],
+                  RichText(
+                    text: TextSpan(
+                      text: '합성할 사진',
+                      style: TextStyle(
+                          fontSize: 45,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orangeAccent,
+                          fontFamily: 'GulyFont'),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: ' 을 선택해 주세요!',
+                          style: TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            fontFamily: 'GulyFont',
                           ),
                         ),
-                        SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      _chooseImg(0);
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 0),
-                                      width: 240,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: chooseImgId == 0
-                                            ? Border.all(
-                                                color: Colors.green, width: 8)
-                                            : Border.all(
-                                                color: Colors.white, width: 4),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: FileImage(File(widget.images[0].imgUrl))
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      _chooseImg(1);
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 10),
-                                      width: 240,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: chooseImgId == 1
-                                            ? Border.all(
-                                                color: Colors.green, width: 8)
-                                            : Border.all(
-                                                color: Colors.white, width: 4),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: FileImage( File(widget.images[1].imgUrl))
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                        // Rounded Image
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      _chooseImg(2);
-                                    },
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.only(left: 0, top: 10),
-                                      width: 240,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: (chooseImgId == 2)
-                                            ? Border.all(
-                                                color: Colors.green, width: 8)
-                                            : Border.all(
-                                                color: Colors.white, width: 4),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: FileImage(File(widget.images[2].imgUrl))
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      _chooseImg(3);
-                                    },
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.only(left: 10, top: 10),
-                                      width: 240,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: (chooseImgId == 3)
-                                            ? Border.all(
-                                                color: Colors.green, width: 8)
-                                            : Border.all(
-                                                color: Colors.white, width: 4),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: FileImage(
-                                                File(widget.images[3].imgUrl))
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 20, top: 10),
-                              alignment: Alignment.bottomCenter,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Add
-                                  _goToEffect();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 20),
-                                  child: Text('시작',
-                                      style: TextStyle(
-                                          fontSize: 50,
-                                          color: Colors.black,
-                                          fontFamily: 'GulyFont')),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.lightGreen,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            child: InkWell(
+                              onTap: () {
+                                _chooseImg(0);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 0),
+                                width: 240,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: chooseImgId == 0
+                                      ? Border.all(
+                                          color: Colors.green, width: 8)
+                                      : Border.all(
+                                          color: Colors.white, width: 4),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(widget.images[0].imgUrl))),
                                 ),
                               ),
                             ),
-                          ],
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            child: InkWell(
+                              onTap: () {
+                                _chooseImg(1);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10),
+                                width: 240,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: chooseImgId == 1
+                                      ? Border.all(
+                                          color: Colors.green, width: 8)
+                                      : Border.all(
+                                          color: Colors.white, width: 4),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(widget.images[1].imgUrl))),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Rounded Image
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            child: InkWell(
+                              onTap: () {
+                                _chooseImg(2);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 0, top: 10),
+                                width: 240,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: (chooseImgId == 2)
+                                      ? Border.all(
+                                          color: Colors.green, width: 8)
+                                      : Border.all(
+                                          color: Colors.white, width: 4),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(widget.images[2].imgUrl))),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            child: InkWell(
+                              onTap: () {
+                                _chooseImg(3);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10, top: 10),
+                                width: 240,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  border: (chooseImgId == 3)
+                                      ? Border.all(
+                                          color: Colors.green, width: 8)
+                                      : Border.all(
+                                          color: Colors.white, width: 4),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(widget.images[3].imgUrl))),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 20, top: 10),
+                        alignment: Alignment.bottomCenter,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Add
+                            _goToEffect();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: Text('시작',
+                                style: TextStyle(
+                                    fontSize: 50,
+                                    color: Colors.black,
+                                    fontFamily: 'GulyFont')),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightGreen,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
-            ),
-          )
-        : Container();
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

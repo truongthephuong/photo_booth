@@ -4,10 +4,6 @@ import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:photobooth_section1/screens/screen4.dart';
-import 'package:photobooth_section1/screens/screen5.dart';
-import 'package:photobooth_section1/screens/screen6.dart';
-import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:photobooth_section1/screens/screen3.dart';
@@ -82,8 +78,8 @@ class _Screen2State extends State<Screen2> {
               body: SingleChildScrollView(
                 child: SafeArea(
                   child: Container(
-                    margin: const EdgeInsets.only(
-                        left: 10.0, right: 0.0, top: 0.0),
+                    margin:
+                        const EdgeInsets.only(left: 10.0, right: 0.0, top: 0.0),
                     alignment: Alignment.center,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,13 +159,15 @@ class _Screen2State extends State<Screen2> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Screen7(imgUrl: '',)),
-                              //MaterialPageRoute(builder: (context) => Screen3()),
+                              // MaterialPageRoute(builder: (context) => Screen7(imgUrl: '',)),
+                              MaterialPageRoute(
+                                  builder: (context) => Screen3()),
                             );
                           },
                           elevation: 2.0,
                           fillColor: Colors.teal.withOpacity(0.8),
-                          child: Icon(Icons.arrow_forward_ios_sharp, size: 35.0),
+                          child:
+                              Icon(Icons.arrow_forward_ios_sharp, size: 35.0),
                           padding: EdgeInsets.all(15.0),
                           shape: CircleBorder(),
                         )
@@ -194,7 +192,6 @@ class _Screen2State extends State<Screen2> {
                 alignment: Alignment(1, 0.1),
               ),
                */
-
             ),
           ],
         ),
