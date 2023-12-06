@@ -94,6 +94,7 @@ class _Screen3State extends State<Screen3> {
           setState(() {
             okToTimer = false;
           });
+          _controller.dispose();
           Timer(Duration(seconds: 5), () {
             Navigator.push(
                 context,

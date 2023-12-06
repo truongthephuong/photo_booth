@@ -41,13 +41,11 @@ class _Screen7State extends State<Screen7> {
       final response = await request.send();
 
       if (response.statusCode == 200) {
-        final jsonData = await response.stream.bytesToString();
-        print(jsonData);
-        if (jsonData.isNotEmpty) {
-          final parsedJson = jsonDecode(jsonData);
-          print(parsedJson);
+        final jsonData = await http.Response.fromStream(response);
+        final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
+        if (result.isNotEmpty) {
           setState(() {
-            imgUrlTest = 'http://128.199.205.168${parsedJson.image}';
+            imgUrlTest = 'http://128.199.205.168/${result['image']}';
           });
         }
       } else {
