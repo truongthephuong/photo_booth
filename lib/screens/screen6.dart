@@ -45,14 +45,8 @@ class _Screen6State extends State<Screen6> {
 
     _loading = !_loading;
     _updateProgress();
-    print('test');
 
     // API call
-    print('effect name');
-    print(widget.effectName);
-
-    print('image');
-    print(widget.imgUrl);
     fetchDataAndSaveImage(widget.effectName);
   }
 
