@@ -293,7 +293,7 @@ class ImageSaver {
     await Directory(resultUserDir).create(recursive: true);
 
     String fileNameWithPath = '$fileName.jpg';
-    final String userPath = path.join(userDir, fileNameWithPath);
+    final String userPath = path.join(resultUserDir, fileNameWithPath);
     File(userPath).writeAsBytesSync(imageData);
   }
 }
