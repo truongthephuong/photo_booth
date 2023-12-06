@@ -20,7 +20,7 @@ class Screen7 extends StatefulWidget {
 
 class _Screen7State extends State<Screen7> {
   // TODO: Upload to API and get the image link here
-  final String imgUrlTest = 'https://placekitten.com/418/326';
+  late String imgUrlTest = '';
   final String resultUrl =
       'C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\test1.png';
   final ApiService apiService = new ApiService();
@@ -42,10 +42,14 @@ class _Screen7State extends State<Screen7> {
         await http.MultipartFile.fromPath('file', widget.imgUrl),
       );
 
-      var response = await request.send();
+      final response = await request.send();
 
       if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
+        final jsonData = await response.stream.bytesToString();
+        final parsedJson = jsonDecode(jsonData);
+        setState(() {
+          imgUrlTest = 'http://128.199.205.168${parsedJson.image}';
+        });
       } else {
         // Handle errors
         print('Failed to upload image. Status code: ${response.statusCode}');
@@ -189,12 +193,14 @@ class _Screen7State extends State<Screen7> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: AspectRatio(
                             aspectRatio: 1,
-                            child: QrImageView(
-                              data: imgUrlTest,
-                              version: QrVersions.auto,
-                              size: 50,
-                              backgroundColor: Colors.white,
-                            ),
+                            child: imgUrlTest.isNotEmpty
+                                ? QrImageView(
+                                    data: imgUrlTest,
+                                    version: QrVersions.auto,
+                                    size: 50,
+                                    backgroundColor: Colors.white,
+                                  )
+                                : Container(),
                           ),
                         ),
                       ),
