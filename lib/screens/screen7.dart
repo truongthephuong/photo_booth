@@ -20,7 +20,7 @@ class _Screen7State extends State<Screen7> {
   @override
   void initState() {
     super.initState();
-    _freshPhotoDir();
+    // _freshPhotoDir();
   }
 
   _freshPhotoDir() {
