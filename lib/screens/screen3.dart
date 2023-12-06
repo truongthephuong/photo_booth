@@ -42,14 +42,19 @@ class _Screen3State extends State<Screen3> {
   Future<void> _initializeCamera() async {
     cameras = await availableCameras();
 
-    _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
-    await _controller.initialize();
+    if (cameras.isNotEmpty) {
+      _controller = CameraController(
+        cameras[0],
+        ResolutionPreset.medium,
+      );
 
-    if (!mounted) return;
-
-    setState(() {
-      isCameraReady = true;
-    });
+      _controller.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {});
+      });
+    }
   }
 
   @override
@@ -94,7 +99,6 @@ class _Screen3State extends State<Screen3> {
           setState(() {
             okToTimer = false;
           });
-          _controller.dispose();
           Timer(Duration(seconds: 5), () {
             Navigator.push(
                 context,
@@ -203,7 +207,7 @@ class _Screen3State extends State<Screen3> {
   }
 
   Widget build(BuildContext context) {
-    if (!isCameraReady) {
+    if (!_controller.value.isInitialized) {
       return Container();
     }
 
