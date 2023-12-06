@@ -40,10 +40,14 @@ class _Screen7State extends State<Screen7> {
 
       if (response.statusCode == 200) {
         final jsonData = await response.stream.bytesToString();
-        final parsedJson = jsonDecode(jsonData);
-        setState(() {
-          imgUrlTest = 'http://128.199.205.168${parsedJson.image}';
-        });
+        print(jsonData);
+        if (jsonData.isNotEmpty) {
+          final parsedJson = jsonDecode(jsonData);
+          print(parsedJson);
+          setState(() {
+            imgUrlTest = 'http://128.199.205.168${parsedJson.image}';
+          });
+        }
       } else {
         // Handle errors
         print('Failed to upload image. Status code: ${response.statusCode}');
@@ -211,8 +215,6 @@ class _Screen7State extends State<Screen7> {
           label: Text('재시작'),
         ),
       ),
-
-
     );
   }
 }
