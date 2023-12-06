@@ -14,12 +14,13 @@ class Screen7 extends StatefulWidget {
 }
 
 class _Screen7State extends State<Screen7> {
+  // TODO: Upload to API and get the image link here
   final String imgUrlTest = 'https://placekitten.com/418/326';
 
   @override
   void initState() {
     super.initState();
-    _freshPhotoDir();
+    // _freshPhotoDir();
   }
 
   _freshPhotoDir() {
@@ -47,8 +48,8 @@ class _Screen7State extends State<Screen7> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                        left: 10.0, right: 0.0, top: 0.0),
+                    margin:
+                        const EdgeInsets.only(left: 10.0, right: 0.0, top: 0.0),
                     child: RichText(
                       text: TextSpan(
                         text: '바뀐 나의 모습을',
@@ -113,13 +114,12 @@ class _Screen7State extends State<Screen7> {
                            */
                         ],
                       ),
-
                     ],
                   ),
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 20, top: 10),
+                        margin: EdgeInsets.only(left: 30, top: 10),
                         alignment: Alignment.bottomCenter,
                         child: ElevatedButton(
                           onPressed: () {
@@ -143,12 +143,11 @@ class _Screen7State extends State<Screen7> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 50, top: 5),
+                        margin: EdgeInsets.only(left: 30, top: 5),
                         height: 263,
                         width: 272,
                         child: ClipRRect(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: AspectRatio(
                             aspectRatio: 1,
                             child: QrImageView(
@@ -181,26 +180,26 @@ class ImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4.0,
-      margin: EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(2.0),
       child: Column(
         children: [
+          // Container(
+          //   color: Colors.lightGreen,
+          //   padding: EdgeInsets.all(8.0),
+          //   child: Center(
+          //     child: Text(
+          //       '합성 결과',
+          //       style: TextStyle(
+          //         color: const Color.fromARGB(255, 255, 205, 202),
+          //         fontSize: 18.0,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Container(
-            color: Colors.lightGreen,
-            padding: EdgeInsets.all(8.0),
-            child: Center(
-              child: Text(
-                '합성 결과',
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 255, 205, 202),
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: 418,
-            height: 354.0,
+            width: 320,
+            height: 240,
             child: Image.file(
               File(imageCardUrl),
               fit: BoxFit.cover,
