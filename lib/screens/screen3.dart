@@ -45,14 +45,16 @@ class _Screen3State extends State<Screen3> {
     if (cameras.isNotEmpty) {
       _controller = CameraController(
         cameras[0],
-        ResolutionPreset.medium,
+        ResolutionPreset.ultraHigh,
       );
 
       _controller.initialize().then((_) {
         if (!mounted) {
           return;
         }
-        setState(() {});
+        setState(() {
+          isCameraReady = true;
+        });
       });
     }
   }
@@ -207,7 +209,7 @@ class _Screen3State extends State<Screen3> {
   }
 
   Widget build(BuildContext context) {
-    if (!_controller.value.isInitialized) {
+    if (!isCameraReady) {
       return Container();
     }
 
