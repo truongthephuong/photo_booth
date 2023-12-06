@@ -77,17 +77,14 @@ class _Screen4State extends State<Screen4> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Icon(
-            Icons.warning_amber_rounded,
-            size: 30,
-          ),
+          title: Text(''),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text(
-                  '이미지를 선택해주세요.',
+                  '사진 하나를 선택해주세요',
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 30,
                     fontFamily: 'GulyFont',
                     color: Colors.redAccent,
                   ),
