@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:photobooth_section1/screens/screen3.dart';
@@ -159,9 +160,8 @@ class _Screen2State extends State<Screen2> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              // MaterialPageRoute(builder: (context) => Screen7(imgUrl: '',)),
-                              MaterialPageRoute(
-                                  builder: (context) => Screen3()),
+                               //MaterialPageRoute(builder: (context) => Screen7(imgUrl: '',)),
+                              MaterialPageRoute(builder: (context) => Screen3()),
                             );
                           },
                           elevation: 2.0,

@@ -166,7 +166,21 @@ class _Screen7State extends State<Screen7> {
             )
           ],
         ),
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.black,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Screen1()),
+            );
+          },
+          icon: Icon(Icons.arrow_back_sharp),
+          label: Text('재시작'),
+        ),
       ),
+
+
     );
   }
 }
