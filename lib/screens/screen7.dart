@@ -28,20 +28,18 @@ class _Screen7State extends State<Screen7> {
   }
 
   Future<void> _uploadImage() async {
-    File? _selectedImage = File(widget.imgUrl);
-
     try {
       var request = http.MultipartRequest(
-          'POST', Uri.parse('http://128.199.205.168/api/upload'));
+          'POST', Uri.parse('http://128.199.205.168/api/upload/'));
 
       request.files.add(
-        await http.MultipartFile.fromPath('image', _selectedImage!.path),
+        await http.MultipartFile.fromPath('file', widget.imgUrl),
       );
 
       var response = await request.send();
 
       if (response.statusCode == 200) {
-        print(response);
+        print(await response.stream.bytesToString());
       } else {
         // Handle errors
         print('Failed to upload image. Status code: ${response.statusCode}');
