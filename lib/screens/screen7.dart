@@ -75,10 +75,14 @@ class _Screen7State extends State<Screen7> {
         await http.MultipartFile.fromPath('file', widget.imgUrl),
       );
 
-      var response = await request.send();
+      final response = await request.send();
 
       if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
+        final jsonData = await response.stream.bytesToString();
+        final parsedJson = jsonDecode(jsonData);
+        setState(() {
+          imgUrlTest = 'http://128.199.205.168${parsedJson.image}';
+        });
       } else {
         // Handle errors
         print('Failed to upload image. Status code: ${response.statusCode}');
