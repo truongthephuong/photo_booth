@@ -7,6 +7,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Screen7 extends StatefulWidget {
   // AI Image
@@ -59,6 +63,35 @@ class _Screen7State extends State<Screen7> {
       print('Error uploaded');
     }
     _uploadImage();
+    _uploadImage();
+  }
+
+  Future<void> _uploadImage() async {
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://128.199.205.168/api/upload/'));
+
+      request.files.add(
+        await http.MultipartFile.fromPath('file', widget.imgUrl),
+      );
+
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final jsonData = await http.Response.fromStream(response);
+        final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
+        if (result.isNotEmpty) {
+          setState(() {
+            imgUrlTest = 'http://128.199.205.168/${result['image']}';
+          });
+        }
+      } else {
+        // Handle errors
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error uploaded');
+    }
   }
 
   _freshPhotoDir() {
