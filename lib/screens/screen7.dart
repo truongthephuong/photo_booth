@@ -8,6 +8,8 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Screen7 extends StatefulWidget {
   // AI Image
@@ -54,6 +56,31 @@ class _Screen7State extends State<Screen7> {
             imgUrlTest = 'http://128.199.205.168${parsedJson.image}';
           });
         }
+      } else {
+        // Handle errors
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error uploaded');
+    }
+    _uploadImage();
+  }
+
+  Future<void> _uploadImage() async {
+    File? _selectedImage = File(widget.imgUrl);
+
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://128.199.205.168/api/upload'));
+
+      request.files.add(
+        await http.MultipartFile.fromPath('image', _selectedImage!.path),
+      );
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(response);
       } else {
         // Handle errors
         print('Failed to upload image. Status code: ${response.statusCode}');
