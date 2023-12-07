@@ -1,0 +1,47 @@
+{
+              "prompt": "1man, (absurdres, highres, ultra detailed), mature, (Height difference1.3), fantasy, russia, winter, knight, (absurdres, highres, ultra detailed), solo, handsome, tall muscular guy, broad shoulders, intricate details, colorful, highest detailed, profile",
+              "negative_prompt": "nsfw, (ugly face:1.3), (blurred face:1.3), disfigured, lowres, poorly drawn, sloppy, over exposed, burnt image, sloppy, broken, fuzzy, aliasing, cheap, oldschool, poor quality, pixelated, sleepy, closed-eyes, (two head:1.3), (matte color:1.1),  bad-hands-5, BadDream, badhandv4, verybadimagenegative_v1.3",
+              "seed": -1,
+              "sampler_name": "Euler a",
+              "batch_size": 1,
+              "steps": 20,
+              "cfg_scale": 9,
+              "width": 640,
+              "height": 628,
+              "override_settings": {
+                "sd_model_checkpoint": "romanticprism_v10.safetensors",
+				"sd_vae": "vae-ft-mse-840000-ema-pruned.ckpt"
+              },
+              "override_settings_restore_afterwards": True,
+              "sampler_index": "Euler a",
+              "script_args": [],
+              "send_images": True,
+              "save_images": True,
+              "alwayson_scripts": {
+                  "ControlNet":{
+                        "args":[
+                                {
+                                      "control_mode":"Balanced",  
+                                      "enabled":True,
+                                      "guidance_end":1,
+                                      "guidance_start":0,
+                                      "input_image": encodeBase64(), 
+                                      "input_mode":"simple",
+                                      "is_ui":True,
+                                      "loopback":False,
+                                      "low_vram":False,
+                                      "model":"control_v11p_sd15_lineart [43d4be0d]",
+                                      "module":"lineart_standard (from white bg & black line)",
+                                      "output_dir":"",
+                                      "pixel_perfect":True,
+                                      "processor_res":512,
+                                      "resize_mode":"Crop and Resize",
+                                      "threshold_a":-1,
+                                      "threshold_b":-1,
+                                      "weight":1.5
+                                }
+                            
+                        ]
+                    }
+              }
+}
