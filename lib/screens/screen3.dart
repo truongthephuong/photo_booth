@@ -41,6 +41,9 @@ class _Screen3State extends State<Screen3> {
   }
 
   _freshPhotoDir() async {
+    setState(() {
+      savedImages = [];
+    });
     Directory current = Directory.current;
 
     // Parent folder
@@ -53,10 +56,6 @@ class _Screen3State extends State<Screen3> {
   }
 
   Future<void> _initializeCamera() async {
-    setState(() {
-      savedImages = [];
-    });
-
     cameras = await availableCameras();
 
     _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
