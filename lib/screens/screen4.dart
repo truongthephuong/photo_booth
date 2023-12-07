@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/models/image_model.dart';
@@ -19,11 +20,19 @@ class Screen4 extends StatefulWidget {
 class _Screen4State extends State<Screen4> {
   int chooseImgId = 999;
   String chooseImgUrl = '';
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  String getRandomString(int length) {
+    return String.fromCharCodes(Iterable.generate(
+        length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
 
   /**
@@ -48,7 +57,8 @@ class _Screen4State extends State<Screen4> {
     await Directory(tempUserDir).create(recursive: true);
 
     // Save photo
-    final String userPath = path.join(tempUserDir, 'photo.jpg');
+    String randomStr = getRandomString(5);
+    final String userPath = path.join(tempUserDir, 'photo-${randomStr}.jpg');
     await File(widget.images[id].imgUrl).copy(userPath);
 
     setState(() {

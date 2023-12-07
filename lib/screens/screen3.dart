@@ -152,7 +152,7 @@ class _Screen3State extends State<Screen3> {
         // Save photo
         int userPhotoId = savedImages.length + 1;
         final String userPath =
-            path.join(tempUserDir, 'user_photo_$userPhotoId.jpg');
+            path.join(tempUserDir, path.basename(file.path));
         await File(file.path).copy(userPath);
 
         // setState(() {

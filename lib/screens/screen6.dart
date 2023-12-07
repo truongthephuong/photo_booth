@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -33,6 +34,9 @@ class _Screen6State extends State<Screen6> {
   List<String> aiImages = [];
   Map<String, dynamic> payload = {};
   bool doneAi = false;
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
 
   late bool _loading;
   late double _progressValue;
@@ -48,6 +52,11 @@ class _Screen6State extends State<Screen6> {
 
     // API call
     fetchDataAndSaveImage(widget.effectName);
+  }
+
+  String getRandomString(int length) {
+    return String.fromCharCodes(Iterable.generate(
+        length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
 
   Future<void> getImagePath(int fileName) async {
@@ -68,7 +77,8 @@ class _Screen6State extends State<Screen6> {
     final String resultUserDir = path.join(userDir, 'Result');
     await Directory(resultUserDir).create(recursive: true);
 
-    String fileNameWithPath = '$fileName.jpg';
+    String randomStr = getRandomString(5);
+    String fileNameWithPath = '$fileName-${randomStr}.jpg';
     final String userPath = path.join(resultUserDir, fileNameWithPath);
     setState(() {
       aiImages.add(userPath);
@@ -240,9 +250,9 @@ class _Screen6State extends State<Screen6> {
     const oneSec = const Duration(seconds: 1);
     new Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        _progressValue += 0.01;
+        _progressValue += 0.1;
         // we "finish" downloading here
-        if (_progressValue.toStringAsFixed(1) == '3.0' || doneAi) {
+        if (_progressValue.toStringAsFixed(1) == '2.0' || doneAi) {
           //_loading = false;
           t.cancel();
           print('Load 100% goto other screen');
