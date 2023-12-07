@@ -90,6 +90,115 @@ class _Screen5State extends State<Screen5> {
       name: 'Comic',
       effect: 'comic-woman',
     ),
+    AIModel(
+      id: 13,
+      img: 'assets/images/effective/GreenGoblin/GreenGoblin-man.gif',
+      name: 'GreenGoblin',
+      effect: 'greengoblin-man',
+    ),
+    AIModel(
+      id: 14,
+      img: 'assets/images/effective/GreenGoblin/GreenGoblin-woman.gif',
+      name: 'GreenGoblin',
+      effect: 'greengoblin-woman',
+    ),
+    AIModel(
+      id: 15,
+      img: 'assets/images/effective/HellFire/HellFire-man.gif',
+      name: 'HellFire',
+      effect: 'hellire-man',
+    ),
+    AIModel(
+      id: 16,
+      img: 'assets/images/effective/HellFire/HellFire-woman.gif',
+      name: 'HellFire',
+      effect: 'hellfire-woman',
+    ),
+    AIModel(
+      id: 17,
+      img: 'assets/images/effective/Necromancer/Necromancer-man.gif',
+      name: 'Necromancer',
+      effect: 'necromancer-man',
+    ),
+    AIModel(
+      id: 18,
+      img: 'assets/images/effective/Necromancer/Necromancer-woman.gif',
+      name: 'Necromancer',
+      effect: 'necromancer-woman',
+    ),
+    AIModel(
+      id: 19,
+      img: 'assets/images/effective/Nightcrawler/Nightcrawler-man.gif',
+      name: 'Nightcrawler',
+      effect: 'nightcrawler-man',
+    ),
+    AIModel(
+      id: 20,
+      img: 'assets/images/effective/Nightcrawler/Nightcrawler-woman.gif',
+      name: 'Nightcrawler',
+      effect: 'nightcrawler-woman',
+    ),
+    AIModel(
+      id: 21,
+      img: 'assets/images/effective/Pixar/Pixar-man.gif',
+      name: 'Pixar',
+      effect: 'pixar-man',
+    ),
+    AIModel(
+      id: 22,
+      img: 'assets/images/effective/Pixar/Pixar-woman.gif',
+      name: 'Pixar',
+      effect: 'pixar-woman',
+    ),
+    AIModel(
+      id: 23,
+      img: 'assets/images/effective/Romantic/Romantic-man.gif',
+      name: 'Romantic',
+      effect: 'romantic-man',
+    ),
+    AIModel(
+      id: 24,
+      img: 'assets/images/effective/Romantic/Romantic-woman.gif',
+      name: 'Romantic',
+      effect: 'romantic-woman',
+    ),
+    AIModel(
+      id: 25,
+      img: 'assets/images/effective/Ultraviolet/Ultraviolet-man.gif',
+      name: 'Ultraviolet',
+      effect: 'ultraviolet-man',
+    ),
+    AIModel(
+      id: 26,
+      img: 'assets/images/effective/Ultraviolet/Ultraviolet-woman.gif',
+      name: 'Ultraviolet',
+      effect: 'ultraviolet-woman',
+    ),
+    AIModel(
+      id: 27,
+      img: 'assets/images/effective/WalkingDead/WalkingDead-man.gif',
+      name: 'WalkingDead',
+      effect: 'walkingdead-man',
+    ),
+    AIModel(
+      id: 28,
+      img: 'assets/images/effective/WalkingDead/WalkingDead-woman.gif',
+      name: 'WalkingDead',
+      effect: 'walkingdead-woman',
+    ),
+    AIModel(
+      id: 29,
+      img: 'assets/images/effective/Witch/Witch-man.gif',
+      name: 'Witch',
+      effect: 'witch-man',
+    ),
+    AIModel(
+      id: 30,
+      img: 'assets/images/effective/Witch/Witch-woman.gif',
+      name: 'Witch',
+      effect: 'witch-woman',
+    ),
+
   ];
 
   @override

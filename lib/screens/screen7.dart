@@ -116,8 +116,8 @@ class _Screen7State extends State<Screen7> {
                           Container(
                             margin: EdgeInsets.only(left: 10),
                             color: Colors.blueAccent,
-                            height: 250,
-                            width: 320,
+                            height: 300,
+                            width: 350,
                             child: ImageCard(
                               imageCardUrl: widget.imgUrl,
                             ),
