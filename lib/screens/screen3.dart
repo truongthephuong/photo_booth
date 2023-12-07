@@ -53,6 +53,10 @@ class _Screen3State extends State<Screen3> {
   }
 
   Future<void> _initializeCamera() async {
+    setState(() {
+      savedImages = [];
+    });
+
     cameras = await availableCameras();
 
     _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
