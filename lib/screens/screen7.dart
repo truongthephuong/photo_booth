@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path/path.dart' as path;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Screen7 extends StatefulWidget {
+  // AI Image
   String imgUrl;
   Screen7({required this.imgUrl});
 
@@ -14,22 +19,53 @@ class Screen7 extends StatefulWidget {
 }
 
 class _Screen7State extends State<Screen7> {
-  final String imgUrlTest = 'https://placekitten.com/418/326';
+  // TODO: Upload to API and get the image link here
+  late String imgUrlTest = '';
+  final String resultUrl =
+      'C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\test1.png';
+  final ApiService apiService = new ApiService();
 
   @override
   void initState() {
     super.initState();
-    _freshPhotoDir();
+    // _printDataAndSaveImage(resultUrl);
+    _uploadImage();
   }
 
-  _freshPhotoDir() {
-    Directory current = Directory.current;
+  Future<void> _uploadImage() async {
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://128.199.205.168/api/upload/'));
 
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    final Directory dir = Directory(internalFolder);
-    dir.deleteSync(recursive: true);
+      request.files.add(
+        await http.MultipartFile.fromPath('file', widget.imgUrl),
+      );
+
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final jsonData = await http.Response.fromStream(response);
+        final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
+        if (result.isNotEmpty) {
+          setState(() {
+            imgUrlTest = 'http://128.199.205.168/${result['image']}';
+          });
+        }
+      } else {
+        // Handle errors
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error uploaded');
+    }
   }
+
+  // Future<void> _printDataAndSaveImage(resultUrl) async {
+  //   final Map<String, dynamic> response = await apiService.printData(resultUrl);
+  //   if (response.isNotEmpty) {
+  //     print('call api... ');
+  //   }
+  // }
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,8 +83,8 @@ class _Screen7State extends State<Screen7> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                        left: 10.0, right: 0.0, top: 0.0),
+                    margin:
+                        const EdgeInsets.only(left: 10.0, right: 0.0, top: 0.0),
                     child: RichText(
                       text: TextSpan(
                         text: '바뀐 나의 모습을',
@@ -113,13 +149,12 @@ class _Screen7State extends State<Screen7> {
                            */
                         ],
                       ),
-
                     ],
                   ),
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 20, top: 10),
+                        margin: EdgeInsets.only(left: 30, top: 10),
                         alignment: Alignment.bottomCenter,
                         child: ElevatedButton(
                           onPressed: () {
@@ -143,20 +178,21 @@ class _Screen7State extends State<Screen7> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 50, top: 5),
+                        margin: EdgeInsets.only(left: 30, top: 5),
                         height: 263,
                         width: 272,
                         child: ClipRRect(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: AspectRatio(
                             aspectRatio: 1,
-                            child: QrImageView(
-                              data: imgUrlTest,
-                              version: QrVersions.auto,
-                              size: 50,
-                              backgroundColor: Colors.white,
-                            ),
+                            child: imgUrlTest.isNotEmpty
+                                ? QrImageView(
+                                    data: imgUrlTest,
+                                    version: QrVersions.auto,
+                                    size: 50,
+                                    backgroundColor: Colors.white,
+                                  )
+                                : Container(),
                           ),
                         ),
                       ),
@@ -166,6 +202,18 @@ class _Screen7State extends State<Screen7> {
               ),
             )
           ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.black,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Screen1()),
+            );
+          },
+          icon: Icon(Icons.arrow_back_sharp),
+          label: Text('재시작'),
         ),
       ),
     );
@@ -181,26 +229,26 @@ class ImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4.0,
-      margin: EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(2.0),
       child: Column(
         children: [
+          // Container(
+          //   color: Colors.lightGreen,
+          //   padding: EdgeInsets.all(8.0),
+          //   child: Center(
+          //     child: Text(
+          //       '합성 결과',
+          //       style: TextStyle(
+          //         color: const Color.fromARGB(255, 255, 205, 202),
+          //         fontSize: 18.0,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Container(
-            color: Colors.lightGreen,
-            padding: EdgeInsets.all(8.0),
-            child: Center(
-              child: Text(
-                '합성 결과',
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 255, 205, 202),
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: 418,
-            height: 354.0,
+            width: 320,
+            height: 240,
             child: Image.file(
               File(imageCardUrl),
               fit: BoxFit.cover,
@@ -209,5 +257,38 @@ class ImageCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ApiService {
+  static const String apiUrl = 'http://127.0.0.1:8000/api/generate-image';
+  //"C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\test1.png"
+  Future<Map<String, dynamic>> printData(Map<String, dynamic> resultUrl) async {
+    final response = await http.post(Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "image_selected": resultUrl,
+          "bkgrnd_image":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\3a.jpg",
+          "logo_image":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
+          "hearth_image_1":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
+          "hearth_image_2":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
+          "banned_image":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\Banned-Transparent.png",
+          "small_icon":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\Asset1.png",
+          "kiss_icon":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\kiss.png",
+          "generated_print_image_path":
+              "C:\\flutter-printer\\tkinter_doc_printer\\print_image.jpg"
+        }));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed');
+    }
   }
 }

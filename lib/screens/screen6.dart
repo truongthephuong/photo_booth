@@ -32,6 +32,7 @@ class _Screen6State extends State<Screen6> {
   Uint8List resultImageUrl = Uint8List(0);
   List<String> aiImages = [];
   Map<String, dynamic> payload = {};
+  bool doneAi = false;
 
   late bool _loading;
   late double _progressValue;
@@ -43,7 +44,7 @@ class _Screen6State extends State<Screen6> {
     _progressValue = 0.0;
 
     _loading = !_loading;
-    //_updateProgress();
+    _updateProgress();
 
     // API call
     fetchDataAndSaveImage(widget.effectName);
@@ -72,6 +73,7 @@ class _Screen6State extends State<Screen6> {
     setState(() {
       aiImages.add(userPath);
       userImgPath = userPath;
+      doneAi = true;
     });
   }
 
@@ -100,17 +102,20 @@ class _Screen6State extends State<Screen6> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int aiEffectIDSess = prefs.getInt('aiEffectIDSess') ?? 1;
       String usrImgUrl = widget.imgUrl;
-      File _imageFile = File(usrImgUrl);
-      final Uint8List _bytes = await _imageFile.readAsBytes();
-      if (_bytes.isNotEmpty) {
-        final String imgBase64 = base64.encode(_bytes);
+      File imageFile = File(usrImgUrl);
+      final Uint8List bytes = await imageFile.readAsBytes();
+      if (bytes.isNotEmpty) {
+        final String imgBase64 = base64.encode(bytes);
         if (imgBase64.isNotEmpty) {
           String jsonString = await rootBundle
-              .loadString("assets/ai/v2/${widget.effectName}.json");
+              .loadString("assets/ai/${widget.effectName}.json");
           payload = json.decode(jsonString);
 
           payload['alwayson_scripts']['ControlNet']['args'][0]['input_image'] =
               'data:image/jpeg;base64,' + imgBase64;
+
+          print('call api');
+          print(payload);
 
           final Map<String, dynamic> response =
               await apiService.postData(payload);
@@ -128,6 +133,8 @@ class _Screen6State extends State<Screen6> {
                 resultImageUrl = imageData;
                 cntImg++;
               });
+
+              print('done');
 
               getImagePath(aiEffectIDSess);
 
@@ -149,81 +156,79 @@ class _Screen6State extends State<Screen6> {
           body: SingleChildScrollView(
             child: SafeArea(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          left: 20.0, right: 0.0, top: 0.0),
-                      height: 150,
-                      child: Center(
-                        child: RichText(
-                          text: TextSpan(
-                            text: '인공지능 ',
-                            style: kHeading,
-                            children: <TextSpan>[
-                              TextSpan(text: '은 어떻게 ', style: kHeading1),
-                              TextSpan(
-                                  text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 900,
-                      height: 380,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/welcome.png',
-                            width: 900,
-                            height: 380,
-                          ),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  margin:
+                      const EdgeInsets.only(left: 20.0, right: 0.0, top: 0.0),
+                  height: 150,
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: '인공지능 ',
+                        style: kHeading,
+                        children: <TextSpan>[
+                          TextSpan(text: '은 어떻게 ', style: kHeading1),
+                          TextSpan(
+                              text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
                         ],
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(12.0),
-                      width: 500,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                Container(
+                  width: 900,
+                  height: 380,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/welcome.png',
+                        width: 900,
+                        height: 380,
                       ),
-                      child: _loading
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Container(
-                                    height: 20,
-                                    width: 256,
-                                    child: LinearProgressIndicator(
-                                      minHeight: 20.0,
-                                      backgroundColor: Colors.limeAccent,
-                                      valueColor: new AlwaysStoppedAnimation<Color>(
-                                          Colors.blueAccent),
-                                      value: _progressValue,
-                                    ),
-                                  ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(12.0),
+                  width: 500,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: _loading
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                height: 20,
+                                width: 256,
+                                child: LinearProgressIndicator(
+                                  minHeight: 20.0,
+                                  backgroundColor: Colors.limeAccent,
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      Colors.blueAccent),
+                                  value: _progressValue,
                                 ),
-                                //Text('${(_progressValue * 100).round()}%',
-                                Text(
-                                    '외계인을 납치해 오는중...',
-                                    style: TextStyle(fontSize: 18, color: Colors.blueAccent)
-                                ),
-                              ],
-                            )
-                          : Text("", style: TextStyle(fontSize: 25)),
-                    ),
-                  ],
-              )
-            ),
+                              ),
+                            ),
+                            //Text('${(_progressValue * 100).round()}%',
+                            Text('외계인을 납치해 오는중...',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.blueAccent)),
+                          ],
+                        )
+                      : Text("", style: TextStyle(fontSize: 25)),
+                ),
+              ],
+            )),
           ),
         ),
       ],
@@ -237,7 +242,7 @@ class _Screen6State extends State<Screen6> {
       setState(() {
         _progressValue += 0.01;
         // we "finish" downloading here
-        if (_progressValue.toStringAsFixed(1) == '1.0') {
+        if (_progressValue.toStringAsFixed(1) == '3.0' || doneAi) {
           //_loading = false;
           t.cancel();
           print('Load 100% goto other screen');
@@ -246,7 +251,7 @@ class _Screen6State extends State<Screen6> {
             context,
             MaterialPageRoute(
                 builder: (context) => Screen7(
-                      imgUrl: widget.imgUrl,
+                      imgUrl: aiImages.isNotEmpty ? aiImages[0] : widget.imgUrl,
                     )),
           );
           return;
@@ -276,7 +281,7 @@ class ImageSaver {
     await Directory(resultUserDir).create(recursive: true);
 
     String fileNameWithPath = '$fileName.jpg';
-    final String userPath = path.join(userDir, fileNameWithPath);
+    final String userPath = path.join(resultUserDir, fileNameWithPath);
     File(userPath).writeAsBytesSync(imageData);
   }
 }
