@@ -28,7 +28,7 @@ class _Screen3State extends State<Screen3> {
   File? _imageFile;
   String userDirPath = '';
 
-  int _countdown = 6;
+  int _countdown = 3;
   late Timer _timer;
   bool startCount = false;
   bool okToTimer = true;
@@ -77,7 +77,7 @@ class _Screen3State extends State<Screen3> {
       if (_countdown == 0) {
         timer.cancel();
         takePhoto();
-        _countdown = 6;
+        _countdown = 3;
         startCount = false;
         if (okToTimer) {
           startTimer();
