@@ -21,14 +21,12 @@ class Screen7 extends StatefulWidget {
 class _Screen7State extends State<Screen7> {
   // TODO: Upload to API and get the image link here
   late String imgUrlTest = '';
-  final String resultUrl =
-      'C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\test1.png';
   final ApiService apiService = new ApiService();
 
   @override
   void initState() {
     super.initState();
-    // _printDataAndSaveImage(resultUrl);
+    _printDataAndSaveImage1(widget.imgUrl);
     _uploadImage();
   }
 
@@ -60,12 +58,37 @@ class _Screen7State extends State<Screen7> {
     }
   }
 
-  // Future<void> _printDataAndSaveImage(resultUrl) async {
-  //   final Map<String, dynamic> response = await apiService.printData(resultUrl);
-  //   if (response.isNotEmpty) {
-  //     print('call api... ');
-  //   }
-  // }
+  Future<void> _printDataAndSaveImage1(resultUrl) async {
+
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('http://127.0.0.1:8000/api/generate-image/'));
+    request.body = json.encode({
+      "image_selected": "C:/imageframe/test1.png", //chỗ này lấy link hình kết quả
+      "bkgrnd_image": "C:/imageframe/3a.jpg", //mấy cái này lấy từ asset dùm em
+      "logo_image": "C:/imageframe/h1.png", //mấy cái này lấy từ asset dùm em
+      "hearth_image_1": "C:/imageframe/h1.png", //mấy cái này lấy từ asset dùm em
+      "hearth_image_2": "C:/imageframe/h1.png", //mấy cái này lấy từ asset dùm em
+      "banned_image": "C:/imageframe/Banned-Transparent.png", //mấy cái này lấy từ asset dùm em
+      "small_icon": "C:/imageframe/Asset1.png", //mấy cái này lấy từ asset dùm em
+      "kiss_icon": "C:/imageframe/kiss.png", //mấy cái này lấy từ asset dùm em
+      "generated_print_image_path": "C:/imageframe/print_image.jpg" // chỗ này là hình in ra
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    print('Phuong truong here ');
+    print(response);
+    if (response.statusCode == 200) {
+      //print(await response.stream.bytesToString());
+      print('Phuong truong here, call success ');
+      print(response.statusCode);
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+  }
 
   Widget build(BuildContext context) {
     return MaterialApp(
