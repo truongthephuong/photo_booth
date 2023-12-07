@@ -28,7 +28,7 @@ class _Screen7State extends State<Screen7> {
   @override
   void initState() {
     super.initState();
-    _printDataAndSaveImage(resultUrl);
+    // _printDataAndSaveImage(resultUrl);
     _uploadImage();
   }
 
@@ -60,12 +60,12 @@ class _Screen7State extends State<Screen7> {
     }
   }
 
-  Future<void> _printDataAndSaveImage(resultUrl) async {
-    final Map<String, dynamic> response = await apiService.printData(resultUrl);
-    if (response.isNotEmpty) {
-      print('call api... ');
-    }
-  }
+  // Future<void> _printDataAndSaveImage(resultUrl) async {
+  //   final Map<String, dynamic> response = await apiService.printData(resultUrl);
+  //   if (response.isNotEmpty) {
+  //     print('call api... ');
+  //   }
+  // }
 
   Widget build(BuildContext context) {
     return MaterialApp(
