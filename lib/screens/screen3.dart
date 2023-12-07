@@ -40,33 +40,29 @@ class _Screen3State extends State<Screen3> {
     _initializeCamera();
   }
 
-  _freshPhotoDir() {
+  _freshPhotoDir() async {
     Directory current = Directory.current;
 
     // Parent folder
     final String internalFolder = path.join(current.path, 'myphotos');
-    final Directory dir = Directory(internalFolder);
-    dir.deleteSync(recursive: true);
+    bool exists = await Directory(internalFolder).exists();
+    if (exists) {
+      final Directory dir = Directory(internalFolder);
+      dir.deleteSync(recursive: true);
+    }
   }
 
   Future<void> _initializeCamera() async {
     cameras = await availableCameras();
 
-    if (cameras.isNotEmpty) {
-      _controller = CameraController(
-        cameras[0],
-        ResolutionPreset.ultraHigh,
-      );
+    _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
+    await _controller.initialize();
 
-      _controller.initialize().then((_) {
-        if (!mounted) {
-          return;
-        }
-        setState(() {
-          isCameraReady = true;
-        });
-      });
-    }
+    if (!mounted) return;
+
+    setState(() {
+      isCameraReady = true;
+    });
   }
 
   @override
@@ -112,6 +108,7 @@ class _Screen3State extends State<Screen3> {
             okToTimer = false;
           });
           Timer(Duration(seconds: 5), () {
+            Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(
