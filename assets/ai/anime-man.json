@@ -2,7 +2,7 @@
     "prompt": "(((best quality, high quality, highres))), 1man, handsome, young, celebrity, angular face, simple background, white background",
     "negative_prompt": "nsfw, poorly_drawn, blurry, cropped, worst quality, normal quality, low quality, jpeg artifacts, bad_hands, missing fingers, extra digit, bad_anatomy, bad_proportions, bad_feet, watermark, username, artist name, signature, error, text, lower, fewer digits, extra digit, (worst quality, low quality:1.4), monochrome, blurry, missing fingers, extra digit, fewer digits, extra body parts, bad anatomy, censored, collage, logo, border, child, loli, shota, ((deformation)), bad-hands-5, BadDream, badhandv4, verybadimagenegative_v1.3",
     "sampler_name": "Euler a",
-    "batch_size": 2,
+    "batch_size": 1,
     "steps": 20,
     "cfg_scale": 9,
     "width": 640,

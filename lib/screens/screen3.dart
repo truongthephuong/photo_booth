@@ -28,7 +28,7 @@ class _Screen3State extends State<Screen3> {
   File? _imageFile;
   String userDirPath = '';
 
-  int _countdown = 6;
+  int _countdown = 3;
   late Timer _timer;
   bool startCount = false;
   bool okToTimer = true;
@@ -36,7 +36,20 @@ class _Screen3State extends State<Screen3> {
   @override
   void initState() {
     super.initState();
+    _freshPhotoDir();
     _initializeCamera();
+  }
+
+  _freshPhotoDir() async {
+    Directory current = Directory.current;
+
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    bool exists = await Directory(internalFolder).exists();
+    if (exists) {
+      final Directory dir = Directory(internalFolder);
+      dir.deleteSync(recursive: true);
+    }
   }
 
   Future<void> _initializeCamera() async {
@@ -64,7 +77,7 @@ class _Screen3State extends State<Screen3> {
       if (_countdown == 0) {
         timer.cancel();
         takePhoto();
-        _countdown = 6;
+        _countdown = 3;
         startCount = false;
         if (okToTimer) {
           startTimer();
@@ -95,6 +108,7 @@ class _Screen3State extends State<Screen3> {
             okToTimer = false;
           });
           Timer(Duration(seconds: 5), () {
+            Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(

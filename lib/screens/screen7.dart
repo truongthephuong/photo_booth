@@ -6,8 +6,11 @@ import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Screen7 extends StatefulWidget {
+  // AI Image
   String imgUrl;
   Screen7({required this.imgUrl});
 
@@ -17,32 +20,52 @@ class Screen7 extends StatefulWidget {
 
 class _Screen7State extends State<Screen7> {
   // TODO: Upload to API and get the image link here
-  final String imgUrlTest = 'https://placekitten.com/418/326';
-  final String resultUrl = 'C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\test1.png';
+  late String imgUrlTest = '';
+  final String resultUrl =
+      'C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\test1.png';
   final ApiService apiService = new ApiService();
 
   @override
   void initState() {
     super.initState();
-    _freshPhotoDir();
-    _printDataAndSaveImage(resultUrl);
+    // _printDataAndSaveImage(resultUrl);
+    _uploadImage();
   }
 
-  _freshPhotoDir() {
-    Directory current = Directory.current;
+  Future<void> _uploadImage() async {
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://128.199.205.168/api/upload/'));
 
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    final Directory dir = Directory(internalFolder);
-    dir.deleteSync(recursive: true);
-  }
+      request.files.add(
+        await http.MultipartFile.fromPath('file', widget.imgUrl),
+      );
 
-  Future<void> _printDataAndSaveImage(resultUrl) async {
-    final Map<String, dynamic> response = await apiService.printData(resultUrl);
-    if (response.isNotEmpty ) {
-      print('call api... ');
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        final jsonData = await http.Response.fromStream(response);
+        final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
+        if (result.isNotEmpty) {
+          setState(() {
+            imgUrlTest = 'http://128.199.205.168/${result['image']}';
+          });
+        }
+      } else {
+        // Handle errors
+        print('Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error uploaded');
     }
   }
+
+  // Future<void> _printDataAndSaveImage(resultUrl) async {
+  //   final Map<String, dynamic> response = await apiService.printData(resultUrl);
+  //   if (response.isNotEmpty) {
+  //     print('call api... ');
+  //   }
+  // }
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -162,12 +185,14 @@ class _Screen7State extends State<Screen7> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           child: AspectRatio(
                             aspectRatio: 1,
-                            child: QrImageView(
-                              data: imgUrlTest,
-                              version: QrVersions.auto,
-                              size: 50,
-                              backgroundColor: Colors.white,
-                            ),
+                            child: imgUrlTest.isNotEmpty
+                                ? QrImageView(
+                                    data: imgUrlTest,
+                                    version: QrVersions.auto,
+                                    size: 50,
+                                    backgroundColor: Colors.white,
+                                  )
+                                : Container(),
                           ),
                         ),
                       ),
@@ -191,11 +216,8 @@ class _Screen7State extends State<Screen7> {
           label: Text('재시작'),
         ),
       ),
-
-
     );
   }
-
 }
 
 class ImageCard extends StatelessWidget {
@@ -246,16 +268,23 @@ class ApiService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "image_selected": resultUrl,
-          "bkgrnd_image":"C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\3a.jpg",
-          "logo_image":"C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
-          "hearth_image_1":"C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
-          "hearth_image_2":"C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
-          "banned_image":"C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\Banned-Transparent.png",
-          "small_icon": "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\Asset1.png",
-          "kiss_icon": "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\kiss.png",
-          "generated_print_image_path":"C:\\flutter-printer\\tkinter_doc_printer\\print_image.jpg"
-        })
-    );
+          "bkgrnd_image":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\3a.jpg",
+          "logo_image":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
+          "hearth_image_1":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
+          "hearth_image_2":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\h1.png",
+          "banned_image":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\Banned-Transparent.png",
+          "small_icon":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\Asset1.png",
+          "kiss_icon":
+              "C:\\Users\\26-MongTaaaMedia\\Desktop\\PhotoApp\\image-frame\\kiss.png",
+          "generated_print_image_path":
+              "C:\\flutter-printer\\tkinter_doc_printer\\print_image.jpg"
+        }));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

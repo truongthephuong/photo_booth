@@ -45,14 +45,8 @@ class _Screen6State extends State<Screen6> {
 
     _loading = !_loading;
     _updateProgress();
-    print('test');
 
     // API call
-    print('effect name');
-    print(widget.effectName);
-
-    print('image');
-    print(widget.imgUrl);
     fetchDataAndSaveImage(widget.effectName);
   }
 
@@ -76,7 +70,6 @@ class _Screen6State extends State<Screen6> {
 
     String fileNameWithPath = '$fileName.jpg';
     final String userPath = path.join(resultUserDir, fileNameWithPath);
-    print(userPath);
     setState(() {
       aiImages.add(userPath);
       userImgPath = userPath;
@@ -108,19 +101,14 @@ class _Screen6State extends State<Screen6> {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int aiEffectIDSess = prefs.getInt('aiEffectIDSess') ?? 1;
-      print('effect id');
-      print(aiEffectIDSess);
       String usrImgUrl = widget.imgUrl;
       File imageFile = File(usrImgUrl);
       final Uint8List bytes = await imageFile.readAsBytes();
       if (bytes.isNotEmpty) {
         final String imgBase64 = base64.encode(bytes);
         if (imgBase64.isNotEmpty) {
-          print('json url start');
           String jsonString = await rootBundle
               .loadString("assets/ai/${widget.effectName}.json");
-          print('json url');
-          print(jsonString);
           payload = json.decode(jsonString);
 
           payload['alwayson_scripts']['ControlNet']['args'][0]['input_image'] =
