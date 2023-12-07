@@ -6,8 +6,7 @@ import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Screen7 extends StatefulWidget {
   // AI Image
@@ -26,7 +25,7 @@ class _Screen7State extends State<Screen7> {
   @override
   void initState() {
     super.initState();
-    _printDataAndSaveImage1(widget.imgUrl);
+    _printDataAndSaveImage(widget.imgUrl);
     _uploadImage();
   }
 
@@ -58,35 +57,67 @@ class _Screen7State extends State<Screen7> {
     }
   }
 
-  Future<void> _printDataAndSaveImage1(resultUrl) async {
+  Future<void> _printDataAndSaveImage(String resultUrl) async {
+    // Define the API endpoint and headers
+    final apiUrl = Uri.parse('http://127.0.0.1:8000/api/generate-image/');
+    final headers = {'Content-Type': 'application/json; charset=utf-8'};
 
-    var headers = {
-      'Content-Type': 'application/json'
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _username = prefs.getString('username') ?? "";
+
+    Directory current = Directory.current;
+
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    await Directory(internalFolder).create(recursive: true);
+
+    // User folder
+    final String userDir = path.join(internalFolder, _username);
+    await Directory(userDir).create(recursive: true);
+
+    // Target folder
+    final String targetUserDir = path.join(userDir, 'Target');
+    await Directory(targetUserDir).create(recursive: true);
+    // Asset folder
+    final String assetDir = path.join(current.path, 'assets');
+    await Directory(assetDir).create(recursive: true);
+    final String assertImageDir = path.join(assetDir, 'images');
+    await Directory(assertImageDir).create(recursive: true);
+
+    // Prepare the request body
+    final requestBody = {
+      "image_selected": resultUrl,
+      "bkgrnd_image": path.join(assertImageDir, '3a.jpg'),
+      "logo_image": path.join(assertImageDir, 'h1.png'),
+      "hearth_image_1": path.join(assertImageDir, 'h1.png'),
+      "hearth_image_2": path.join(assertImageDir, 'h1.png'),
+      "banned_image": path.join(assertImageDir, 'Banned-Transparent.png'),
+      "small_icon": path.join(assertImageDir, "Asset1.png"),
+      "kiss_icon": path.join(assertImageDir, "kiss.png"),
+      "generated_print_image_path":
+          path.join(internalFolder, "print_image.jpg"),
     };
-    var request = http.Request('POST', Uri.parse('http://127.0.0.1:8000/api/generate-image/'));
-    request.body = json.encode({
-      "image_selected": "C:/imageframe/test1.png", //chỗ này lấy link hình kết quả
-      "bkgrnd_image": "C:/imageframe/3a.jpg", //mấy cái này lấy từ asset dùm em
-      "logo_image": "C:/imageframe/h1.png", //mấy cái này lấy từ asset dùm em
-      "hearth_image_1": "C:/imageframe/h1.png", //mấy cái này lấy từ asset dùm em
-      "hearth_image_2": "C:/imageframe/h1.png", //mấy cái này lấy từ asset dùm em
-      "banned_image": "C:/imageframe/Banned-Transparent.png", //mấy cái này lấy từ asset dùm em
-      "small_icon": "C:/imageframe/Asset1.png", //mấy cái này lấy từ asset dùm em
-      "kiss_icon": "C:/imageframe/kiss.png", //mấy cái này lấy từ asset dùm em
-      "generated_print_image_path": "C:/imageframe/print_image.jpg" // chỗ này là hình in ra
-    });
-    request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
-    print('Phuong truong here ');
-    print(response);
-    if (response.statusCode == 200) {
-      //print(await response.stream.bytesToString());
-      print('Phuong truong here, call success ');
-      print(response.statusCode);
-    }
-    else {
-      print(response.reasonPhrase);
+    // Create the HTTP request
+    final request = http.Request('POST', apiUrl)
+      ..headers.addAll(headers)
+      ..body = json.encode(requestBody);
+
+    try {
+      // Send the request and get the response
+      final response = await request.send();
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        final jsonData = await http.Response.fromStream(response);
+        var decodedBody = utf8.decode(jsonData.bodyBytes);
+        print("Handle print project");
+        print(decodedBody);
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
@@ -145,31 +176,6 @@ class _Screen7State extends State<Screen7> {
                               imageCardUrl: widget.imgUrl,
                             ),
                           ),
-                          /*
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Screen1()));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
-                              child: Text('시작',
-                                  style: TextStyle(
-                                      fontSize: 50,
-                                      color: Colors.red,
-                                      fontFamily: 'GulyFont')),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          ),
-                           */
                         ],
                       ),
                     ],
