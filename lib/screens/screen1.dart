@@ -48,7 +48,7 @@ class Screen1 extends StatelessWidget {
                   SizedBox(height: 20),
                   // Rounded Image
                   Container(
-                    width: 600,
+                    width: 500,
                     height: 318,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,

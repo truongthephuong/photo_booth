@@ -230,7 +230,7 @@ class _Screen3State extends State<Screen3> {
           children: [
             // Background Image
             Image(
-              image: AssetImage('assets/template/theme.png'),
+              image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
             Container(
