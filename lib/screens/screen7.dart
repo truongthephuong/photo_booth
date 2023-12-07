@@ -207,6 +207,7 @@ class _Screen7State extends State<Screen7> {
           backgroundColor: Colors.green,
           foregroundColor: Colors.black,
           onPressed: () {
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Screen1()),

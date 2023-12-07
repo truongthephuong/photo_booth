@@ -62,6 +62,7 @@ class _Screen4State extends State<Screen4> {
       _showMyDialog();
       return;
     } else {
+      Navigator.pop(context);
       Navigator.push(
           context,
           MaterialPageRoute(
