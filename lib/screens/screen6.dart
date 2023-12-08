@@ -59,7 +59,7 @@ class _Screen6State extends State<Screen6> {
         length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
   }
 
-  Future<void> getImagePath(int fileName) async {
+  Future<void> getImagePath(String fileName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
@@ -77,9 +77,7 @@ class _Screen6State extends State<Screen6> {
     final String resultUserDir = path.join(userDir, 'Result');
     await Directory(resultUserDir).create(recursive: true);
 
-    String randomStr = getRandomString(5);
-    String fileNameWithPath = '$fileName-${randomStr}.jpg';
-    final String userPath = path.join(resultUserDir, fileNameWithPath);
+    final String userPath = path.join(resultUserDir, fileName);
     setState(() {
       aiImages.add(userPath);
       userImgPath = userPath;
@@ -137,7 +135,10 @@ class _Screen6State extends State<Screen6> {
                 base64Decode(dynamicData.firstOrNull ?? "");
 
             if (imageData.isNotEmpty) {
-              await ImageSaver.saveImage(aiEffectIDSess, imageData);
+              String randomStr = getRandomString(5);
+              String fileNameWithPath = '$aiEffectIDSess-${randomStr}.jpg';
+
+              await ImageSaver.saveImage(fileNameWithPath, imageData);
 
               setState(() {
                 resultImageUrl = imageData;
@@ -146,9 +147,9 @@ class _Screen6State extends State<Screen6> {
 
               print('done');
 
-              getImagePath(aiEffectIDSess);
+              getImagePath(fileNameWithPath);
 
-              imgListAi.add(getImagePath(aiEffectIDSess) as ImgList);
+              imgListAi.add(getImagePath(fileNameWithPath) as ImgList);
             }
           }
         }
@@ -272,7 +273,7 @@ class _Screen6State extends State<Screen6> {
 }
 
 class ImageSaver {
-  static Future<void> saveImage(int fileName, Uint8List imageData) async {
+  static Future<void> saveImage(String fileName, Uint8List imageData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
@@ -290,8 +291,7 @@ class ImageSaver {
     final String resultUserDir = path.join(userDir, 'Result');
     await Directory(resultUserDir).create(recursive: true);
 
-    String fileNameWithPath = '$fileName.jpg';
-    final String userPath = path.join(resultUserDir, fileNameWithPath);
+    final String userPath = path.join(resultUserDir, fileName);
     File(userPath).writeAsBytesSync(imageData);
   }
 }
