@@ -250,7 +250,7 @@ class _Screen6State extends State<Screen6> {
     const oneSec = const Duration(seconds: 1);
     new Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        _progressValue += 0.1;
+        _progressValue += 0.01;
         // we "finish" downloading here
         if (_progressValue.toStringAsFixed(1) == '2.0' || doneAi) {
           //_loading = false;
