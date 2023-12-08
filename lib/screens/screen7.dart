@@ -87,15 +87,14 @@ class _Screen7State extends State<Screen7> {
     // Prepare the request body
     final requestBody = {
       "image_selected": resultUrl,
-      "bkgrnd_image": path.join(assertImageDir, '3a.jpg'),
-      "logo_image": path.join(assertImageDir, 'h1.png'),
-      "hearth_image_1": path.join(assertImageDir, 'h1.png'),
-      "hearth_image_2": path.join(assertImageDir, 'h1.png'),
-      "banned_image": path.join(assertImageDir, 'Banned-Transparent.png'),
-      "small_icon": path.join(assertImageDir, "Asset1.png"),
-      "kiss_icon": path.join(assertImageDir, "kiss.png"),
-      "generated_print_image_path":
-          path.join(internalFolder, "print_image.jpg"),
+      "bkgrnd_image": "C:/photoboothprint/3a.jpg",
+      "logo_image": "C:/photoboothprint/h1.png",
+      "hearth_image_1": "C:/photoboothprint/h1.png",
+      "hearth_image_2": "C:/photoboothprint/h1.png",
+      "banned_image": "C:/photoboothprint/Banned-Transparent.png",
+      "small_icon": "C:/photoboothprint/Asset1.png",
+      "kiss_icon": "C:/photoboothprint/kiss.png",
+      "generated_print_image_path": "C:/photoboothprint/print_image.jpg",
     };
 
     // Create the HTTP request
