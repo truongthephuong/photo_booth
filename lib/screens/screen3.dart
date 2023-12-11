@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'dart:math';
 import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as img;
+import 'package:stroke_text/stroke_text.dart';
 
 class Screen3 extends StatefulWidget {
   @override
@@ -58,7 +59,8 @@ class _Screen3State extends State<Screen3> {
   Future<void> _initializeCamera() async {
     cameras = await availableCameras();
 
-    _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
+    _controller = new CameraController(cameras.first, ResolutionPreset.medium);
+
     await _controller.initialize();
 
     if (!mounted) return;
@@ -223,6 +225,18 @@ class _Screen3State extends State<Screen3> {
       return Container();
     }
 
+    var camera = _controller.value;
+    final size = MediaQuery.of(context).size;
+
+    // calculate scale depending on screen and camera ratios
+    // this is actually size.aspectRatio / (1 / camera.aspectRatio)
+    // because camera preview size is received as landscape
+    // but we're calculating for portrait orientation
+    var scale = size.aspectRatio * camera.aspectRatio;
+
+    // to prevent scaling down, invert the value
+    if (scale < 1) scale = 1 / scale;
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -233,33 +247,21 @@ class _Screen3State extends State<Screen3> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/template/text-screen2.png',
+                )
+              ],
+            ),
             Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 0.0, top: 20.0),
+              margin: const EdgeInsets.only(left: 10.0, right: 0.0, top: 20.0),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        text: '인공지능',
-                        style: TextStyle(
-                            fontSize: 45,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.orangeAccent,
-                            fontFamily: 'GulyFont'),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: ' 은 어떻게 나를 바꾸어 줄까요?',
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontFamily: 'GulyFont'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     // Rounded Image
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -268,16 +270,16 @@ class _Screen3State extends State<Screen3> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              //color: Colors.white,
+                              // color: Colors.white,
                               alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 0),
-                              height: 350,
-                              width: 500,
+                              margin: EdgeInsets.only(left: 0, top: 100),
+                              height: 480,
+                              width: 900,
                               child: ClipRRect(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(20)),
                                 child: AspectRatio(
-                                  aspectRatio: 1,
+                                  aspectRatio: 2,
                                   child: CameraPreview(_controller),
                                 ),
                               ),
@@ -289,8 +291,7 @@ class _Screen3State extends State<Screen3> {
                           children: [
                             Center(
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 0, top: 10),
+                                padding: const EdgeInsets.only(left: 0, top: 5),
                                 child: startCount
                                     ? Container(
                                         padding: const EdgeInsets.all(20),
@@ -302,7 +303,7 @@ class _Screen3State extends State<Screen3> {
                                         child: Text(
                                           '$_countdown',
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 30,
                                               color: Colors.white,
                                               fontFamily: 'GulyFont'),
                                         ),
@@ -316,7 +317,7 @@ class _Screen3State extends State<Screen3> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10, top: 40),
+                              margin: EdgeInsets.only(left: 10, top: 5),
                               alignment: Alignment.bottomCenter,
                               child: (startCount || savedImages.isNotEmpty)
                                   ? Container()
@@ -328,17 +329,26 @@ class _Screen3State extends State<Screen3> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 30, vertical: 20),
-                                        child: Text('촬영',
-                                            style: TextStyle(
-                                                fontSize: 45,
-                                                color: Colors.black,
-                                                fontFamily: 'GulyFont')),
+                                        child: StrokeText(
+                                          text: "촬영",
+                                          textStyle: TextStyle(
+                                            fontSize: 100,
+                                            color: Colors.black,
+                                            fontFamily: 'GulyFont',
+                                          ),
+                                          strokeColor: Colors.white,
+                                          strokeWidth: 5,
+                                        ),
                                       ),
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.teal,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),
+                                          side: BorderSide(
+                                            width: 5,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),

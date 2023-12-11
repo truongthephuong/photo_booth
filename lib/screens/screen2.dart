@@ -75,6 +75,14 @@ class _Screen2State extends State<Screen2> {
         body: Stack(
           children: [
             BackGroundImage(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/template/text-screen2.png',
+                )
+              ],
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,35 +91,21 @@ class _Screen2State extends State<Screen2> {
                     child: SafeArea(
                       child: Container(
                         margin: const EdgeInsets.only(
-                            left: 10.0, right: 0.0, top: 0.0),
+                            left: 10.0, right: 0.0, top: 150.0),
                         alignment: Alignment.center,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 80.0,
-                            ),
-                            Center(
-                              child: RichText(
-                                text: TextSpan(
-                                  text: '인공지능 ',
-                                  style: kHeading,
-                                  children: <TextSpan>[
-                                    TextSpan(text: '은 어떻게 ', style: kHeading1),
-                                    TextSpan(text: '나의 모습을 ', style: kButton),
-                                    TextSpan(
-                                        text: '바꾸어 줄까요? ', style: kHeading1),
-                                  ],
-                                ),
-                              ),
+                              height: 50.0,
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: 600,
-                                  height: 400,
+                                  width: 1000,
+                                  height: 500,
                                   //color: Colors.green[200],
                                   alignment: Alignment.center,
                                   child: Row(
@@ -120,11 +114,11 @@ class _Screen2State extends State<Screen2> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        width: 250,
+                                        width: 480,
                                         //height: 270,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(15),
+                                              BorderRadius.circular(20),
                                           color: Colors.green[200],
                                         ),
                                         child: ClipRRect(
@@ -143,7 +137,7 @@ class _Screen2State extends State<Screen2> {
                                         //color: Colors.blue[200],
                                       ),
                                       Container(
-                                        width: 250,
+                                        width: 480,
                                         //height: 270,
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -176,11 +170,26 @@ class _Screen2State extends State<Screen2> {
                               },
                               elevation: 2.0,
                               fillColor: Colors.teal.withOpacity(0.8),
-                              child: Icon(Icons.arrow_forward_ios_sharp,
-                                  size: 35.0),
-                              padding: EdgeInsets.all(15.0),
-                              shape: CircleBorder(),
-                            )
+                              child: Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                size: 55.0,
+                              ),
+                              padding: EdgeInsets.all(30.0),
+                              shape: CircleBorder(
+                                side: BorderSide(
+                                  color: Colors.white,
+                                  width: 5,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/template/screen2_below_text.png',
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       ),

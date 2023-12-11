@@ -61,6 +61,7 @@ dependencies:
   flutter_native_image: ^0.0.6
   flutter_countdown_timer: ^4.1.0
   qr_flutter: ^4.1.0
+  stroke_text: 0.0.2
 
 dev_dependencies:
   flutter_test:

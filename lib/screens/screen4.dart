@@ -7,6 +7,7 @@ import 'package:photobooth_section1/screens/screen5.dart';
 // import 'package:flutter/painting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
+import 'package:stroke_text/stroke_text.dart';
 
 class Screen4 extends StatefulWidget {
   List<ImageModel> images = [];
@@ -95,7 +96,7 @@ class _Screen4State extends State<Screen4> {
                 Text(
                   '사진 하나를 선택해주세요',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 60,
                     fontFamily: 'GulyFont',
                     color: Colors.redAccent,
                   ),
@@ -108,7 +109,7 @@ class _Screen4State extends State<Screen4> {
               child: const Text(
                 '좋아요',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 30,
                   fontFamily: 'GulyFont',
                   color: Colors.black,
                 ),
@@ -134,33 +135,18 @@ class _Screen4State extends State<Screen4> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/template/text-screen4.png',
+                )
+              ],
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      text: '합성할 사진',
-                      style: TextStyle(
-                          fontSize: 45,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orangeAccent,
-                          fontFamily: 'GulyFont'),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' 을 선택해 주세요!',
-                          style: TextStyle(
-                            fontSize: 45,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                            fontFamily: 'GulyFont',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -173,8 +159,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 0),
-                                width: 240,
-                                height: 180,
+                                width: 400,
+                                height: 230,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -202,8 +188,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 10),
-                                width: 240,
-                                height: 180,
+                                width: 400,
+                                height: 230,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -237,8 +223,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 0, top: 10),
-                                width: 240,
-                                height: 180,
+                                width: 400,
+                                height: 230,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -266,8 +252,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 10, top: 10),
-                                width: 240,
-                                height: 180,
+                                width: 400,
+                                height: 230,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -292,7 +278,7 @@ class _Screen4State extends State<Screen4> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 20, top: 10),
+                        margin: EdgeInsets.only(left: 5, top: 15),
                         alignment: Alignment.bottomCenter,
                         child: ElevatedButton(
                           onPressed: () {
@@ -301,18 +287,26 @@ class _Screen4State extends State<Screen4> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 20),
-                            child: Text('시작',
-                                style: TextStyle(
-                                    fontSize: 50,
-                                    color: Colors.black,
-                                    fontFamily: 'GulyFont')),
+                                horizontal: 30, vertical: 12),
+                            child: StrokeText(
+                              text: "결정",
+                              textStyle: TextStyle(
+                                fontSize: 85,
+                                color: Colors.black,
+                                fontFamily: 'GulyFont',
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 5,
+                            ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightGreen,
+                            backgroundColor: Colors.teal,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide(
+                                  width: 5,
+                                  color: Colors.white,
+                                )),
                           ),
                         ),
                       ),

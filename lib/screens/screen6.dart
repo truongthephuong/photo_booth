@@ -162,6 +162,14 @@ class _Screen6State extends State<Screen6> {
     return Stack(
       children: [
         BackGroundImage(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/template/text-screen6.png',
+            )
+          ],
+        ),
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -173,42 +181,24 @@ class _Screen6State extends State<Screen6> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 20,
+                      height: 80,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(
-                          left: 20.0, right: 0.0, top: 0.0),
-                      height: 150,
-                      child: Center(
-                        child: RichText(
-                          text: TextSpan(
-                            text: '인공지능 ',
-                            style: kHeading,
-                            children: <TextSpan>[
-                              TextSpan(text: '은 어떻게 ', style: kHeading1),
-                              TextSpan(
-                                  text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 900,
-                      height: 380,
+                      width: 1100,
+                      height: 580,
                       child: Column(
                         children: [
                           Image.asset(
                             'assets/images/welcome.png',
-                            width: 900,
-                            height: 380,
+                            width: 1100,
+                            height: 580,
                           ),
                         ],
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.all(12.0),
-                      width: 500,
+                      width: 1020,
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         color: Colors.white,
@@ -221,23 +211,25 @@ class _Screen6State extends State<Screen6> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Container(
-                                    height: 20,
-                                    width: 256,
+                                    height: 30,
+                                    width: 1020,
                                     child: LinearProgressIndicator(
                                       minHeight: 20.0,
-                                      backgroundColor: Colors.limeAccent,
+                                      backgroundColor: Colors.lightBlueAccent,
                                       valueColor:
                                           new AlwaysStoppedAnimation<Color>(
-                                              Colors.blueAccent),
+                                              Colors.blue),
                                       value: _progressValue,
                                     ),
                                   ),
                                 ),
                                 //Text('${(_progressValue * 100).round()}%',
-                                Text('외계인을 납치해 오는중...',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.blueAccent)),
+                                //외계인을 납치해 오는중...
+                                Image.asset(
+                                  'assets/images/loading_text.png',
+                                  width: 1000,
+                                  height: 30,
+                                ),
                               ],
                             )
                           : Text("", style: TextStyle(fontSize: 25)),

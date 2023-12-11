@@ -269,82 +269,108 @@ class _Screen5State extends State<Screen5> {
                 child: SafeArea(
                   child: Container(
                     margin: const EdgeInsets.only(
-                        left: 10.0, right: 10.0, top: 0.0),
+                      left: 10.0,
+                      right: 10.0,
+                      top: 100.0,
+                      bottom: 350,
+                    ),
                     alignment: Alignment.center,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: 40.0,
-                        ),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                              text: '인공지능 ',
-                              style: kHeading,
-                              children: <TextSpan>[
-                                TextSpan(text: '은 어떻게 ', style: kHeading1),
-                                TextSpan(
-                                    text: '은 어떻게 나를 바꾸어 줄까요? ',
-                                    style: kHeading1),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
                         Container(
+                          margin: const EdgeInsets.only(
+                            bottom: 100.0,
+                          ),
                           width: 500,
-                          height: 800,
+                          height: 1200,
                           //color: Colors.green[200],
                           alignment: Alignment.center,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                //color: Colors.green[200],
-                                width: 244,
-                                height: 240,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.green[200],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Image.file(File(widget.image)),
+                              Center(
+                                child: Container(
+                                  width: 490.0,
+                                  height: 480.0,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.teal,
+                                    // border: Border.all(
+                                    //   color: Colors.white,
+                                    // ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/template/screen5_layer.png'), // Add your background image path
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(
+                                        top: 70.0,
+                                      ),
+                                      width: 490.0,
+                                      height: 520.0,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        image: DecorationImage(
+                                          image: new FileImage(
+                                            File(widget.image),
+                                          ), // Add your foreground image path
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                               const SizedBox(
-                                height: 10.0,
+                                height: 20.0,
                               ),
                               Center(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      textStyle: const TextStyle(fontSize: 20)),
+                                    textStyle: const TextStyle(fontSize: 30),
+                                    backgroundColor: Colors.blueAccent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Screen6(
-                                                imgUrl: '',
-                                                effectName: '',
-                                              )),
-                                      //MaterialPageRoute(builder: (context) => Screen3()),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => Screen6(
+                                    //             imgUrl: '',
+                                    //             effectName: '',
+                                    //           )),
+                                    //   //MaterialPageRoute(builder: (context) => Screen3()),
+                                    // );
                                   },
-                                  child: const Text('스타일 선택',
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    child: Text(
+                                      '스타일 선택',
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.blueAccent,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                        fontSize: 50,
+                                        color: Colors.white,
+                                        backgroundColor: Colors.blueAccent,
+                                        fontFamily: 'GulyFont',
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                               const SizedBox(
-                                height: 10.0,
+                                height: 20.0,
                               ),
                               Container(
                                 //color: Colors.white,

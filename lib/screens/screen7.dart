@@ -131,35 +131,19 @@ class _Screen7State extends State<Screen7> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/template/text-screen7.png',
+                )
+              ],
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    margin:
-                        const EdgeInsets.only(left: 10.0, right: 0.0, top: 0.0),
-                    child: RichText(
-                      text: TextSpan(
-                        text: '바뀐 나의 모습을',
-                        style: TextStyle(
-                            fontSize: 45,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'GulyFont'),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: ' 전송할 수 있어요!',
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orangeAccent,
-                                fontFamily: 'GulyFont'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 300),
                   // Rounded Image
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -167,12 +151,41 @@ class _Screen7State extends State<Screen7> {
                       Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
-                            color: Colors.blueAccent,
-                            height: 300,
-                            width: 350,
-                            child: ImageCard(
-                              imageCardUrl: widget.imgUrl,
+                            width: 490.0,
+                            height: 480.0,
+                            decoration: BoxDecoration(
+                              // color: Colors.teal,
+                              // border: Border.all(
+                              //   color: Colors.white,
+                              // ),
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/template/screen5_layer.png'), // Add your background image path
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                            child: Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                  top: 70.0,
+                                ),
+                                width: 490.0,
+                                height: 520.0,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                    image: new FileImage(
+                                      File(widget.imgUrl),
+                                    ), // Add your foreground image path
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -182,7 +195,11 @@ class _Screen7State extends State<Screen7> {
                   Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 30, top: 10),
+                        margin: EdgeInsets.only(
+                          left: 30,
+                          top: 20,
+                          bottom: 20,
+                        ),
                         alignment: Alignment.bottomCenter,
                         child: ElevatedButton(
                           onPressed: () {
@@ -190,10 +207,10 @@ class _Screen7State extends State<Screen7> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
+                                horizontal: 10, vertical: 5),
                             child: Text('QR 전송',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 35,
                                     color: Colors.white,
                                     fontFamily: 'GulyFont')),
                           ),
@@ -206,21 +223,49 @@ class _Screen7State extends State<Screen7> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 30, top: 5),
-                        height: 263,
-                        width: 272,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: imgUrlTest.isNotEmpty
-                                ? QrImageView(
-                                    data: imgUrlTest,
-                                    version: QrVersions.auto,
-                                    size: 50,
-                                    backgroundColor: Colors.white,
-                                  )
-                                : Container(),
+                        width: 290.0,
+                        height: 380.0,
+                        margin: EdgeInsets.only(
+                          left: 30,
+                          top: 20,
+                          bottom: 20,
+                        ),
+                        decoration: BoxDecoration(
+                          // color: Colors.white,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 10,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/template/screen7_qr_company.png'), // Add your background image path
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                        child: Center(
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              // left: 20,
+                              // right: 20,
+                              top: 30,
+                              // bottom: 20,
+                            ),
+                            child: ClipRRect(
+                              // borderRadius:
+                              //     BorderRadius.all(Radius.circular(10)),
+                              child: AspectRatio(
+                                aspectRatio: 0.6,
+                                child: imgUrlTest.isNotEmpty
+                                    ? QrImageView(
+                                        data: imgUrlTest,
+                                        version: QrVersions.auto,
+                                        size: 200
+                                        // backgroundColor: Colors.white,
+                                        )
+                                    : Container(),
+                              ),
+                            ),
                           ),
                         ),
                       ),
