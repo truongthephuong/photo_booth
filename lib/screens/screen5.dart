@@ -198,7 +198,6 @@ class _Screen5State extends State<Screen5> {
       name: 'Witch',
       effect: 'witch-woman',
     ),
-
   ];
 
   @override
@@ -262,118 +261,123 @@ class _Screen5State extends State<Screen5> {
     return Stack(
       children: [
         BackGroundImage(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: SafeArea(
-              child: Container(
-                margin:
-                    const EdgeInsets.only(left: 10.0, right: 10.0, top: 0.0),
-                alignment: Alignment.center,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 40.0,
-                    ),
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: '인공지능 ',
-                          style: kHeading,
-                          children: <TextSpan>[
-                            TextSpan(text: '은 어떻게 ', style: kHeading1),
-                            TextSpan(
-                                text: '은 어떻게 나를 바꾸어 줄까요? ', style: kHeading1),
-                          ],
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SingleChildScrollView(
+                child: SafeArea(
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        left: 10.0, right: 10.0, top: 0.0),
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 40.0,
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      width: 500,
-                      height: 800,
-                      //color: Colors.green[200],
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            //color: Colors.green[200],
-                            width: 244,
-                            height: 240,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.green[200],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.file(File(widget.image)),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: '인공지능 ',
+                              style: kHeading,
+                              children: <TextSpan>[
+                                TextSpan(text: '은 어떻게 ', style: kHeading1),
+                                TextSpan(
+                                    text: '은 어떻게 나를 바꾸어 줄까요? ',
+                                    style: kHeading1),
+                              ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Center(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  textStyle: const TextStyle(fontSize: 20)),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Screen6(
-                                            imgUrl: '',
-                                            effectName: '',
-                                          )),
-                                  //MaterialPageRoute(builder: (context) => Screen3()),
-                                );
-                              },
-                              child: const Text('스타일 선택',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.blueAccent,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Container(
-                            //color: Colors.white,
-                            width: 500,
-                            height: 500,
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 500,
-                              child: Container(
-                                child: GridView(
-                                  padding: const EdgeInsets.all(5),
-                                  scrollDirection: Axis.vertical,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 2,
-                                  ),
-                                  children: widgets,
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          width: 500,
+                          height: 800,
+                          //color: Colors.green[200],
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                //color: Colors.green[200],
+                                width: 244,
+                                height: 240,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.green[200],
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.file(File(widget.image)),
                                 ),
                               ),
-                            ),
+                              const SizedBox(
+                                height: 10.0,
+                              ),
+                              Center(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      textStyle: const TextStyle(fontSize: 20)),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Screen6(
+                                                imgUrl: '',
+                                                effectName: '',
+                                              )),
+                                      //MaterialPageRoute(builder: (context) => Screen3()),
+                                    );
+                                  },
+                                  child: const Text('스타일 선택',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                //color: Colors.white,
+                                width: 500,
+                                height: 500,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 500,
+                                  child: Container(
+                                    child: GridView(
+                                      padding: const EdgeInsets.all(5),
+                                      scrollDirection: Axis.vertical,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        mainAxisSpacing: 2,
+                                      ),
+                                      children: widgets,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              )
+            ],
           ),
-        ),
+        )
       ],
     );
   }

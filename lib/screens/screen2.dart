@@ -75,125 +75,120 @@ class _Screen2State extends State<Screen2> {
         body: Stack(
           children: [
             BackGroundImage(),
-            Scaffold(
-              backgroundColor: Colors.transparent,
-              body: SingleChildScrollView(
-                child: SafeArea(
-                  child: Container(
-                    margin:
-                        const EdgeInsets.only(left: 10.0, right: 0.0, top: 0.0),
-                    alignment: Alignment.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 80.0,
-                        ),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                              text: '인공지능 ',
-                              style: kHeading,
-                              children: <TextSpan>[
-                                TextSpan(text: '은 어떻게 ', style: kHeading1),
-                                TextSpan(text: '나의 모습을 ', style: kButton),
-                                TextSpan(text: '바꾸어 줄까요? ', style: kHeading1),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SingleChildScrollView(
+                    child: SafeArea(
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 10.0, right: 0.0, top: 0.0),
+                        alignment: Alignment.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 600,
-                              height: 400,
-                              //color: Colors.green[200],
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 250,
-                                    //height: 270,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.asset(
-                                        'assets/images/screen2.gif',
-                                        width: 250,
-                                        //height: 270,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 30,
-                                    height: 225,
-                                    //color: Colors.blue[200],
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    //height: 270,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: Colors.green[200],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.asset(
-                                        'assets/images/screen2.gif',
-                                        width: 250,
-                                        //height: 275,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                            const SizedBox(
+                              height: 80.0,
+                            ),
+                            Center(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '인공지능 ',
+                                  style: kHeading,
+                                  children: <TextSpan>[
+                                    TextSpan(text: '은 어떻게 ', style: kHeading1),
+                                    TextSpan(text: '나의 모습을 ', style: kButton),
+                                    TextSpan(
+                                        text: '바꾸어 줄까요? ', style: kHeading1),
+                                  ],
+                                ),
                               ),
                             ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 600,
+                                  height: 400,
+                                  //color: Colors.green[200],
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 250,
+                                        //height: 270,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Colors.green[200],
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          child: Image.asset(
+                                            'assets/images/screen2.gif',
+                                            width: 250,
+                                            //height: 270,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 30,
+                                        height: 225,
+                                        //color: Colors.blue[200],
+                                      ),
+                                      Container(
+                                        width: 250,
+                                        //height: 270,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Colors.green[200],
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          child: Image.asset(
+                                            'assets/images/screen2.gif',
+                                            width: 250,
+                                            //height: 275,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            RawMaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
+                                  MaterialPageRoute(
+                                      builder: (context) => Screen3()),
+                                );
+                              },
+                              elevation: 2.0,
+                              fillColor: Colors.teal.withOpacity(0.8),
+                              child: Icon(Icons.arrow_forward_ios_sharp,
+                                  size: 35.0),
+                              padding: EdgeInsets.all(15.0),
+                              shape: CircleBorder(),
+                            )
                           ],
                         ),
-                        RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
-                              MaterialPageRoute(builder: (context) => Screen3()),
-                            );
-                          },
-                          elevation: 2.0,
-                          fillColor: Colors.teal.withOpacity(0.8),
-                          child:
-                              Icon(Icons.arrow_forward_ios_sharp, size: 35.0),
-                          padding: EdgeInsets.all(15.0),
-                          shape: CircleBorder(),
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ),
-              /*
-              floatingActionButton: Align(
-                child: FloatingActionButton(
-                  backgroundColor: Colors.white54.withOpacity(0.2),
-                  child: Icon(Icons.arrow_forward_ios_sharp, size: 30.0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      //MaterialPageRoute(builder: (context) => CameraApp()),
-                      MaterialPageRoute(builder: (context) => Screen3()),
-                    );
-                  },
-                ),
-                alignment: Alignment(1, 0.1),
-              ),
-               */
-            ),
+            )
           ],
         ),
       ),
