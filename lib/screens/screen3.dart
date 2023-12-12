@@ -284,7 +284,7 @@ class _Screen3State extends State<Screen3> {
                               ),
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(left: 0, top: 320),
-                              height: 590,
+                              height: 610,
                               width: 460,
                               child: ClipRRect(
                                 borderRadius:
@@ -372,6 +372,7 @@ class _Screen3State extends State<Screen3> {
                     SizedBox(height: 10),
                     Container(
                       height: 120,
+                      width: 500,
                       //color: Colors.green[200],
                       alignment: Alignment.center,
                       child: ThumbnailGridView(
@@ -413,13 +414,18 @@ class ThumbnailGridView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Stack(
               children: [
-                Image.file(
-                  File(images[index].imgUrl),
+                Container(
                   width: 110.0,
-                  height: 100.0,
-                  fit: BoxFit.cover,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Image.file(
+                    File(images[index].imgUrl),
+                    width: 110.0,
+                    height: 100.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-
               ],
             ),
           );
