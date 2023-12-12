@@ -120,7 +120,7 @@ class _Screen2State extends State<Screen2> {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(20),
-                                          color: Colors.green[200],
+                                          //color: Colors.green[200],
                                         ),
                                         child: ClipRRect(
                                           borderRadius:
