@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/models/ai_model.dart';
@@ -345,6 +346,7 @@ class _Screen5State extends State<Screen5> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    AudioPlayer().play(AssetSource('audio/button.mp3'));
                                     // Navigator.push(
                                     //   context,
                                     //   MaterialPageRoute(

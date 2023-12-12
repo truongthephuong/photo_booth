@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:window_manager/window_manager.dart';
@@ -12,7 +13,7 @@ List<CameraDescription> cameras = [];
 Future<void> main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
-
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     // Must add this line.
     //await windowManager.ensureInitialized();
 

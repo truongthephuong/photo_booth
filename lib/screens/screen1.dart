@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen2.dart';
 import 'package:stroke_text/stroke_text.dart';
@@ -46,6 +47,7 @@ class Screen1 extends StatelessWidget {
 
                   ElevatedButton(
                     onPressed: () {
+                      AudioPlayer().play(AssetSource('audio/button.mp3'));
                       Navigator.push(
                           context,
                           MaterialPageRoute(

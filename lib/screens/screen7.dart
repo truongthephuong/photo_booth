@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -25,6 +26,7 @@ class _Screen7State extends State<Screen7> {
   @override
   void initState() {
     super.initState();
+    AudioPlayer().play(AssetSource('audio/screen7.mp3'));
     _printDataAndSaveImage(widget.imgUrl);
     _uploadImage();
   }

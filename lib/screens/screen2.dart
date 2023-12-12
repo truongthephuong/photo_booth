@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -161,6 +162,7 @@ class _Screen2State extends State<Screen2> {
                             ),
                             RawMaterialButton(
                               onPressed: () {
+                                AudioPlayer().play(AssetSource('audio/button.mp3'));
                                 Navigator.push(
                                   context,
                                   //MaterialPageRoute(builder: (context) => Screen5(image: '',)),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/models/image_model.dart';
 import 'package:photobooth_section1/screens/screen5.dart';
@@ -115,6 +116,7 @@ class _Screen4State extends State<Screen4> {
                 ),
               ),
               onPressed: () {
+                AudioPlayer().play(AssetSource('audio/button.mp3'));
                 Navigator.of(context).pop();
               },
             ),
@@ -282,6 +284,7 @@ class _Screen4State extends State<Screen4> {
                         alignment: Alignment.bottomCenter,
                         child: ElevatedButton(
                           onPressed: () {
+                            AudioPlayer().play(AssetSource('audio/button.mp3'));
                             // Add
                             _goToEffect();
                           },

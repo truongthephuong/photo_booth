@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
@@ -272,14 +273,14 @@ class _Screen3State extends State<Screen3> {
                             Container(
                               // color: Colors.white,
                               alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 0, top: 100),
-                              height: 480,
-                              width: 900,
+                              margin: EdgeInsets.only(left: 0, top: 320),
+                              height: 600,
+                              width: 500,
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                                 child: AspectRatio(
-                                  aspectRatio: 2,
+                                  aspectRatio: 3.0 / 4.0,
                                   child: CameraPreview(_controller),
                                 ),
                               ),
@@ -323,6 +324,7 @@ class _Screen3State extends State<Screen3> {
                                   ? Container()
                                   : ElevatedButton(
                                       onPressed: () {
+                                        AudioPlayer().play(AssetSource('audio/take_picture.mp3'));
                                         // Trigger start countdown
                                         startTimer();
                                       },
