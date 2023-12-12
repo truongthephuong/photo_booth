@@ -367,7 +367,44 @@ class _Screen3State extends State<Screen3> {
             )
           ],
         ),
+        bottomNavigationBar: ThumbnailGridView(
+          images: savedImages,
+        ),
+      ),
+    );
+  }
+
+}
+
+class ThumbnailGridView extends StatelessWidget {
+  final List<ImageModel> images;
+  const ThumbnailGridView({Key? key, required this.images}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: images.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: [
+                Image.file(
+                  File(images[index].imgUrl),
+                  width: 80.0,
+                  height: 80.0,
+                  fit: BoxFit.cover,
+                ),
+
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 }
+
