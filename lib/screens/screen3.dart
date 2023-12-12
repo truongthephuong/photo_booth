@@ -86,9 +86,11 @@ class _Screen3State extends State<Screen3> {
         _countdown = 3;
         startCount = false;
         if (okToTimer) {
+          AudioPlayer().play(AssetSource('audio/take_picture.mp3'));
           startTimer();
         }
       } else {
+
         setState(() {
           _countdown--;
           startCount = true;
