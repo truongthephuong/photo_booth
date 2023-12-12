@@ -273,11 +273,19 @@ class _Screen3State extends State<Screen3> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              // color: Colors.white,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+
+                              ),
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(left: 0, top: 320),
-                              height: 600,
-                              width: 500,
+                              height: 590,
+                              width: 460,
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
@@ -358,18 +366,31 @@ class _Screen3State extends State<Screen3> {
                                     ),
                             ),
                           ],
-                        )
+                        ),
                       ],
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      height: 120,
+                      //color: Colors.green[200],
+                      alignment: Alignment.center,
+                      child: ThumbnailGridView(
+                        images: savedImages,
+                      ),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
+
           ],
         ),
+        /*
         bottomNavigationBar: ThumbnailGridView(
           images: savedImages,
         ),
+
+         */
       ),
     );
   }
@@ -383,7 +404,7 @@ class ThumbnailGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 110,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
@@ -394,8 +415,8 @@ class ThumbnailGridView extends StatelessWidget {
               children: [
                 Image.file(
                   File(images[index].imgUrl),
-                  width: 80.0,
-                  height: 80.0,
+                  width: 110.0,
+                  height: 100.0,
                   fit: BoxFit.cover,
                 ),
 
