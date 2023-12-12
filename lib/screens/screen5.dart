@@ -294,8 +294,8 @@ class _Screen5State extends State<Screen5> {
                             children: [
                               Center(
                                 child: Container(
-                                  width: 490.0,
-                                  height: 480.0,
+                                  width: 500.0,
+                                  height: 460.0,
                                   decoration: BoxDecoration(
                                     // color: Colors.teal,
                                     // border: Border.all(
@@ -316,10 +316,10 @@ class _Screen5State extends State<Screen5> {
                                       width: 490.0,
                                       height: 520.0,
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 1,
-                                        ),
+                                        // border: Border.all(
+                                        //   color: Colors.white,
+                                        //   width: 1,
+                                        // ),
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                         image: DecorationImage(

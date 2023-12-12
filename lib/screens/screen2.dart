@@ -166,8 +166,7 @@ class _Screen2State extends State<Screen2> {
                                 Navigator.push(
                                   context,
                                   //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
-                                  MaterialPageRoute(
-                                      builder: (context) => Screen3()),
+                                  MaterialPageRoute(builder: (context) => Screen3()),
                                 );
                               },
                               elevation: 2.0,

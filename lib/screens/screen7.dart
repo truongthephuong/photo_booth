@@ -133,6 +133,7 @@ class _Screen7State extends State<Screen7> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -141,6 +142,7 @@ class _Screen7State extends State<Screen7> {
                 )
               ],
             ),
+
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -153,18 +155,18 @@ class _Screen7State extends State<Screen7> {
                       Column(
                         children: [
                           Container(
-                            width: 490.0,
-                            height: 480.0,
+                            width: 500.0,
+                            height: 460.0,
                             decoration: BoxDecoration(
-                              // color: Colors.teal,
+                              //color: Colors.teal,
                               // border: Border.all(
-                              //   color: Colors.white,
+                              //   color: Colors.black,
                               // ),
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
                                     'assets/template/screen5_layer.png'), // Add your background image path
-                                fit: BoxFit.fitHeight,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             child: Center(
@@ -175,10 +177,10 @@ class _Screen7State extends State<Screen7> {
                                 width: 490.0,
                                 height: 520.0,
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 1,
-                                  ),
+                                  // border: Border.all(
+                                  //   color: Colors.white,
+                                  //   width: 0,
+                                  // ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
                                     image: new FileImage(
