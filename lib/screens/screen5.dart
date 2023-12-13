@@ -298,7 +298,7 @@ class _Screen5State extends State<Screen5> {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(
-                            bottom: 100.0,
+                            bottom: 80.0,
                           ),
                           width: 500,
                           height: 1200,
@@ -310,18 +310,18 @@ class _Screen5State extends State<Screen5> {
                             children: [
                               Center(
                                 child: Container(
-                                  width: 460.0,
-                                  height: 430.0,
+                                  width: 340.0,
+                                  height: 336.0,
                                   decoration: BoxDecoration(
                                     //color: Colors.teal,
                                     border: Border.all(
                                       color: Colors.white,
-                                      width: 0,
+                                      width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(15.0),
                                     image: DecorationImage(
                                       image: AssetImage('assets/template/screen5_layer.png'),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                   child: Center(
