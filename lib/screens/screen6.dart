@@ -37,6 +37,7 @@ class _Screen6State extends State<Screen6> {
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
+  String imgLoad = '';
 
   late bool _loading;
   late double _progressValue;
@@ -49,6 +50,10 @@ class _Screen6State extends State<Screen6> {
 
     _loading = !_loading;
     _updateProgress();
+
+    final string = widget.effectName;
+    final strEffected = string.split('-');
+    imgLoad = 'assets/images/screen6/${strEffected[0]}.png';
 
     // API call
     fetchDataAndSaveImage(widget.effectName);
@@ -186,15 +191,19 @@ class _Screen6State extends State<Screen6> {
                     Container(
                       width: 1100,
                       height: 580,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/welcome.png',
-                            width: 1100,
-                            height: 580,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              imgLoad.isEmpty ? 'assets/images/welcome.png' : imgLoad,
+                            ),
+                            fit: BoxFit.fill,
                           ),
-                        ],
-                      ),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Container(
                       padding: EdgeInsets.all(12.0),

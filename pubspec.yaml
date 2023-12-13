@@ -111,6 +111,7 @@ flutter:
     - assets/images/effective/Witch/
     - assets/template/
     - assets/audio/
+    - assets/images/screen6/
 
   fonts:
     - family: Header
