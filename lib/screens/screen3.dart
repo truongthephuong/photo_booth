@@ -267,7 +267,7 @@ class _Screen3State extends State<Screen3> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 50),
+                    SizedBox(height: 90),
                     // Rounded Image
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -317,9 +317,8 @@ class _Screen3State extends State<Screen3> {
                                       horizontal: 30, vertical: 20),
                                   child: (startCount || savedImages.isNotEmpty)
                                       ? StrokeText(
-                                          text: okToTimer
-                                              ? '$_countdown'
-                                              : "촬영",
+                                          text:
+                                              okToTimer ? '$_countdown' : "촬영",
                                           textStyle: TextStyle(
                                             fontSize: 80,
                                             color: Colors.black,
@@ -356,8 +355,8 @@ class _Screen3State extends State<Screen3> {
                       ],
                     ),
                     Container(
-                      height: 120,
-                      width: 500,
+                      height: 220,
+                      width: 900,
                       //color: Colors.green[200],
                       alignment: Alignment.center,
                       child: ThumbnailGridView(
@@ -388,15 +387,15 @@ class ThumbnailGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: 220,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
         itemBuilder: (context, index) {
           Image imageSnap = Image.file(
             File(images[index].imgUrl),
-            width: 110.0,
-            height: 110.0,
+            width: 200.0,
+            height: 220.0,
             fit: BoxFit.cover,
           );
           return Padding(
@@ -404,12 +403,12 @@ class ThumbnailGridView extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  width: 110.0,
-                  height: 120.0,
+                  width: 200.0,
+                  height: 220.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: imageSnap.image,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                     border: Border.all(
                       color: Colors.white,

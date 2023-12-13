@@ -91,7 +91,7 @@ class _Screen5State extends State<Screen5> {
       name: 'Comic',
       effect: 'comic-woman',
     ),
-  /*
+    /*
     AIModel(
       id: 13,
       img: 'assets/images/effective/GreenGoblin/GreenGoblin-man.gif',
@@ -165,7 +165,7 @@ class _Screen5State extends State<Screen5> {
       name: 'Romantic',
       effect: 'romantic-woman',
     ),
-  /*
+    /*
     AIModel(
       id: 25,
       img: 'assets/images/effective/Ultraviolet/Ultraviolet-man.gif',
@@ -249,7 +249,9 @@ class _Screen5State extends State<Screen5> {
                     height: 110,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(models[i].img,),
+                        image: AssetImage(
+                          models[i].img,
+                        ),
                         fit: BoxFit.fill,
                       ),
                       //color: Colors.deepOrange,
@@ -300,7 +302,7 @@ class _Screen5State extends State<Screen5> {
                           margin: const EdgeInsets.only(
                             bottom: 80.0,
                           ),
-                          width: 500,
+                          width: 580,
                           height: 1200,
                           //color: Colors.green[200],
                           alignment: Alignment.center,
@@ -308,41 +310,43 @@ class _Screen5State extends State<Screen5> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Center(
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
                                 child: Container(
                                   width: 340.0,
-                                  height: 336.0,
+                                  height: 350.0,
                                   decoration: BoxDecoration(
-                                    //color: Colors.teal,
+                                    color: Colors.white,
                                     border: Border.all(
                                       color: Colors.white,
-                                      width: 1,
+                                      width: 10,
                                     ),
-                                    borderRadius: BorderRadius.circular(15.0),
+                                    borderRadius: BorderRadius.circular(10.0),
                                     image: DecorationImage(
-                                      image: AssetImage('assets/template/screen5_layer.png'),
-                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          'assets/template/screen5_layer.png'),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   child: Center(
                                     child: Container(
                                       margin: const EdgeInsets.only(
-                                        top: 70.0,
+                                        top: 40.0,
                                       ),
-                                      width: 490.0,
-                                      height: 520.0,
+                                      width: 350.0,
+                                      height: 380.0,
                                       decoration: BoxDecoration(
                                         // border: Border.all(
-                                        //   color: Colors.white,
+                                        //   color: Colors.black,
                                         //   width: 1,
                                         // ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        // borderRadius:
+                                        //     BorderRadius.circular(10.0),
                                         image: DecorationImage(
                                           image: new FileImage(
                                             File(widget.image),
                                           ), // Add your foreground image path
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
                                     ),
@@ -359,19 +363,15 @@ class _Screen5State extends State<Screen5> {
                                     backgroundColor: Colors.blueAccent,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
+                                      side: BorderSide(
+                                        width: 5,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                   onPressed: () {
-                                    AudioPlayer().play(AssetSource('audio/button.mp3'));
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) => Screen6(
-                                    //             imgUrl: '',
-                                    //             effectName: '',
-                                    //           )),
-                                    //   //MaterialPageRoute(builder: (context) => Screen3()),
-                                    // );
+                                    AudioPlayer()
+                                        .play(AssetSource('audio/button.mp3'));
                                   },
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(vertical: 20),
