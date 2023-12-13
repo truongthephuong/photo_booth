@@ -6,6 +6,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photobooth_section1/screens/screen5.dart';
+import 'package:photobooth_section1/screens/screen6.dart';
 import 'package:photobooth_section1/screens/screen7.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
@@ -165,7 +166,7 @@ class _Screen2State extends State<Screen2> {
                                 AudioPlayer().play(AssetSource('audio/button.mp3'));
                                 Navigator.push(
                                   context,
-                                  //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
+                                  //MaterialPageRoute(builder: (context) => Screen6(imgUrl: '', effectName: '3dcartoon-man',)),
                                   MaterialPageRoute(builder: (context) => Screen3()),
                                 );
                               },
