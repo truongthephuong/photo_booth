@@ -90,7 +90,6 @@ class _Screen3State extends State<Screen3> {
           startTimer();
         }
       } else {
-
         setState(() {
           _countdown--;
           startCount = true;
@@ -259,12 +258,16 @@ class _Screen3State extends State<Screen3> {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(left: 10.0, right: 0.0, top: 20.0),
+              margin: const EdgeInsets.only(
+                left: 10.0,
+                right: 0.0,
+                top: 50.0,
+              ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10),
+                    SizedBox(height: 50),
                     // Rounded Image
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -277,10 +280,9 @@ class _Screen3State extends State<Screen3> {
                                 color: Colors.white,
                                 border: Border.all(
                                   color: Colors.white,
-                                  width: 2,
+                                  width: 5,
                                 ),
-                                borderRadius: BorderRadius.circular(10.0),
-
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(left: 0, top: 320),
@@ -300,76 +302,59 @@ class _Screen3State extends State<Screen3> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 0, top: 5),
-                                child: startCount
-                                    ? Container(
-                                        padding: const EdgeInsets.all(20),
-                                        decoration: const BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                        ),
-                                        child: Text(
-                                          '$_countdown',
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              color: Colors.white,
-                                              fontFamily: 'GulyFont'),
-                                        ),
-                                      )
-                                    : Container(),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10, top: 5),
+                              margin: EdgeInsets.only(left: 10, top: 10),
                               alignment: Alignment.bottomCenter,
-                              child: (startCount || savedImages.isNotEmpty)
-                                  ? Container()
-                                  : ElevatedButton(
-                                      onPressed: () {
-                                        AudioPlayer().play(AssetSource('audio/take_picture.mp3'));
-                                        // Trigger start countdown
-                                        startTimer();
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 30, vertical: 20),
-                                        child: StrokeText(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  AudioPlayer().play(
+                                      AssetSource('audio/take_picture.mp3'));
+                                  // Trigger start countdown
+                                  startTimer();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 20),
+                                  child: (startCount || savedImages.isNotEmpty)
+                                      ? StrokeText(
+                                          text: okToTimer
+                                              ? '$_countdown'
+                                              : "촬영",
+                                          textStyle: TextStyle(
+                                            fontSize: 80,
+                                            color: Colors.black,
+                                            fontFamily: 'GulyFont',
+                                          ),
+                                          strokeColor: Colors.white,
+                                          strokeWidth: 5,
+                                        )
+                                      : StrokeText(
                                           text: "촬영",
                                           textStyle: TextStyle(
-                                            fontSize: 100,
+                                            fontSize: 80,
                                             color: Colors.black,
                                             fontFamily: 'GulyFont',
                                           ),
                                           strokeColor: Colors.white,
                                           strokeWidth: 5,
                                         ),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.teal,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          side: BorderSide(
-                                            width: 5,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.teal,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: BorderSide(
+                                      width: 5,
+                                      color: Colors.white,
                                     ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
                     Container(
                       height: 120,
                       width: 500,
@@ -383,7 +368,6 @@ class _Screen3State extends State<Screen3> {
                 ),
               ),
             ),
-
           ],
         ),
         /*
@@ -395,7 +379,6 @@ class _Screen3State extends State<Screen3> {
       ),
     );
   }
-
 }
 
 class ThumbnailGridView extends StatelessWidget {
@@ -405,25 +388,34 @@ class ThumbnailGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110,
+      height: 120,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
         itemBuilder: (context, index) {
+          Image imageSnap = Image.file(
+            File(images[index].imgUrl),
+            width: 110.0,
+            height: 110.0,
+            fit: BoxFit.cover,
+          );
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Stack(
               children: [
                 Container(
                   width: 110.0,
+                  height: 120.0,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Image.file(
-                    File(images[index].imgUrl),
-                    width: 110.0,
-                    height: 100.0,
-                    fit: BoxFit.cover,
+                    image: DecorationImage(
+                      image: imageSnap.image,
+                      fit: BoxFit.cover,
+                    ),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 5,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ],
@@ -434,4 +426,3 @@ class ThumbnailGridView extends StatelessWidget {
     );
   }
 }
-
