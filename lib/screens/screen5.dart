@@ -91,6 +91,7 @@ class _Screen5State extends State<Screen5> {
       name: 'Comic',
       effect: 'comic-woman',
     ),
+  /*
     AIModel(
       id: 13,
       img: 'assets/images/effective/GreenGoblin/GreenGoblin-man.gif',
@@ -127,6 +128,7 @@ class _Screen5State extends State<Screen5> {
       name: 'Necromancer',
       effect: 'necromancer-woman',
     ),
+  */
     AIModel(
       id: 19,
       img: 'assets/images/effective/Nightcrawler/Nightcrawler-man.gif',
@@ -163,6 +165,7 @@ class _Screen5State extends State<Screen5> {
       name: 'Romantic',
       effect: 'romantic-woman',
     ),
+  /*
     AIModel(
       id: 25,
       img: 'assets/images/effective/Ultraviolet/Ultraviolet-man.gif',
@@ -199,6 +202,7 @@ class _Screen5State extends State<Screen5> {
       name: 'Witch',
       effect: 'witch-woman',
     ),
+  */
   ];
 
   @override
@@ -241,8 +245,20 @@ class _Screen5State extends State<Screen5> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
-                      Image.asset(models[i].img, height: 110, fit: BoxFit.fill),
+                  child: Container(
+                    height: 110,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(models[i].img,),
+                        fit: BoxFit.fill,
+                      ),
+                      //color: Colors.deepOrange,
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    //child: Image.asset(models[i].img, width: 80),
+                  ),
+
+                  //Image.asset(models[i].img, height: 110, fit: BoxFit.fill),
                 ),
                 Text(
                   models[i].name,
