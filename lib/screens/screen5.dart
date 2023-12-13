@@ -310,18 +310,18 @@ class _Screen5State extends State<Screen5> {
                             children: [
                               Center(
                                 child: Container(
-                                  width: 500.0,
-                                  height: 460.0,
+                                  width: 460.0,
+                                  height: 430.0,
                                   decoration: BoxDecoration(
-                                    // color: Colors.teal,
-                                    // border: Border.all(
-                                    //   color: Colors.white,
-                                    // ),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    //color: Colors.teal,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15.0),
                                     image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/template/screen5_layer.png'), // Add your background image path
-                                      fit: BoxFit.fitHeight,
+                                      image: AssetImage('assets/template/screen5_layer.png'),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   child: Center(
