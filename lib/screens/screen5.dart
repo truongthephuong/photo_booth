@@ -254,13 +254,9 @@ class _Screen5State extends State<Screen5> {
                         ),
                         fit: BoxFit.fill,
                       ),
-                      //color: Colors.deepOrange,
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    //child: Image.asset(models[i].img, width: 80),
                   ),
-
-                  //Image.asset(models[i].img, height: 110, fit: BoxFit.fill),
                 ),
                 Text(
                   models[i].name,
@@ -276,6 +272,13 @@ class _Screen5State extends State<Screen5> {
         ),
       );
     }
+
+    Image imageSnap = Image.network(
+      widget.image,
+      width: 350.0,
+      height: 380.0,
+      fit: BoxFit.cover,
+    );
 
     return Stack(
       children: [
@@ -336,16 +339,9 @@ class _Screen5State extends State<Screen5> {
                                       width: 350.0,
                                       height: 380.0,
                                       decoration: BoxDecoration(
-                                        // border: Border.all(
-                                        //   color: Colors.black,
-                                        //   width: 1,
-                                        // ),
-                                        // borderRadius:
-                                        //     BorderRadius.circular(10.0),
                                         image: DecorationImage(
-                                          image: new FileImage(
-                                            File(widget.image),
-                                          ), // Add your foreground image path
+                                          image: imageSnap
+                                              .image, // Add your foreground image path
                                           fit: BoxFit.fill,
                                         ),
                                       ),

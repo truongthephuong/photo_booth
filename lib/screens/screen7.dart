@@ -27,7 +27,6 @@ class _Screen7State extends State<Screen7> {
   void initState() {
     super.initState();
     AudioPlayer().play(AssetSource('audio/screen7.mp3'));
-    _printDataAndSaveImage(widget.imgUrl);
     _uploadImage();
   }
 
@@ -49,6 +48,8 @@ class _Screen7State extends State<Screen7> {
           setState(() {
             imgUrlTest = 'http://128.199.205.168/${result['image']}';
           });
+
+          _printDataAndSaveImage('http://128.199.205.168/${result['image']}');
         }
       } else {
         // Handle errors
@@ -123,6 +124,13 @@ class _Screen7State extends State<Screen7> {
   }
 
   Widget build(BuildContext context) {
+    Image imageSnap = Image.network(
+      widget.imgUrl,
+      width: 490.0,
+      height: 520.0,
+      fit: BoxFit.cover,
+    );
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -183,9 +191,8 @@ class _Screen7State extends State<Screen7> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
-                                    image: new FileImage(
-                                      File(widget.imgUrl),
-                                    ), // Add your foreground image path
+                                    image: imageSnap
+                                        .image, // Add your foreground image path
                                     fit: BoxFit.cover,
                                   ),
                                 ),

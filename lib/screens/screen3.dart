@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
+import 'package:camera_windows/camera_windows.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:path_provider/path_provider.dart';
@@ -125,48 +126,12 @@ class _Screen3State extends State<Screen3> {
           });
         }
 
-        // Capture photo
         final XFile file = await _controller.takePicture();
-
-        // Get directory to save
-        Directory current = Directory.current;
-
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-
-        // Parent folder
-        final String internalFolder = path.join(current.path, 'myphotos');
-        await Directory(internalFolder).create(recursive: true);
-
-        // User folder
-        DateTime now = DateTime.now();
-        String _username = DateFormat('yyyyMMddkk').format(now);
-        await prefs.setString("username", _username);
-
-        final String userDir = path.join(internalFolder, _username);
-        await Directory(userDir).create(recursive: true);
-
-        setState(() {
-          userDirPath = userDir;
-        });
-
-        // User folder
-        final String tempUserDir = path.join(userDir, 'User');
-        await Directory(tempUserDir).create(recursive: true);
-
-        // Save photo
         int userPhotoId = savedImages.length + 1;
-        final String userPath =
-            path.join(tempUserDir, path.basename(file.path));
-        await File(file.path).copy(userPath);
-
-        // setState(() {
-        //   _imageFile = File(userPath);
-        // });
-
         final ImageModel savedImage = ImageModel(
           id: userPhotoId,
           title: 'user_photo_$userPhotoId',
-          imgUrl: userPath,
+          imgUrl: file.path,
         );
 
         setState(() {
@@ -379,12 +344,6 @@ class _Screen3State extends State<Screen3> {
             ),
           ],
         ),
-        /*
-        bottomNavigationBar: ThumbnailGridView(
-          images: savedImages,
-        ),
-
-         */
       ),
     );
   }
@@ -402,8 +361,8 @@ class ThumbnailGridView extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
         itemBuilder: (context, index) {
-          Image imageSnap = Image.file(
-            File(images[index].imgUrl),
+          Image imageSnap = Image.network(
+            images[index].imgUrl,
             width: 200.0,
             height: 220.0,
             fit: BoxFit.cover,

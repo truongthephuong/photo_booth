@@ -44,28 +44,9 @@ class _Screen4State extends State<Screen4> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
-    Directory current = Directory.current;
-
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    await Directory(internalFolder).create(recursive: true);
-
-    // User folder
-    final String userDir = path.join(internalFolder, _username);
-    await Directory(userDir).create(recursive: true);
-
-    // Target folder
-    final String tempUserDir = path.join(userDir, 'Target');
-    await Directory(tempUserDir).create(recursive: true);
-
-    // Save photo
-    String randomStr = getRandomString(5);
-    final String userPath = path.join(tempUserDir, 'photo-${randomStr}.jpg');
-    await File(widget.images[id].imgUrl).copy(userPath);
-
     setState(() {
       chooseImgId = id;
-      chooseImgUrl = userPath;
+      chooseImgUrl = widget.images[id].imgUrl;
     });
   }
 
@@ -127,6 +108,31 @@ class _Screen4State extends State<Screen4> {
   }
 
   Widget build(BuildContext context) {
+    Image imageSnap1 = Image.network(
+      widget.images[0].imgUrl,
+      width: 400,
+      height: 230.0,
+      fit: BoxFit.cover,
+    );
+    Image imageSnap2 = Image.network(
+      widget.images[1].imgUrl,
+      width: 400,
+      height: 230.0,
+      fit: BoxFit.cover,
+    );
+    Image imageSnap3 = Image.network(
+      widget.images[2].imgUrl,
+      width: 200.0,
+      height: 220.0,
+      fit: BoxFit.cover,
+    );
+    Image imageSnap4 = Image.network(
+      widget.images[3].imgUrl,
+      width: 200.0,
+      height: 220.0,
+      fit: BoxFit.cover,
+    );
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -164,18 +170,17 @@ class _Screen4State extends State<Screen4> {
                                 width: 400,
                                 height: 230,
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  border: chooseImgId == 0
-                                      ? Border.all(
-                                          color: Colors.green, width: 8)
-                                      : Border.all(
-                                          color: Colors.white, width: 4),
-                                  image: DecorationImage(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: chooseImgId == 0
+                                        ? Border.all(
+                                            color: Colors.green, width: 8)
+                                        : Border.all(
+                                            color: Colors.white, width: 4),
+                                    image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(widget.images[0].imgUrl))),
-                                ),
+                                      image: imageSnap1.image,
+                                    )),
                               ),
                             ),
                           ),
@@ -202,8 +207,7 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(widget.images[1].imgUrl))),
+                                      image: imageSnap2.image),
                                 ),
                               ),
                             ),
@@ -237,8 +241,7 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(widget.images[2].imgUrl))),
+                                      image: imageSnap3.image),
                                 ),
                               ),
                             ),
@@ -266,8 +269,7 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(widget.images[3].imgUrl))),
+                                      image: imageSnap4.image),
                                 ),
                               ),
                             ),
