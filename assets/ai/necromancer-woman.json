@@ -6,8 +6,8 @@
     "batch_size": 1,
     "steps": 20,
     "cfg_scale": 9,
-    "width": 640,
-    "height": 628,
+    "width": 525,
+    "height": 512,
     "override_settings": {
         "sd_model_checkpoint": "jimTERUMODE_version10.ckpt",
         "sd_vae": "vae-ft-mse-840000-ema-pruned.ckpt"
