@@ -249,15 +249,21 @@ class _Screen3State extends State<Screen3> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/template/text-screen2.png',
-                )
-              ],
+            Container(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              height: 500,
+              //color: Colors.white70,
+              margin: const EdgeInsets.only(
+                left: 10.0,
+                right: 0.0,
+                top: 10.0,
+              ),
+              child: Image.asset(
+                'assets/template/text_screen2.png', height: 500,
+              ),
             ),
             Container(
+              //color: Colors.deepOrangeAccent,
               margin: const EdgeInsets.only(
                 left: 10.0,
                 right: 0.0,
