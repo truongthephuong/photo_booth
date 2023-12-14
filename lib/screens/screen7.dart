@@ -177,10 +177,10 @@ class _Screen7State extends State<Screen7> {
                                 width: 490.0,
                                 height: 520.0,
                                 decoration: BoxDecoration(
-                                  // border: Border.all(
-                                  //   color: Colors.white,
-                                  //   width: 0,
-                                  // ),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 5,
+                                  ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
                                     image: new FileImage(
