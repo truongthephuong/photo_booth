@@ -65,28 +65,6 @@ class _Screen7State extends State<Screen7> {
     final apiUrl = Uri.parse('http://127.0.0.1:8000/api/generate-image/');
     final headers = {'Content-Type': 'application/json; charset=utf-8'};
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _username = prefs.getString('username') ?? "";
-
-    Directory current = Directory.current;
-
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    await Directory(internalFolder).create(recursive: true);
-
-    // User folder
-    final String userDir = path.join(internalFolder, _username);
-    await Directory(userDir).create(recursive: true);
-
-    // Target folder
-    final String targetUserDir = path.join(userDir, 'Target');
-    await Directory(targetUserDir).create(recursive: true);
-    // Asset folder
-    final String assetDir = path.join(current.path, 'assets');
-    await Directory(assetDir).create(recursive: true);
-    final String assertImageDir = path.join(assetDir, 'images');
-    await Directory(assertImageDir).create(recursive: true);
-
     // Prepare the request body
     final requestBody = {
       "image_selected": resultUrl,
