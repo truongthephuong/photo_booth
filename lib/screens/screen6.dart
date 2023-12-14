@@ -186,11 +186,11 @@ class _Screen6State extends State<Screen6> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 80,
+                      height: 100,
                     ),
                     Container(
-                      width: 1100,
-                      height: 580,
+                      width: 1000,
+                      height: 560,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
@@ -198,7 +198,11 @@ class _Screen6State extends State<Screen6> {
                             ),
                             fit: BoxFit.fill,
                           ),
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 5,
+                          ),
                         ),
 
                     ),
