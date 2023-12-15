@@ -259,9 +259,14 @@ class _Screen3State extends State<Screen3> {
                 top: 10.0,
                 bottom: 700,
               ),
-              child: Image.asset(
-                'assets/template/text_screen2.png',
-                height: 500,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/template/text-screen3.png',
+                    width: 1000,
+                  )
+                ],
               ),
             ),
             Container(
