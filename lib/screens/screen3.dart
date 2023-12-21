@@ -251,20 +251,21 @@ class _Screen3State extends State<Screen3> {
             ),
             Container(
               //mainAxisAlignment: MainAxisAlignment.center,
-              height: 500,
+              height: 500, //500
               //color: Colors.white70,
               margin: const EdgeInsets.only(
-                left: 10.0,
-                right: 0.0,
+                left: 0.0, //10
+                right: 10.0, //0
                 top: 10.0,
-                bottom: 700,
+                bottom: 1250,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'assets/template/text-screen3.png',
-                    width: 1000,
+                    'assets/template/text-screen3-a.png',
+                    width: 972, //1000
+                    height: 324, //3840
                   )
                 ],
               ),
@@ -300,13 +301,13 @@ class _Screen3State extends State<Screen3> {
                               ),
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(left: 0, top: 320),
-                              height: 550,
-                              width: 690,
+                              height: 635, //550
+                              width: 840, //690
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                                 child: AspectRatio(
-                                  aspectRatio: 5.0 / 4.0,
+                                  aspectRatio: 10.0 / 7.5, //5/4
                                   child: CameraPreview(_controller),
                                 ),
                               ),
@@ -317,7 +318,7 @@ class _Screen3State extends State<Screen3> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10, top: 20),
+                              margin: EdgeInsets.only(left: 8, top: 20),
                               alignment: Alignment.bottomCenter,
                               child: ElevatedButton(
                                 onPressed: () {
@@ -370,7 +371,7 @@ class _Screen3State extends State<Screen3> {
                     ),
                     SizedBox(height: 20),
                     Container(
-                      margin: EdgeInsets.only(left: 50, top: 20),
+                      margin: EdgeInsets.only(left: 30, top: 20),
                       height: 220,
                       width: 900,
                       //color: Colors.green[200],
