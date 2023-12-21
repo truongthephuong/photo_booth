@@ -246,7 +246,7 @@ class _Screen5State extends State<Screen5> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 110,
+                    height: 150, //size of image inside card
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -290,8 +290,8 @@ class _Screen5State extends State<Screen5> {
                     margin: const EdgeInsets.only(
                       left: 10.0,
                       right: 10.0,
-                      top: 100.0,
-                      bottom: 350,
+                      top: 50.0,
+                      bottom: 0,
                     ),
                     alignment: Alignment.center,
                     child: Column(
@@ -302,8 +302,8 @@ class _Screen5State extends State<Screen5> {
                           margin: const EdgeInsets.only(
                             bottom: 80.0,
                           ),
-                          width: 580,
-                          height: 1200,
+                          width: 700,
+                          height: 1300,
                           //color: Colors.green[200],
                           alignment: Alignment.center,
                           child: Column(
@@ -313,8 +313,8 @@ class _Screen5State extends State<Screen5> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Container(
-                                  width: 340.0,
-                                  height: 350.0,
+                                  width: 550.0,
+                                  height: 520.0,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
@@ -333,8 +333,8 @@ class _Screen5State extends State<Screen5> {
                                       margin: const EdgeInsets.only(
                                         top: 40.0,
                                       ),
-                                      width: 350.0,
-                                      height: 380.0,
+                                      width: 530.0,
+                                      height: 410.0,
                                       decoration: BoxDecoration(
                                         // border: Border.all(
                                         //   color: Colors.black,
@@ -392,11 +392,11 @@ class _Screen5State extends State<Screen5> {
                               ),
                               Container(
                                 //color: Colors.white,
-                                width: 500,
-                                height: 500,
+                                width: 600,
+                                height: 600,
                                 child: SizedBox(
                                   width: double.infinity,
-                                  height: 500,
+                                  height: 600,
                                   child: Container(
                                     child: GridView(
                                       padding: const EdgeInsets.all(5),

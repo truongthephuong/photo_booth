@@ -149,6 +149,7 @@ class _Screen4State extends State<Screen4> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 200,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -161,8 +162,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 0),
-                                width: 400,
-                                height: 230,
+                                width: 500,
+                                height: 330,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -190,8 +191,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 10),
-                                width: 400,
-                                height: 230,
+                                width: 500,
+                                height: 330,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -225,8 +226,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 0, top: 10),
-                                width: 400,
-                                height: 230,
+                                width: 500,
+                                height: 330,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),
@@ -254,8 +255,8 @@ class _Screen4State extends State<Screen4> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(left: 10, top: 10),
-                                width: 400,
-                                height: 230,
+                                width: 500,
+                                height: 330,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(8.0),

@@ -300,13 +300,13 @@ class _Screen3State extends State<Screen3> {
                               ),
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(left: 0, top: 320),
-                              height: 610,
-                              width: 460,
+                              height: 550,
+                              width: 690,
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                                 child: AspectRatio(
-                                  aspectRatio: 3.0 / 4.0,
+                                  aspectRatio: 5.0 / 4.0,
                                   child: CameraPreview(_controller),
                                 ),
                               ),
@@ -370,6 +370,7 @@ class _Screen3State extends State<Screen3> {
                     ),
                     SizedBox(height: 20),
                     Container(
+                      margin: EdgeInsets.only(left: 50, top: 20),
                       height: 220,
                       width: 900,
                       //color: Colors.green[200],
@@ -402,7 +403,7 @@ class ThumbnailGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
+      height: 180,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
@@ -410,7 +411,7 @@ class ThumbnailGridView extends StatelessWidget {
           Image imageSnap = Image.file(
             File(images[index].imgUrl),
             width: 200.0,
-            height: 220.0,
+            height: 180.0,
             fit: BoxFit.cover,
           );
           return Padding(
@@ -419,7 +420,7 @@ class ThumbnailGridView extends StatelessWidget {
               children: [
                 Container(
                   width: 200.0,
-                  height: 220.0,
+                  height: 180.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: imageSnap.image,
