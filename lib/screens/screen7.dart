@@ -89,13 +89,9 @@ class _Screen7State extends State<Screen7> {
     // Prepare the request body
     final requestBody = {
       "image_selected": resultUrl,
-      "bkgrnd_image": "C:/photoboothprint/3a.jpg",
-      "logo_image": "C:/photoboothprint/h1.png",
-      "hearth_image_1": "C:/photoboothprint/h1.png",
-      "hearth_image_2": "C:/photoboothprint/h1.png",
-      "banned_image": "C:/photoboothprint/Banned-Transparent.png",
-      "small_icon": "C:/photoboothprint/Asset1.png",
-      "kiss_icon": "C:/photoboothprint/kiss.png",
+      "bkgrnd_image": "C:/photoboothprint/3a1.jpg",
+      "star1_img": "C:/photoboothprint/star1.png",
+      "star2_img": "C:/photoboothprint/star2.png",
       "generated_print_image_path": "C:/photoboothprint/print_image.jpg",
     };
 
