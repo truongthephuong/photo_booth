@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:photobooth_section1/screens/screen3.dart';
 
+import '../models/image_model.dart';
 import '../palatter.dart';
 import '../widgets/background-image.dart';
 
@@ -169,7 +170,12 @@ class _Screen2State extends State<Screen2> {
                                   context,
                                   //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
                                   //MaterialPageRoute(builder: (context) => Screen3()),
-                                  MaterialPageRoute( builder: (context) => Screen4(images: [],)),
+                                  MaterialPageRoute( builder: (context) => Screen4(images: [
+                                    ImageModel(id : 0, title: 'img1', imgUrl: 'assets/template/1.png'),
+                                    ImageModel(id : 1, title: 'img2', imgUrl: 'assets/template/2.png'),
+                                    ImageModel(id : 2, title: 'img3', imgUrl: 'assets/template/3.png'),
+                                    ImageModel(id : 3, title: 'img4', imgUrl: 'assets/template/4.png'),
+                                  ],)),
                                 );
                               },
                               elevation: 2.0,

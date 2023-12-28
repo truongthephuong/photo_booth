@@ -174,8 +174,8 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      //image: FileImage(File(widget.images[0].imgUrl))
-                                      image: AssetImage('assets/template/1.png'),
+                                      image: FileImage(File(widget.images[0].imgUrl))
+                                      //image: AssetImage('assets/template/1.png'),
                                   ),
                                 ),
                               ),
@@ -204,8 +204,8 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      //image: FileImage(File(widget.images[1].imgUrl))
-                                      image: AssetImage('assets/template/2.png'),
+                                      image: FileImage(File(widget.images[1].imgUrl))
+                                      //image: AssetImage('assets/template/2.png'),
                                   ),
                                 ),
                               ),
@@ -240,8 +240,8 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      //image: FileImage(File(widget.images[2].imgUrl))
-                                      image: AssetImage('assets/template/3.png'),
+                                      image: FileImage(File(widget.images[2].imgUrl))
+                                      //image: AssetImage('assets/template/3.png'),
                                   ),
                                 ),
                               ),
@@ -270,8 +270,8 @@ class _Screen4State extends State<Screen4> {
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      //image: FileImage(File(widget.images[3].imgUrl))
-                                      image: AssetImage('assets/template/4.png'),
+                                      image: FileImage(File(widget.images[3].imgUrl))
+                                      //image: AssetImage('assets/template/4.png'),
                                   ),
                                 ),
                               ),
