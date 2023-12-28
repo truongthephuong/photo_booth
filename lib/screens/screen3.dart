@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
+import 'package:camera_platform_interface/camera_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/models/image_model.dart';
@@ -23,7 +25,7 @@ class Screen3 extends StatefulWidget {
 
 class _Screen3State extends State<Screen3> {
   late CameraController _controller;
-  late List<CameraDescription> cameras;
+  late List<CameraDescription> _cameras;
   bool isCameraReady = false;
 
   List<ImageModel> savedImages = [];
@@ -35,12 +37,123 @@ class _Screen3State extends State<Screen3> {
   bool startCount = false;
   bool okToTimer = true;
 
+  int _cameraIndex = 0;
+  int _cameraId = -1;
+  bool _initialized = false;
+
+  ResolutionPreset _resolutionPreset = ResolutionPreset.veryHigh;
+  StreamSubscription<CameraErrorEvent>? _errorStreamSubscription;
+  StreamSubscription<CameraClosingEvent>? _cameraClosingStreamSubscription;
+  Size? _previewSize;
+
   @override
   void initState() {
     super.initState();
     _freshPhotoDir();
-    _initializeCamera();
+    WidgetsFlutterBinding.ensureInitialized();
+    _fetchCameras();
   }
+
+  /// Fetches list of available cameras from camera_windows plugin.
+  Future<void> _fetchCameras() async {
+    String cameraInfo;
+    List<CameraDescription> cameras = <CameraDescription>[];
+
+    int cameraIndex = 0;
+    try {
+      cameras = await CameraPlatform.instance.availableCameras();
+      if (cameras.isEmpty) {
+        cameraInfo = 'No available cameras';
+      } else {
+        cameraIndex = _cameraIndex % cameras.length;
+        cameraInfo = 'Found camera: ${cameras[cameraIndex].name}';
+      }
+    } on PlatformException catch (e) {
+      cameraInfo = 'Failed to get cameras: ${e.code}: ${e.message}';
+    }
+
+    print(cameraInfo);
+
+    if (mounted) {
+      setState(() {
+        _cameraIndex = cameraIndex;
+        _cameras = cameras;
+      });
+
+      _initializeCamera();
+    }
+  }
+
+  /// Initializes the camera on the device.
+  Future<void> _initializeCamera() async {
+    if (_cameras.isEmpty) {
+      return;
+    }
+
+    int cameraId = -1;
+    try {
+      final int cameraIndex = _cameraIndex % _cameras.length;
+      final CameraDescription camera = _cameras[cameraIndex];
+
+      cameraId = await CameraPlatform.instance.createCamera(
+        camera,
+        _resolutionPreset,
+      );
+
+      unawaited(_errorStreamSubscription?.cancel());
+      _errorStreamSubscription = CameraPlatform.instance
+          .onCameraError(cameraId)
+          .listen(_onCameraError);
+
+      unawaited(_cameraClosingStreamSubscription?.cancel());
+      _cameraClosingStreamSubscription = CameraPlatform.instance
+          .onCameraClosing(cameraId)
+          .listen(_onCameraClosing);
+
+      final Future<CameraInitializedEvent> initialized =
+          CameraPlatform.instance.onCameraInitialized(cameraId).first;
+
+      await CameraPlatform.instance.initializeCamera(
+        cameraId,
+      );
+
+      final CameraInitializedEvent event = await initialized;
+      _previewSize = Size(
+        event.previewWidth,
+        event.previewHeight,
+      );
+
+      if (mounted) {
+        setState(() {
+          _initialized = true;
+          _cameraId = cameraId;
+          _cameraIndex = cameraIndex;
+        });
+      }
+    } on CameraException catch (e) {
+      try {
+        if (cameraId >= 0) {
+          await CameraPlatform.instance.dispose(cameraId);
+        }
+      } on CameraException catch (e) {
+        debugPrint('Failed to dispose camera: ${e.code}: ${e.description}');
+      }
+
+      // Reset state.
+      if (mounted) {
+        setState(() {
+          _initialized = false;
+          _cameraId = -1;
+          _cameraIndex = 0;
+          _previewSize = null;
+        });
+      }
+    }
+  }
+
+  void _onCameraError(CameraErrorEvent event) {}
+
+  void _onCameraClosing(CameraClosingEvent event) {}
 
   _freshPhotoDir() async {
     setState(() {
@@ -57,23 +170,13 @@ class _Screen3State extends State<Screen3> {
     }
   }
 
-  Future<void> _initializeCamera() async {
-    cameras = await availableCameras();
-
-    _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
-
-    await _controller.initialize();
-
-    if (!mounted) return;
-
-    setState(() {
-      isCameraReady = true;
-    });
-  }
-
   @override
   void dispose() {
-    _controller.dispose();
+    _disposeCurrentCamera();
+    _errorStreamSubscription?.cancel();
+    _errorStreamSubscription = null;
+    _cameraClosingStreamSubscription?.cancel();
+    _cameraClosingStreamSubscription = null;
     super.dispose();
   }
 
@@ -98,83 +201,91 @@ class _Screen3State extends State<Screen3> {
     });
   }
 
-  /**
-   * Create folder inside root directory
-   * 
-   * Snap photo -> go to 'myphotos/{userID}/Temp'
-   * Crop photo(s) -> save to 'myphotos/{userID}/User'
-   * If photos reach (4) -> go to Screen4
-   * If user choose photo -> go into 'myphotos/{userID}/Target'
-   * If photo apply AI -> go to Result with format 'myphotos/{userID}/Result/{Effect-ID}.png'
-   */
-  void takePhoto() async {
-    if (_controller.value.isInitialized) {
+  Future<void> _disposeCurrentCamera() async {
+    if (_cameraId >= 0 && _initialized) {
       try {
-        if (savedImages.length > 2) {
+        await CameraPlatform.instance.dispose(_cameraId);
+
+        if (mounted) {
           setState(() {
-            okToTimer = false;
-          });
-          Timer(Duration(seconds: 5), () {
-            Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Screen4(
-                          images: savedImages,
-                        )));
+            _initialized = false;
+            _cameraId = -1;
+            _previewSize = null;
           });
         }
-
-        // Capture photo
-        final XFile file = await _controller.takePicture();
-
-        // Get directory to save
-        Directory current = Directory.current;
-
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-
-        // Parent folder
-        final String internalFolder = path.join(current.path, 'myphotos');
-        await Directory(internalFolder).create(recursive: true);
-
-        // User folder
-        DateTime now = DateTime.now();
-        String _username = DateFormat('yyyyMMddkk').format(now);
-        await prefs.setString("username", _username);
-
-        final String userDir = path.join(internalFolder, _username);
-        await Directory(userDir).create(recursive: true);
-
-        setState(() {
-          userDirPath = userDir;
-        });
-
-        // User folder
-        final String tempUserDir = path.join(userDir, 'User');
-        await Directory(tempUserDir).create(recursive: true);
-
-        // Save photo
-        int userPhotoId = savedImages.length + 1;
-        final String userPath =
-            path.join(tempUserDir, path.basename(file.path));
-        await File(file.path).copy(userPath);
-
-        // setState(() {
-        //   _imageFile = File(userPath);
-        // });
-
-        final ImageModel savedImage = ImageModel(
-          id: userPhotoId,
-          title: 'user_photo_$userPhotoId',
-          imgUrl: userPath,
-        );
-
-        setState(() {
-          savedImages.add(savedImage);
-        });
-      } catch (e) {
-        print("Error taking photo: $e");
+      } on CameraException catch (e) {
+        if (mounted) {
+          print('Failed to dispose camera: ${e.code}: ${e.description}');
+        }
       }
+    }
+  }
+
+  void takePhoto() async {
+    try {
+      if (savedImages.length > 2) {
+        setState(() {
+          okToTimer = false;
+        });
+        Timer(Duration(seconds: 5), () {
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Screen4(
+                        images: savedImages,
+                      )));
+        });
+      }
+
+      // Capture photo
+      final XFile file = await CameraPlatform.instance.takePicture(_cameraId);
+
+      // Get directory to save
+      Directory current = Directory.current;
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      // Parent folder
+      final String internalFolder = path.join(current.path, 'myphotos');
+      await Directory(internalFolder).create(recursive: true);
+
+      // User folder
+      DateTime now = DateTime.now();
+      String _username = DateFormat('yyyyMMddkk').format(now);
+      await prefs.setString("username", _username);
+
+      final String userDir = path.join(internalFolder, _username);
+      await Directory(userDir).create(recursive: true);
+
+      setState(() {
+        userDirPath = userDir;
+      });
+
+      // User folder
+      final String tempUserDir = path.join(userDir, 'User');
+      await Directory(tempUserDir).create(recursive: true);
+
+      // Save photo
+      int userPhotoId = savedImages.length + 1;
+      final String userPath = path.join(tempUserDir, path.basename(file.path));
+      await File(file.path).copy(userPath);
+
+      // setState(() {
+      //   _imageFile = File(userPath);
+      // });
+
+      final ImageModel savedImage = ImageModel(
+        id: userPhotoId,
+        title: 'user_photo_$userPhotoId',
+        imgUrl: userPath,
+      );
+
+      setState(() {
+        savedImages.add(savedImage);
+      });
+    } catch (e) {
+      print("Error taking photo: $e");
     }
   }
 
@@ -223,22 +334,6 @@ class _Screen3State extends State<Screen3> {
   }
 
   Widget build(BuildContext context) {
-    if (!isCameraReady) {
-      return Container();
-    }
-
-    var camera = _controller.value;
-    final size = MediaQuery.of(context).size;
-
-    // calculate scale depending on screen and camera ratios
-    // this is actually size.aspectRatio / (1 / camera.aspectRatio)
-    // because camera preview size is received as landscape
-    // but we're calculating for portrait orientation
-    var scale = size.aspectRatio * camera.aspectRatio;
-
-    // to prevent scaling down, invert the value
-    if (scale < 1) scale = 1 / scale;
-
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -308,7 +403,9 @@ class _Screen3State extends State<Screen3> {
                                     BorderRadius.all(Radius.circular(20)),
                                 child: AspectRatio(
                                   aspectRatio: 10.0 / 7.5, //5/4
-                                  child: CameraPreview(_controller),
+                                  // aspectRatio: _previewSize!.width /_previewSize!.height,
+                                  child: CameraPlatform.instance
+                                      .buildPreview(_cameraId),
                                 ),
                               ),
                             ),
