@@ -178,22 +178,22 @@ class _Screen2State extends State<Screen2> {
                                                   id: 0,
                                                   title: 'img1',
                                                   imgUrl:
-                                                      'assets/template/1.png'),
+                                                      'https://i.imgur.com/ITaDkVz.png'),
                                               ImageModel(
                                                   id: 1,
                                                   title: 'img2',
                                                   imgUrl:
-                                                      'assets/template/2.png'),
+                                                      'https://i.imgur.com/d7eO055.png'),
                                               ImageModel(
                                                   id: 2,
                                                   title: 'img3',
                                                   imgUrl:
-                                                      'assets/template/3.png'),
+                                                      'https://i.imgur.com/PE2dECe.png'),
                                               ImageModel(
                                                   id: 3,
                                                   title: 'img4',
                                                   imgUrl:
-                                                      'assets/template/4.png'),
+                                                      'https://i.imgur.com/bGyc52q.png'),
                                             ],
                                           )),
                                 );
