@@ -169,10 +169,13 @@ class _Screen2State extends State<Screen2> {
                                     .play(AssetSource('audio/button.mp3'));
                                 Navigator.push(
                                   context,
-                                  //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
+                                  // MaterialPageRoute(builder: (context) => Screen7(
+                                  //     imgUrl: 'assets/template/1.png', imgUrlTarget: 'assets/template/2.png',
+                                  //     )
+                                  // ),
                                   //MaterialPageRoute(builder: (context) => Screen3()),
-                                  MaterialPageRoute(
-                                      builder: (context) => Screen4(
+
+                                  MaterialPageRoute(builder: (context) => Screen4(
                                             images: [
                                               ImageModel(
                                                   id: 0,
@@ -196,6 +199,7 @@ class _Screen2State extends State<Screen2> {
                                                       'https://i.imgur.com/bGyc52q.png'),
                                             ],
                                           )),
+
                                 );
                               },
                               elevation: 2.0,

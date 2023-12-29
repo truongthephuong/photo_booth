@@ -12,7 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Screen7 extends StatefulWidget {
   // AI Image
   String imgUrl;
-  Screen7({required this.imgUrl});
+  String imgUrlTarget;
+  Screen7({required this.imgUrl, required this.imgUrlTarget});
 
   @override
   State<Screen7> createState() => _Screen7State();
@@ -143,8 +144,7 @@ class _Screen7State extends State<Screen7> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 300),
-                  // Rounded Image
+                  SizedBox(height: 500),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -152,23 +152,20 @@ class _Screen7State extends State<Screen7> {
                         children: [
                           Container(
                             width: 500.0,
-                            height: 460.0,
+                            height: 450.0,
                             decoration: BoxDecoration(
-                              //color: Colors.teal,
-                              // border: Border.all(
-                              //   color: Colors.black,
-                              // ),
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/template/screen5_layer.png'), // Add your background image path
+                                    'assets/template/screen7_layer_up.png',
+                                ), // Add your background image path
                                 fit: BoxFit.cover,
                               ),
                             ),
                             child: Center(
                               child: Container(
                                 margin: const EdgeInsets.only(
-                                  top: 70.0,
+                                  top: 60.0,
                                 ),
                                 width: 490.0,
                                 height: 520.0,
@@ -179,9 +176,53 @@ class _Screen7State extends State<Screen7> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
-                                    image: new FileImage(
-                                      File(widget.imgUrl),
-                                    ), // Add your foreground image path
+                                    image: new FileImage(File(widget.imgUrlTarget),), // Add your foreground image path
+                                    //image: AssetImage(widget.imgUrlTarget),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  // Rounded Image
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: 500.0,
+                            height: 450.0,
+                            decoration: BoxDecoration(
+
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/template/screen7_layer_down.png'), // Add your background image path
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                  top: 60.0,
+                                ),
+                                width: 490.0,
+                                height: 520.0,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                    image: new FileImage(File(widget.imgUrl),), // Add your foreground image path
+                                    //image: AssetImage(widget.imgUrl),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -194,6 +235,7 @@ class _Screen7State extends State<Screen7> {
                   ),
                   Column(
                     children: [
+                      /*
                       Container(
                         margin: EdgeInsets.only(
                           left: 30,
@@ -222,11 +264,12 @@ class _Screen7State extends State<Screen7> {
                           ),
                         ),
                       ),
+                       */
                       Container(
                         width: 290.0,
                         height: 380.0,
                         margin: EdgeInsets.only(
-                          left: 30,
+                          left: 800,
                           top: 20,
                           bottom: 20,
                         ),
@@ -239,7 +282,7 @@ class _Screen7State extends State<Screen7> {
                           borderRadius: BorderRadius.circular(10.0),
                           image: DecorationImage(
                             image: AssetImage(
-                                'assets/template/screen7_qr_company.png'), // Add your background image path
+                                'assets/template/qr-big.png'), // Add your background image path
                             fit: BoxFit.fitHeight,
                           ),
                         ),
@@ -260,7 +303,7 @@ class _Screen7State extends State<Screen7> {
                                     ? QrImageView(
                                         data: imgUrlTest,
                                         version: QrVersions.auto,
-                                        size: 200
+                                        size: 180
                                         // backgroundColor: Colors.white,
                                         )
                                     : Container(),
@@ -276,18 +319,25 @@ class _Screen7State extends State<Screen7> {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.black,
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Screen1()),
-            );
-          },
-          icon: Icon(Icons.arrow_back_sharp),
-          label: Text('재시작'),
+        floatingActionButton: Align(
+          alignment: Alignment(0.9, 1),
+          child: FloatingActionButton.extended(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Screen1()),
+              );
+            },
+            icon: Icon(Icons.arrow_back_sharp),
+            label: Text('재시작',
+              style: TextStyle(
+                fontSize: 50,
+              ),
+            ),
+          ),
         ),
       ),
     );
