@@ -130,7 +130,7 @@ class _Screen7State extends State<Screen7> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
-
+            /*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -139,25 +139,35 @@ class _Screen7State extends State<Screen7> {
                 )
               ],
             ),
-
+*/
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 600),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/template/text_screen7.png',
+                        width: 800,
+                        height: 300,
+                      )
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
                           Container(
-                            width: 550.0,
-                            height: 500.0,
+                            width: 600.0,
+                            height: 550.0,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/template/screen7_layer_up.png',
+                                    'assets/template/screen7_layer_down.png',
                                 ), // Add your background image path
                                 fit: BoxFit.cover,
                               ),
@@ -167,8 +177,8 @@ class _Screen7State extends State<Screen7> {
                                 margin: const EdgeInsets.only(
                                   top: 60.0,
                                 ),
-                                width: 550.0,
-                                height: 570.0,
+                                width: 600.0,
+                                height: 620.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -196,14 +206,14 @@ class _Screen7State extends State<Screen7> {
                       Column(
                         children: [
                           Container(
-                            width: 550.0,
-                            height: 500.0,
+                            width: 600.0,
+                            height: 550.0,
                             decoration: BoxDecoration(
 
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/template/screen7_layer_down.png'), // Add your background image path
+                                    'assets/template/screen7_layer_up.png'), // Add your background image path
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -212,8 +222,8 @@ class _Screen7State extends State<Screen7> {
                                 margin: const EdgeInsets.only(
                                   top: 60.0,
                                 ),
-                                width: 550.0,
-                                height: 570.0,
+                                width: 600.0,
+                                height: 620.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -269,7 +279,7 @@ class _Screen7State extends State<Screen7> {
                         width: 290.0,
                         height: 380.0,
                         margin: EdgeInsets.only(
-                          left: 900,
+                          left: 850,
                           top: 20,
                           bottom: 20,
                         ),
