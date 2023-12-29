@@ -169,6 +169,10 @@ class _Screen2State extends State<Screen2> {
                                     .play(AssetSource('audio/button.mp3'));
                                 Navigator.push(
                                   context,
+                                  // MaterialPageRoute(builder: (context) => Screen6(
+                                  //   imgUrl: 'assets/template/1.png',
+                                  //   effectName: '3dcartoon-man',)
+                                  // ),
                                   // MaterialPageRoute(builder: (context) => Screen7(
                                   //     imgUrl: 'assets/template/1.png', imgUrlTarget: 'assets/template/2.png',
                                   //     )

@@ -31,6 +31,8 @@ class _Screen3State extends State<Screen3> {
   String userDirPath = '';
 
   int _countdown = 3;
+  int _cntdown = 3;
+  bool delayStartCnt = false;
   late Timer _timer;
   bool startCount = false;
   bool okToTimer = true;
@@ -40,6 +42,7 @@ class _Screen3State extends State<Screen3> {
     super.initState();
     _freshPhotoDir();
     _initializeCamera();
+    _delayTimer();
   }
 
   _freshPhotoDir() async {
@@ -93,6 +96,22 @@ class _Screen3State extends State<Screen3> {
         setState(() {
           _countdown--;
           startCount = true;
+        });
+      }
+    });
+  }
+
+  void _delayTimer() {
+    const threeSec = const Duration(seconds: 3);
+    _timer = Timer.periodic(threeSec, (Timer timer1) {
+      if (_cntdown == 0) {
+        timer1.cancel();
+        startTimer();
+
+      } else {
+        setState(() {
+          _cntdown--;
+
         });
       }
     });
