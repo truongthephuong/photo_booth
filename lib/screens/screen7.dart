@@ -162,14 +162,14 @@ class _Screen7State extends State<Screen7> {
                         children: [
                           Container(
                             width: 600.0,
-                            height: 550.0,
+                            height: 610.0,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
                                     'assets/template/screen7_layer_down.png',
                                 ), // Add your background image path
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             child: Center(
@@ -177,8 +177,8 @@ class _Screen7State extends State<Screen7> {
                                 margin: const EdgeInsets.only(
                                   top: 60.0,
                                 ),
-                                width: 600.0,
-                                height: 620.0,
+                                width: 590.0,
+                                height: 560.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -188,7 +188,7 @@ class _Screen7State extends State<Screen7> {
                                   image: DecorationImage(
                                     image: new FileImage(File(widget.imgUrlTarget),), // Add your foreground image path
                                     //image: AssetImage(widget.imgUrlTarget),
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
@@ -207,14 +207,14 @@ class _Screen7State extends State<Screen7> {
                         children: [
                           Container(
                             width: 600.0,
-                            height: 550.0,
+                            height: 610.0,
                             decoration: BoxDecoration(
 
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
                                     'assets/template/screen7_layer_up.png'), // Add your background image path
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             child: Center(
@@ -222,8 +222,8 @@ class _Screen7State extends State<Screen7> {
                                 margin: const EdgeInsets.only(
                                   top: 60.0,
                                 ),
-                                width: 600.0,
-                                height: 620.0,
+                                width: 590.0,
+                                height: 560.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -233,7 +233,7 @@ class _Screen7State extends State<Screen7> {
                                   image: DecorationImage(
                                     image: new FileImage(File(widget.imgUrl),), // Add your foreground image path
                                     //image: AssetImage(widget.imgUrl),
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
