@@ -274,6 +274,7 @@ class _Screen6State extends State<Screen6> {
             MaterialPageRoute(
                 builder: (context) => Screen7(
                       imgUrl: aiImages.isNotEmpty ? aiImages[0] : widget.imgUrl,
+                      imgUrlTarget: widget.imgUrl,
                     )),
           );
           return;
