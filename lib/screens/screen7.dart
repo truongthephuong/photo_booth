@@ -144,15 +144,15 @@ class _Screen7State extends State<Screen7> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 500),
+                  SizedBox(height: 600),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
                           Container(
-                            width: 500.0,
-                            height: 450.0,
+                            width: 550.0,
+                            height: 500.0,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
@@ -167,8 +167,8 @@ class _Screen7State extends State<Screen7> {
                                 margin: const EdgeInsets.only(
                                   top: 60.0,
                                 ),
-                                width: 490.0,
-                                height: 520.0,
+                                width: 550.0,
+                                height: 570.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -196,8 +196,8 @@ class _Screen7State extends State<Screen7> {
                       Column(
                         children: [
                           Container(
-                            width: 500.0,
-                            height: 450.0,
+                            width: 550.0,
+                            height: 500.0,
                             decoration: BoxDecoration(
 
                               borderRadius: BorderRadius.circular(10.0),
@@ -212,8 +212,8 @@ class _Screen7State extends State<Screen7> {
                                 margin: const EdgeInsets.only(
                                   top: 60.0,
                                 ),
-                                width: 490.0,
-                                height: 520.0,
+                                width: 550.0,
+                                height: 570.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -269,7 +269,7 @@ class _Screen7State extends State<Screen7> {
                         width: 290.0,
                         height: 380.0,
                         margin: EdgeInsets.only(
-                          left: 800,
+                          left: 900,
                           top: 20,
                           bottom: 20,
                         ),
@@ -320,21 +320,25 @@ class _Screen7State extends State<Screen7> {
           ],
         ),
         floatingActionButton: Align(
-          alignment: Alignment(0.9, 1),
-          child: FloatingActionButton.extended(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.black,
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Screen1()),
-              );
-            },
-            icon: Icon(Icons.arrow_back_sharp),
-            label: Text('재시작',
-              style: TextStyle(
-                fontSize: 50,
+          alignment: Alignment(-0.9, 1),
+          child: Container(
+            height: 100,
+            width: 250,
+            child: FloatingActionButton.extended(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.black,
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Screen1()),
+                );
+              },
+              icon: Icon(Icons.arrow_back_sharp),
+              label: Text('재시작',
+                style: TextStyle(
+                  fontSize: 60,
+                ),
               ),
             ),
           ),
