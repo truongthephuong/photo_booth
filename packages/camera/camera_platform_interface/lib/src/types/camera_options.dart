@@ -1,4 +1,4 @@
-import 'package:camera_platform_interface/src/platform_interface/camera_platform.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 
 class CameraOptions {

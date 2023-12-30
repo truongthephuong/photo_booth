@@ -1,4 +1,5 @@
-part of '../camera.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 
 enum CameraStatus { uninitialized, available, unavailable }
 
@@ -42,8 +43,6 @@ class CameraController extends ValueNotifier<CameraState> {
     try {
       await _cameraPlatform.init();
       _textureId = await _cameraPlatform.create(options);
-      print('camera id');
-      print(_textureId);
       value = const CameraState.available();
     } on CameraException catch (e) {
       value = CameraState.unavailable(e);

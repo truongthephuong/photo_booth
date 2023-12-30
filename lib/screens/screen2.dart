@@ -25,7 +25,6 @@ class Screen2 extends StatefulWidget {
 class _Screen2State extends State<Screen2> {
   late VideoPlayerController _controller;
   String _storedUserValue = '';
-  late CameraDescription firstCamera;
 
   static const MaterialColor black = MaterialColor(
     0xFFFFFFFF,
@@ -47,20 +46,12 @@ class _Screen2State extends State<Screen2> {
   void initState() {
     _loadStoredValue();
     super.initState();
-    _setCamera();
   }
 
   @override
   void dispose() {
     super.dispose();
     //_controller.dispose();
-  }
-
-  _setCamera() async {
-    final cameras = await availableCameras();
-    setState(() {
-      firstCamera = cameras.first;
-    });
   }
 
   @override
@@ -163,11 +154,13 @@ class _Screen2State extends State<Screen2> {
                             ),
                             RawMaterialButton(
                               onPressed: () {
-                                AudioPlayer().play(AssetSource('audio/button.mp3'));
+                                AudioPlayer()
+                                    .play(AssetSource('audio/button.mp3'));
                                 Navigator.push(
                                   context,
                                   //MaterialPageRoute(builder: (context) => Screen5(image: '',)),
-                                  MaterialPageRoute(builder: (context) => Screen3()),
+                                  MaterialPageRoute(
+                                      builder: (context) => Screen3()),
                                 );
                               },
                               elevation: 2.0,
