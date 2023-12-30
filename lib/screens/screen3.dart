@@ -20,10 +20,10 @@ import 'package:stroke_text/stroke_text.dart';
 const _videoConstraints = VideoConstraints(
   facingMode: FacingMode(
     type: CameraType.user,
-    constrain: Constrain.exact,
+    constrain: Constrain.ideal,
   ),
-  width: VideoSize(ideal: 520, maximum: 520),
-  height: VideoSize(ideal: 380, maximum: 380),
+  width: VideoSize(ideal: 320, maximum: 520),
+  height: VideoSize(ideal: 280, maximum: 380),
 );
 
 class Screen3 extends StatefulWidget {
