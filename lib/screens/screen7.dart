@@ -12,7 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Screen7 extends StatefulWidget {
   // AI Image
   String imgUrl;
-  Screen7({required this.imgUrl});
+  String imgUrlTarget;
+  Screen7({required this.imgUrl, required this.imgUrlTarget});
 
   @override
   State<Screen7> createState() => _Screen7State();
@@ -64,38 +65,12 @@ class _Screen7State extends State<Screen7> {
     final apiUrl = Uri.parse('http://127.0.0.1:8000/api/generate-image/');
     final headers = {'Content-Type': 'application/json; charset=utf-8'};
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _username = prefs.getString('username') ?? "";
-
-    Directory current = Directory.current;
-
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    await Directory(internalFolder).create(recursive: true);
-
-    // User folder
-    final String userDir = path.join(internalFolder, _username);
-    await Directory(userDir).create(recursive: true);
-
-    // Target folder
-    final String targetUserDir = path.join(userDir, 'Target');
-    await Directory(targetUserDir).create(recursive: true);
-    // Asset folder
-    final String assetDir = path.join(current.path, 'assets');
-    await Directory(assetDir).create(recursive: true);
-    final String assertImageDir = path.join(assetDir, 'images');
-    await Directory(assertImageDir).create(recursive: true);
-
     // Prepare the request body
     final requestBody = {
       "image_selected": resultUrl,
-      "bkgrnd_image": "C:/photoboothprint/3a.jpg",
-      "logo_image": "C:/photoboothprint/h1.png",
-      "hearth_image_1": "C:/photoboothprint/h1.png",
-      "hearth_image_2": "C:/photoboothprint/h1.png",
-      "banned_image": "C:/photoboothprint/Banned-Transparent.png",
-      "small_icon": "C:/photoboothprint/Asset1.png",
-      "kiss_icon": "C:/photoboothprint/kiss.png",
+      "bkgrnd_image": "C:/photoboothprint/3a1.jpg",
+      "star1_img": "C:/photoboothprint/star1.png",
+      "star2_img": "C:/photoboothprint/star2.png",
       "generated_print_image_path": "C:/photoboothprint/print_image.jpg",
     };
 
@@ -123,6 +98,20 @@ class _Screen7State extends State<Screen7> {
   }
 
   Widget build(BuildContext context) {
+    Image imageSnap = Image.network(
+      widget.imgUrl,
+      width: 490.0,
+      height: 520.0,
+      fit: BoxFit.cover,
+    );
+
+    Image imageSnapTarget = Image.network(
+      widget.imgUrlTarget,
+      width: 490.0,
+      height: 520.0,
+      fit: BoxFit.cover,
+    );
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -133,7 +122,7 @@ class _Screen7State extends State<Screen7> {
               image: AssetImage('assets/images/bg_ver.png'),
               fit: BoxFit.cover,
             ),
-
+            /*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -142,40 +131,46 @@ class _Screen7State extends State<Screen7> {
                 )
               ],
             ),
-
+*/
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 300),
-                  // Rounded Image
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/template/text_screen7.png',
+                        width: 300,
+                        height: 100,
+                      )
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
                           Container(
-                            width: 500.0,
-                            height: 460.0,
+                            width: 600.0,
+                            height: 610.0,
                             decoration: BoxDecoration(
-                              //color: Colors.teal,
-                              // border: Border.all(
-                              //   color: Colors.black,
-                              // ),
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/template/screen5_layer.png'), // Add your background image path
-                                fit: BoxFit.cover,
+                                  'assets/template/screen7_layer_down.png',
+                                ), // Add your background image path
+                                fit: BoxFit.fill,
                               ),
                             ),
                             child: Center(
                               child: Container(
                                 margin: const EdgeInsets.only(
-                                  top: 70.0,
+                                  top: 60.0,
                                 ),
-                                width: 490.0,
-                                height: 520.0,
+                                width: 590.0,
+                                height: 560.0,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.white,
@@ -183,10 +178,55 @@ class _Screen7State extends State<Screen7> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
-                                    image: new FileImage(
-                                      File(widget.imgUrl),
-                                    ), // Add your foreground image path
-                                    fit: BoxFit.cover,
+                                    image: imageSnapTarget
+                                        .image, // Add your foreground image path
+                                    //image: AssetImage(widget.imgUrlTarget),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  // Rounded Image
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: 600.0,
+                            height: 610.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/template/screen7_layer_up.png'), // Add your background image path
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            child: Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                  top: 60.0,
+                                ),
+                                width: 590.0,
+                                height: 560.0,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                    image: imageSnap
+                                        .image, // Add your foreground image path
+                                    //image: AssetImage(widget.imgUrl),
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
@@ -198,6 +238,7 @@ class _Screen7State extends State<Screen7> {
                   ),
                   Column(
                     children: [
+                      /*
                       Container(
                         margin: EdgeInsets.only(
                           left: 30,
@@ -226,11 +267,12 @@ class _Screen7State extends State<Screen7> {
                           ),
                         ),
                       ),
+                       */
                       Container(
                         width: 290.0,
                         height: 380.0,
                         margin: EdgeInsets.only(
-                          left: 30,
+                          left: 850,
                           top: 20,
                           bottom: 20,
                         ),
@@ -243,7 +285,7 @@ class _Screen7State extends State<Screen7> {
                           borderRadius: BorderRadius.circular(10.0),
                           image: DecorationImage(
                             image: AssetImage(
-                                'assets/template/screen7_qr_company.png'), // Add your background image path
+                                'assets/template/qr-big.png'), // Add your background image path
                             fit: BoxFit.fitHeight,
                           ),
                         ),
@@ -264,7 +306,7 @@ class _Screen7State extends State<Screen7> {
                                     ? QrImageView(
                                         data: imgUrlTest,
                                         version: QrVersions.auto,
-                                        size: 200
+                                        size: 180
                                         // backgroundColor: Colors.white,
                                         )
                                     : Container(),
@@ -280,18 +322,30 @@ class _Screen7State extends State<Screen7> {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.black,
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Screen1()),
-            );
-          },
-          icon: Icon(Icons.arrow_back_sharp),
-          label: Text('재시작'),
+        floatingActionButton: Align(
+          alignment: Alignment(-0.9, 1),
+          child: Container(
+            height: 100,
+            width: 250,
+            child: FloatingActionButton.extended(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.black,
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Screen1()),
+                );
+              },
+              icon: Icon(Icons.arrow_back_sharp),
+              label: Text(
+                '재시작',
+                style: TextStyle(
+                  fontSize: 60,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

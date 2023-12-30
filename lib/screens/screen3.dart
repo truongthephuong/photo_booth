@@ -20,10 +20,10 @@ import 'package:stroke_text/stroke_text.dart';
 const _videoConstraints = VideoConstraints(
   facingMode: FacingMode(
     type: CameraType.user,
-    constrain: Constrain.ideal,
+    constrain: Constrain.exact,
   ),
-  width: VideoSize(ideal: 320, maximum: 320),
-  height: VideoSize(ideal: 280, maximum: 280),
+  width: VideoSize(ideal: 520, maximum: 520),
+  height: VideoSize(ideal: 380, maximum: 380),
 );
 
 class Screen3 extends StatefulWidget {
@@ -61,9 +61,6 @@ class _Screen3State extends State<Screen3> {
 
   bool get _isCameraAvailable =>
       _controller.value.status == CameraStatus.available;
-
-  /// Fetches list of available cameras from camera_windows plugin.
-  Future<void> _fetchCameras() async {}
 
   Future<void> _play() async {
     if (!_isCameraAvailable) return;
@@ -121,51 +118,18 @@ class _Screen3State extends State<Screen3> {
       }
 
       // Capture photo
-      // final XFile file = await CameraPlatform.instance.takePicture(_cameraId);
+      final picture = await _controller.takePicture();
 
-      // Get directory to save
-      Directory current = Directory.current;
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      // Parent folder
-      final String internalFolder = path.join(current.path, 'myphotos');
-      await Directory(internalFolder).create(recursive: true);
-
-      // User folder
-      DateTime now = DateTime.now();
-      String _username = DateFormat('yyyyMMddkk').format(now);
-      await prefs.setString("username", _username);
-
-      final String userDir = path.join(internalFolder, _username);
-      await Directory(userDir).create(recursive: true);
+      int userPhotoId = savedImages.length + 1;
+      final ImageModel savedImage = ImageModel(
+        id: userPhotoId,
+        title: 'user_photo_$userPhotoId',
+        imgUrl: picture.data,
+      );
 
       setState(() {
-        userDirPath = userDir;
+        savedImages.add(savedImage);
       });
-
-      // User folder
-      final String tempUserDir = path.join(userDir, 'User');
-      await Directory(tempUserDir).create(recursive: true);
-
-      // Save photo
-      int userPhotoId = savedImages.length + 1;
-      // final String userPath = path.join(tempUserDir, path.basename(file.path));
-      // await File(file.path).copy(userPath);
-
-      // setState(() {
-      //   _imageFile = File(userPath);
-      // });
-
-      // final ImageModel savedImage = ImageModel(
-      //   id: userPhotoId,
-      //   title: 'user_photo_$userPhotoId',
-      //   imgUrl: userPath,
-      // );
-
-      // setState(() {
-      //   savedImages.add(savedImage);
-      // });
     } catch (e) {
       print("Error taking photo: $e");
     }
@@ -228,13 +192,13 @@ class _Screen3State extends State<Screen3> {
             ),
             Container(
               //mainAxisAlignment: MainAxisAlignment.center,
-              height: 500, //500
+              height: 300, //300
               //color: Colors.white70,
               margin: const EdgeInsets.only(
                 left: 0.0, //10
                 right: 10.0, //0
                 top: 10.0,
-                bottom: 1250,
+                bottom: 1050,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -253,7 +217,7 @@ class _Screen3State extends State<Screen3> {
                 left: 10.0,
                 right: 0.0,
                 top: 70.0,
-                bottom: 300,
+                bottom: 100,
               ),
               child: Center(
                 child: Column(
@@ -389,8 +353,8 @@ class ThumbnailGridView extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
         itemBuilder: (context, index) {
-          Image imageSnap = Image.file(
-            File(images[index].imgUrl),
+          Image imageSnap = Image.network(
+            images[index].imgUrl,
             width: 200.0,
             height: 180.0,
             fit: BoxFit.cover,

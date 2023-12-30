@@ -191,20 +191,21 @@ class _Screen6State extends State<Screen6> {
                     Container(
                       width: 1000,
                       height: 560,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              imgLoad.isEmpty ? 'assets/images/welcome.png' : imgLoad,
-                            ),
-                            fit: BoxFit.fill,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            imgLoad.isEmpty
+                                ? 'assets/images/welcome.png'
+                                : imgLoad,
                           ),
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 5,
-                          ),
+                          fit: BoxFit.fill,
                         ),
-
+                        borderRadius: BorderRadius.circular(20.0),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 5,
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -274,6 +275,7 @@ class _Screen6State extends State<Screen6> {
             MaterialPageRoute(
                 builder: (context) => Screen7(
                       imgUrl: aiImages.isNotEmpty ? aiImages[0] : widget.imgUrl,
+                      imgUrlTarget: widget.imgUrl,
                     )),
           );
           return;
@@ -285,25 +287,25 @@ class _Screen6State extends State<Screen6> {
 
 class ImageSaver {
   static Future<void> saveImage(String fileName, Uint8List imageData) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _username = prefs.getString('username') ?? "";
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String _username = prefs.getString('username') ?? "";
 
-    Directory current = Directory.current;
+    // Directory current = Directory.current;
 
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    await Directory(internalFolder).create(recursive: true);
+    // // Parent folder
+    // final String internalFolder = path.join(current.path, 'myphotos');
+    // await Directory(internalFolder).create(recursive: true);
 
-    // User Dir
-    final String userDir = path.join(internalFolder, _username);
-    await Directory(userDir).create(recursive: true);
+    // // User Dir
+    // final String userDir = path.join(internalFolder, _username);
+    // await Directory(userDir).create(recursive: true);
 
-    // Result folder
-    final String resultUserDir = path.join(userDir, 'Result');
-    await Directory(resultUserDir).create(recursive: true);
+    // // Result folder
+    // final String resultUserDir = path.join(userDir, 'Result');
+    // await Directory(resultUserDir).create(recursive: true);
 
-    final String userPath = path.join(resultUserDir, fileName);
-    File(userPath).writeAsBytesSync(imageData);
+    // final String userPath = path.join(resultUserDir, fileName);
+    // File(userPath).writeAsBytesSync(imageData);
   }
 }
 
