@@ -65,29 +65,29 @@ class _Screen6State extends State<Screen6> {
   }
 
   Future<void> getImagePath(String fileName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _username = prefs.getString('username') ?? "";
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String _username = prefs.getString('username') ?? "";
 
-    Directory current = Directory.current;
+    // Directory current = Directory.current;
 
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    await Directory(internalFolder).create(recursive: true);
+    // // Parent folder
+    // final String internalFolder = path.join(current.path, 'myphotos');
+    // await Directory(internalFolder).create(recursive: true);
 
-    // User Dir
-    final String userDir = path.join(internalFolder, _username);
-    await Directory(userDir).create(recursive: true);
+    // // User Dir
+    // final String userDir = path.join(internalFolder, _username);
+    // await Directory(userDir).create(recursive: true);
 
-    // Result folder
-    final String resultUserDir = path.join(userDir, 'Result');
-    await Directory(resultUserDir).create(recursive: true);
+    // // Result folder
+    // final String resultUserDir = path.join(userDir, 'Result');
+    // await Directory(resultUserDir).create(recursive: true);
 
-    final String userPath = path.join(resultUserDir, fileName);
-    setState(() {
-      aiImages.add(userPath);
-      userImgPath = userPath;
-      doneAi = true;
-    });
+    // final String userPath = path.join(resultUserDir, fileName);
+    // setState(() {
+    //   aiImages.add(userPath);
+    //   userImgPath = userPath;
+    //   doneAi = true;
+    // });
   }
 
   Future<void> readJson(String payloadFile) async {
@@ -114,9 +114,10 @@ class _Screen6State extends State<Screen6> {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int aiEffectIDSess = prefs.getInt('aiEffectIDSess') ?? 1;
-      String usrImgUrl = widget.imgUrl;
-      File imageFile = File(usrImgUrl);
-      final Uint8List bytes = await imageFile.readAsBytes();
+      //String usrImgUrl = widget.imgUrl;
+      //File imageFile = File(usrImgUrl);
+      // DEBUG
+      final Uint8List bytes = await http.readBytes(Uri.parse(widget.imgUrl));
       if (bytes.isNotEmpty) {
         final String imgBase64 = base64.encode(bytes);
         if (imgBase64.isNotEmpty) {
@@ -151,6 +152,12 @@ class _Screen6State extends State<Screen6> {
               });
 
               print('done');
+
+              setState(() {
+                // aiImages.add(String.fromCharCodes(imageData));
+                // userImgPath = String.fromCharCodes(imageData);
+                doneAi = true;
+              });
 
               // getImagePath(fileNameWithPath);
 
@@ -263,7 +270,7 @@ class _Screen6State extends State<Screen6> {
     const oneSec = const Duration(seconds: 1);
     new Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        _progressValue += 0.1;
+        _progressValue += 0.001;
         // we "finish" downloading here
         if (_progressValue.toStringAsFixed(1) == '2.0' || doneAi) {
           //_loading = false;
@@ -274,7 +281,7 @@ class _Screen6State extends State<Screen6> {
             context,
             MaterialPageRoute(
                 builder: (context) => Screen7(
-                      imgUrl: aiImages.isNotEmpty ? aiImages[0] : widget.imgUrl,
+                      imgUrl: resultImageUrl,
                       imgUrlTarget: widget.imgUrl,
                     )),
           );

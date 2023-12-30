@@ -1,17 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:html' as html;
 
 class Screen7 extends StatefulWidget {
   // AI Image
-  String imgUrl;
+  Uint8List imgUrl;
   String imgUrlTarget;
   Screen7({required this.imgUrl, required this.imgUrlTarget});
 
@@ -28,23 +31,37 @@ class _Screen7State extends State<Screen7> {
   void initState() {
     super.initState();
     AudioPlayer().play(AssetSource('audio/screen7.mp3'));
-    _printDataAndSaveImage(widget.imgUrl);
     _uploadImage();
+    _printDataAndSaveImage(widget.imgUrl);
+  }
+
+  Future<html.File> convertUint8ListToFile(
+      Uint8List bytes, String fileName) async {
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..target = 'web'
+      ..download = fileName
+      ..click();
+    html.Url.revokeObjectUrl(url);
+
+    final file = await html.FileUploadInputElement().files!.first;
+    return file;
   }
 
   Future<void> _uploadImage() async {
     try {
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('http://128.199.205.168/api/upload/'));
+      Dio dio = Dio();
+      FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromBytes(widget.imgUrl as List<int>),
+      });
 
-      request.files.add(
-        await http.MultipartFile.fromPath('file', widget.imgUrl),
-      );
+      final response =
+          await dio.post('http://128.199.205.168/api/upload/', data: formData);
 
-      final response = await request.send();
-
+      print('response');
       if (response.statusCode == 200) {
-        final jsonData = await http.Response.fromStream(response);
+        final jsonData = response.data;
         final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
         if (result.isNotEmpty) {
           setState(() {
@@ -57,17 +74,18 @@ class _Screen7State extends State<Screen7> {
       }
     } catch (error) {
       print('Error uploaded');
+      print(error);
     }
   }
 
-  Future<void> _printDataAndSaveImage(String resultUrl) async {
+  Future<void> _printDataAndSaveImage(Uint8List resultUrl) async {
     // Define the API endpoint and headers
     final apiUrl = Uri.parse('http://127.0.0.1:8000/api/generate-image/');
     final headers = {'Content-Type': 'application/json; charset=utf-8'};
 
     // Prepare the request body
     final requestBody = {
-      "image_selected": resultUrl,
+      "image_selected": base64Encode(resultUrl),
       "bkgrnd_image": "C:/photoboothprint/3a1.jpg",
       "star1_img": "C:/photoboothprint/star1.png",
       "star2_img": "C:/photoboothprint/star2.png",
@@ -98,12 +116,7 @@ class _Screen7State extends State<Screen7> {
   }
 
   Widget build(BuildContext context) {
-    Image imageSnap = Image.network(
-      widget.imgUrl,
-      width: 490.0,
-      height: 520.0,
-      fit: BoxFit.cover,
-    );
+    Image imageSnap = Image.memory(widget.imgUrl);
 
     Image imageSnapTarget = Image.network(
       widget.imgUrlTarget,
