@@ -242,7 +242,7 @@ class _Screen6State extends State<Screen6> {
                                 Image.asset(
                                   'assets/images/loading_text.png',
                                   width: 1000,
-                                  height: 30,
+                                  height: 80,
                                 ),
                               ],
                             )

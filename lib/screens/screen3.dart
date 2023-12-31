@@ -39,6 +39,8 @@ class _Screen3State extends State<Screen3> {
   String userDirPath = '';
 
   int _countdown = 3;
+  int _cntdown = 3;
+  bool delayStartCnt = false;
   late Timer _timer;
   bool startCount = false;
   bool okToTimer = true;
@@ -57,6 +59,7 @@ class _Screen3State extends State<Screen3> {
   void initState() {
     super.initState();
     _initializeCamera();
+    _delayTimer();
   }
 
   bool get _isCameraAvailable =>
@@ -100,6 +103,31 @@ class _Screen3State extends State<Screen3> {
     });
   }
 
+  void _delayTimer() {
+    const threeSec = const Duration(seconds: 3);
+    _timer = Timer.periodic(threeSec, (Timer timer1) {
+      if (_cntdown == 0) {
+        timer1.cancel();
+        startTimer();
+
+      } else {
+        setState(() {
+          _cntdown--;
+
+        });
+      }
+    });
+  }
+
+  /**
+   * Create folder inside root directory
+   * 
+   * Snap photo -> go to 'myphotos/{userID}/Temp'
+   * Crop photo(s) -> save to 'myphotos/{userID}/User'
+   * If photos reach (4) -> go to Screen4
+   * If user choose photo -> go into 'myphotos/{userID}/Target'
+   * If photo apply AI -> go to Result with format 'myphotos/{userID}/Result/{Effect-ID}.png'
+   */
   void takePhoto() async {
     try {
       if (savedImages.length > 2) {

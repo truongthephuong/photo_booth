@@ -9,6 +9,7 @@ import 'package:photobooth_section1/screens/screen5.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'package:stroke_text/stroke_text.dart';
+import 'package:http/http.dart' as http;
 
 class Screen4 extends StatefulWidget {
   List<ImageModel> images = [];
@@ -41,6 +42,34 @@ class _Screen4State extends State<Screen4> {
    * If user choose photo -> go into 'myphotos/{userID}/Target'
    */
   _chooseImg(int id) async {
+/*
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _username = prefs.getString('username') ?? "";
+
+    Directory current = Directory.current;
+
+    // Parent folder
+    final String internalFolder = path.join(current.path, 'myphotos');
+    await Directory(internalFolder).create(recursive: true);
+
+    // User folder
+    final String userDir = path.join(internalFolder, _username);
+    await Directory(userDir).create(recursive: true);
+
+    // Target folder
+    final String tempUserDir = path.join(userDir, 'Target');
+    await Directory(tempUserDir).create(recursive: true);
+
+    // Save photo
+    String randomStr = getRandomString(5);
+    final String userPath = path.join(tempUserDir, 'photo-${randomStr}.jpg');
+    var response = await http.get(Uri.parse(widget.images[id].imgUrl));
+    if (response.statusCode == 200) {
+      File file = File(userPath);
+      await file.writeAsBytes(response.bodyBytes);
+    }
+
+*/
     setState(() {
       chooseImgId = id;
       chooseImgUrl = widget.images[id].imgUrl;
@@ -178,9 +207,17 @@ class _Screen4State extends State<Screen4> {
                                       : Border.all(
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
+
                                     fit: BoxFit.cover,
                                     image: imageSnap1.image,
                                   ),
+/*
+                                      fit: BoxFit.cover,
+                                      image:
+                                          NetworkImage(widget.images[0].imgUrl)
+                                      // image: AssetImage(widget.images[0].imgUrl),
+                                      ),
+*/
                                 ),
                               ),
                             ),
@@ -210,6 +247,13 @@ class _Screen4State extends State<Screen4> {
                                     fit: BoxFit.cover,
                                     image: imageSnap2.image,
                                   ),
+/*
+                                      fit: BoxFit.cover,
+                                      image:
+                                          NetworkImage(widget.images[1].imgUrl)
+                                      // image: AssetImage(widget.images[1].imgUrl),
+                                      ),
+*/
                                 ),
                               ),
                             ),
@@ -245,6 +289,13 @@ class _Screen4State extends State<Screen4> {
                                     fit: BoxFit.cover,
                                     image: imageSnap3.image,
                                   ),
+/*
+                                      fit: BoxFit.cover,
+                                      image:
+                                          NetworkImage(widget.images[2].imgUrl)
+                                      // image: AssetImage(widget.images[2].imgUrl),
+                                      ),
+*/
                                 ),
                               ),
                             ),
@@ -274,6 +325,13 @@ class _Screen4State extends State<Screen4> {
                                     fit: BoxFit.cover,
                                     image: imageSnap4.image,
                                   ),
+/*
+                                      fit: BoxFit.cover,
+                                      image:
+                                          NetworkImage(widget.images[3].imgUrl)
+                                      // image: AssetImage(widget.images[3].imgUrl),
+                                      ),
+*/
                                 ),
                               ),
                             ),

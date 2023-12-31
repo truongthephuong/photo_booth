@@ -142,8 +142,12 @@ class _Screen7State extends State<Screen7> {
                     children: [
                       Image.asset(
                         'assets/template/text_screen7.png',
+/*
                         width: 300,
                         height: 100,
+*/
+                        width: 800,
+                        height: 300,
                       )
                     ],
                   ),
@@ -160,6 +164,9 @@ class _Screen7State extends State<Screen7> {
                               image: DecorationImage(
                                 image: AssetImage(
                                   'assets/template/screen7_layer_down.png',
+/*
+                                    'assets/template/screen7_layer_down.png',
+*/
                                 ), // Add your background image path
                                 fit: BoxFit.fill,
                               ),
@@ -178,8 +185,12 @@ class _Screen7State extends State<Screen7> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
+
                                     image: imageSnapTarget
                                         .image, // Add your foreground image path
+/*
+                                    image: new FileImage(File(widget.imgUrlTarget),), // Add your foreground image path
+*/
                                     //image: AssetImage(widget.imgUrlTarget),
                                     fit: BoxFit.fill,
                                   ),
@@ -202,6 +213,7 @@ class _Screen7State extends State<Screen7> {
                             width: 600.0,
                             height: 610.0,
                             decoration: BoxDecoration(
+
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
@@ -225,6 +237,9 @@ class _Screen7State extends State<Screen7> {
                                   image: DecorationImage(
                                     image: imageSnap
                                         .image, // Add your foreground image path
+/*
+                                    image: new FileImage(File(widget.imgUrl),), // Add your foreground image path
+*/
                                     //image: AssetImage(widget.imgUrl),
                                     fit: BoxFit.fill,
                                   ),
@@ -340,6 +355,9 @@ class _Screen7State extends State<Screen7> {
               icon: Icon(Icons.arrow_back_sharp),
               label: Text(
                 '재시작',
+/*
+              label: Text('재시작',
+*/
                 style: TextStyle(
                   fontSize: 60,
                 ),
