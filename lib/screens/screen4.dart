@@ -42,6 +42,7 @@ class _Screen4State extends State<Screen4> {
    * If user choose photo -> go into 'myphotos/{userID}/Target'
    */
   _chooseImg(int id) async {
+/*
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String _username = prefs.getString('username') ?? "";
 
@@ -68,9 +69,10 @@ class _Screen4State extends State<Screen4> {
       await file.writeAsBytes(response.bodyBytes);
     }
 
+*/
     setState(() {
       chooseImgId = id;
-      chooseImgUrl = userPath;
+      chooseImgUrl = widget.images[id].imgUrl;
     });
   }
 
@@ -132,6 +134,31 @@ class _Screen4State extends State<Screen4> {
   }
 
   Widget build(BuildContext context) {
+    Image imageSnap1 = Image.network(
+      widget.images[0].imgUrl,
+      width: 400,
+      height: 230.0,
+      fit: BoxFit.cover,
+    );
+    Image imageSnap2 = Image.network(
+      widget.images[1].imgUrl,
+      width: 400,
+      height: 230.0,
+      fit: BoxFit.cover,
+    );
+    Image imageSnap3 = Image.network(
+      widget.images[2].imgUrl,
+      width: 200.0,
+      height: 220.0,
+      fit: BoxFit.cover,
+    );
+    Image imageSnap4 = Image.network(
+      widget.images[3].imgUrl,
+      width: 200.0,
+      height: 220.0,
+      fit: BoxFit.cover,
+    );
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -180,11 +207,17 @@ class _Screen4State extends State<Screen4> {
                                       : Border.all(
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
+
+                                    fit: BoxFit.cover,
+                                    image: imageSnap1.image,
+                                  ),
+/*
                                       fit: BoxFit.cover,
                                       image:
                                           NetworkImage(widget.images[0].imgUrl)
                                       // image: AssetImage(widget.images[0].imgUrl),
                                       ),
+*/
                                 ),
                               ),
                             ),
@@ -211,11 +244,16 @@ class _Screen4State extends State<Screen4> {
                                       : Border.all(
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: imageSnap2.image,
+                                  ),
+/*
                                       fit: BoxFit.cover,
                                       image:
                                           NetworkImage(widget.images[1].imgUrl)
                                       // image: AssetImage(widget.images[1].imgUrl),
                                       ),
+*/
                                 ),
                               ),
                             ),
@@ -248,11 +286,16 @@ class _Screen4State extends State<Screen4> {
                                       : Border.all(
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: imageSnap3.image,
+                                  ),
+/*
                                       fit: BoxFit.cover,
                                       image:
                                           NetworkImage(widget.images[2].imgUrl)
                                       // image: AssetImage(widget.images[2].imgUrl),
                                       ),
+*/
                                 ),
                               ),
                             ),
@@ -279,11 +322,16 @@ class _Screen4State extends State<Screen4> {
                                       : Border.all(
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: imageSnap4.image,
+                                  ),
+/*
                                       fit: BoxFit.cover,
                                       image:
                                           NetworkImage(widget.images[3].imgUrl)
                                       // image: AssetImage(widget.images[3].imgUrl),
                                       ),
+*/
                                 ),
                               ),
                             ),

@@ -8,27 +8,10 @@ import 'package:camera/camera.dart';
 //import 'package:camera_windows/camera_windows.dart';
 import 'package:camera_platform_interface/camera_platform_interface.dart';
 
-List<CameraDescription> cameras = [];
-
 Future<void> main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    // Must add this line.
-    //await windowManager.ensureInitialized();
-
-/*
-    windowManager.waitUntilReadyToShow().then((_) async {
-      await windowManager.setTitleBarStyle('hidden' as TitleBarStyle);
-      await windowManager.setFullScreen(true);
-      await windowManager.center();
-      await windowManager.show();
-      await windowManager.setSkipTaskbar(false);
-    });
-
- */
-    cameras = await availableCameras();
-    //cameras = await CameraPlatform.instance.availableCameras();
   } on CameraException catch (e) {
     print('Error in fetching the cameras: $e');
   }

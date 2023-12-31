@@ -27,7 +27,6 @@ class Screen2 extends StatefulWidget {
 class _Screen2State extends State<Screen2> {
   late VideoPlayerController _controller;
   String _storedUserValue = '';
-  late CameraDescription firstCamera;
 
   static const MaterialColor black = MaterialColor(
     0xFFFFFFFF,
@@ -49,20 +48,12 @@ class _Screen2State extends State<Screen2> {
   void initState() {
     _loadStoredValue();
     super.initState();
-    _setCamera();
   }
 
   @override
   void dispose() {
     super.dispose();
     //_controller.dispose();
-  }
-
-  _setCamera() async {
-    final cameras = await availableCameras();
-    setState(() {
-      firstCamera = cameras.first;
-    });
   }
 
   @override
@@ -169,6 +160,7 @@ class _Screen2State extends State<Screen2> {
                                     .play(AssetSource('audio/button.mp3'));
                                 Navigator.push(
                                   context,
+
                                   // MaterialPageRoute(builder: (context) => Screen6(
                                   //   imgUrl: 'assets/template/1.png',
                                   //   effectName: '3dcartoon-man',)
@@ -177,8 +169,8 @@ class _Screen2State extends State<Screen2> {
                                   //     imgUrl: 'assets/template/1.png', imgUrlTarget: 'assets/template/2.png',
                                   //     )
                                   // ),
-                                  //MaterialPageRoute(builder: (context) => Screen3()),
-
+                                  MaterialPageRoute(builder: (context) => Screen3()),
+/*
                                   MaterialPageRoute(builder: (context) => Screen4(
                                             images: [
                                               ImageModel(
@@ -203,7 +195,7 @@ class _Screen2State extends State<Screen2> {
                                                       'https://i.imgur.com/bGyc52q.png'),
                                             ],
                                           )),
-
+*/
                                 );
                               },
                               elevation: 2.0,

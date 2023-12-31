@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photobooth_section1/models/image_model.dart';
@@ -16,14 +17,21 @@ import 'package:path/path.dart' as path;
 import 'package:image/image.dart' as img;
 import 'package:stroke_text/stroke_text.dart';
 
+const _videoConstraints = VideoConstraints(
+  facingMode: FacingMode(
+    type: CameraType.user,
+    constrain: Constrain.ideal,
+  ),
+  width: VideoSize(ideal: 320, maximum: 520),
+  height: VideoSize(ideal: 280, maximum: 380),
+);
+
 class Screen3 extends StatefulWidget {
   @override
   State<Screen3> createState() => _Screen3State();
 }
 
 class _Screen3State extends State<Screen3> {
-  late CameraController _controller;
-  late List<CameraDescription> cameras;
   bool isCameraReady = false;
 
   List<ImageModel> savedImages = [];
@@ -37,41 +45,35 @@ class _Screen3State extends State<Screen3> {
   bool startCount = false;
   bool okToTimer = true;
 
+  int _cameraIndex = 0;
+  int _cameraId = -1;
+  bool _initialized = false;
+
+  final _controller = CameraController(
+      options: const CameraOptions(
+    audio: AudioConstraints(),
+    video: _videoConstraints,
+  ));
+
   @override
   void initState() {
     super.initState();
-    _freshPhotoDir();
     _initializeCamera();
     _delayTimer();
   }
 
-  _freshPhotoDir() async {
-    setState(() {
-      savedImages = [];
-    });
-    Directory current = Directory.current;
+  bool get _isCameraAvailable =>
+      _controller.value.status == CameraStatus.available;
 
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    bool exists = await Directory(internalFolder).exists();
-    if (exists) {
-      final Directory dir = Directory(internalFolder);
-      dir.deleteSync(recursive: true);
-    }
+  Future<void> _play() async {
+    if (!_isCameraAvailable) return;
+    return _controller.play();
   }
 
+  /// Initializes the camera on the device.
   Future<void> _initializeCamera() async {
-    cameras = await availableCameras();
-
-    _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
-
     await _controller.initialize();
-
-    if (!mounted) return;
-
-    setState(() {
-      isCameraReady = true;
-    });
+    await _play();
   }
 
   @override
@@ -127,73 +129,37 @@ class _Screen3State extends State<Screen3> {
    * If photo apply AI -> go to Result with format 'myphotos/{userID}/Result/{Effect-ID}.png'
    */
   void takePhoto() async {
-    if (_controller.value.isInitialized) {
-      try {
-        if (savedImages.length > 2) {
-          setState(() {
-            okToTimer = false;
-          });
-          Timer(Duration(seconds: 5), () {
-            Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Screen4(
-                          images: savedImages,
-                        )));
-          });
-        }
-
-        // Capture photo
-        final XFile file = await _controller.takePicture();
-
-        // Get directory to save
-        Directory current = Directory.current;
-
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-
-        // Parent folder
-        final String internalFolder = path.join(current.path, 'myphotos');
-        await Directory(internalFolder).create(recursive: true);
-
-        // User folder
-        DateTime now = DateTime.now();
-        String _username = DateFormat('yyyyMMddkk').format(now);
-        await prefs.setString("username", _username);
-
-        final String userDir = path.join(internalFolder, _username);
-        await Directory(userDir).create(recursive: true);
-
+    try {
+      if (savedImages.length > 2) {
         setState(() {
-          userDirPath = userDir;
+          okToTimer = false;
         });
-
-        // User folder
-        final String tempUserDir = path.join(userDir, 'User');
-        await Directory(tempUserDir).create(recursive: true);
-
-        // Save photo
-        int userPhotoId = savedImages.length + 1;
-        final String userPath =
-            path.join(tempUserDir, path.basename(file.path));
-        await File(file.path).copy(userPath);
-
-        // setState(() {
-        //   _imageFile = File(userPath);
-        // });
-
-        final ImageModel savedImage = ImageModel(
-          id: userPhotoId,
-          title: 'user_photo_$userPhotoId',
-          imgUrl: userPath,
-        );
-
-        setState(() {
-          savedImages.add(savedImage);
+        Timer(Duration(seconds: 5), () {
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Screen4(
+                        images: savedImages,
+                      )));
         });
-      } catch (e) {
-        print("Error taking photo: $e");
       }
+
+      // Capture photo
+      final picture = await _controller.takePicture();
+
+      int userPhotoId = savedImages.length + 1;
+      final ImageModel savedImage = ImageModel(
+        id: userPhotoId,
+        title: 'user_photo_$userPhotoId',
+        imgUrl: picture.data,
+      );
+
+      setState(() {
+        savedImages.add(savedImage);
+      });
+    } catch (e) {
+      print("Error taking photo: $e");
     }
   }
 
@@ -242,22 +208,6 @@ class _Screen3State extends State<Screen3> {
   }
 
   Widget build(BuildContext context) {
-    if (!isCameraReady) {
-      return Container();
-    }
-
-    var camera = _controller.value;
-    final size = MediaQuery.of(context).size;
-
-    // calculate scale depending on screen and camera ratios
-    // this is actually size.aspectRatio / (1 / camera.aspectRatio)
-    // because camera preview size is received as landscape
-    // but we're calculating for portrait orientation
-    var scale = size.aspectRatio * camera.aspectRatio;
-
-    // to prevent scaling down, invert the value
-    if (scale < 1) scale = 1 / scale;
-
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -270,13 +220,13 @@ class _Screen3State extends State<Screen3> {
             ),
             Container(
               //mainAxisAlignment: MainAxisAlignment.center,
-              height: 500, //500
+              height: 300, //300
               //color: Colors.white70,
               margin: const EdgeInsets.only(
                 left: 0.0, //10
                 right: 10.0, //0
                 top: 10.0,
-                bottom: 1250,
+                bottom: 1050,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -295,7 +245,7 @@ class _Screen3State extends State<Screen3> {
                 left: 10.0,
                 right: 0.0,
                 top: 70.0,
-                bottom: 300,
+                bottom: 100,
               ),
               child: Center(
                 child: Column(
@@ -326,9 +276,12 @@ class _Screen3State extends State<Screen3> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                                 child: AspectRatio(
-                                  aspectRatio: 10.0 / 7.5, //5/4
-                                  child: CameraPreview(_controller),
-                                ),
+                                    aspectRatio: 10.0 / 7.5, //5/4
+                                    // aspectRatio: _previewSize!.width /_previewSize!.height,
+                                    child: Camera(
+                                      controller: _controller,
+                                      placeholder: (_) => const SizedBox(),
+                                    )),
                               ),
                             ),
                           ],
@@ -428,8 +381,8 @@ class ThumbnailGridView extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
         itemBuilder: (context, index) {
-          Image imageSnap = Image.file(
-            File(images[index].imgUrl),
+          Image imageSnap = Image.network(
+            images[index].imgUrl,
             width: 200.0,
             height: 180.0,
             fit: BoxFit.cover,

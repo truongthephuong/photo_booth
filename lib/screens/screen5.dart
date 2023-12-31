@@ -277,6 +277,13 @@ class _Screen5State extends State<Screen5> {
       );
     }
 
+    Image imageSnap = Image.network(
+      widget.image,
+      width: 350.0,
+      height: 380.0,
+      fit: BoxFit.cover,
+    );
+
     return Stack(
       children: [
         BackGroundImage(),
@@ -343,9 +350,8 @@ class _Screen5State extends State<Screen5> {
                                         // borderRadius:
                                         //     BorderRadius.circular(10.0),
                                         image: DecorationImage(
-                                          image: new FileImage(
-                                            File(widget.image),
-                                          ), // Add your foreground image path
+                                          image: imageSnap
+                                              .image, // Add your foreground image path
                                           fit: BoxFit.fill,
                                         ),
                                       ),

@@ -65,28 +65,6 @@ class _Screen7State extends State<Screen7> {
     final apiUrl = Uri.parse('http://127.0.0.1:8000/api/generate-image/');
     final headers = {'Content-Type': 'application/json; charset=utf-8'};
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _username = prefs.getString('username') ?? "";
-
-    Directory current = Directory.current;
-
-    // Parent folder
-    final String internalFolder = path.join(current.path, 'myphotos');
-    await Directory(internalFolder).create(recursive: true);
-
-    // User folder
-    final String userDir = path.join(internalFolder, _username);
-    await Directory(userDir).create(recursive: true);
-
-    // Target folder
-    final String targetUserDir = path.join(userDir, 'Target');
-    await Directory(targetUserDir).create(recursive: true);
-    // Asset folder
-    final String assetDir = path.join(current.path, 'assets');
-    await Directory(assetDir).create(recursive: true);
-    final String assertImageDir = path.join(assetDir, 'images');
-    await Directory(assertImageDir).create(recursive: true);
-
     // Prepare the request body
     final requestBody = {
       "image_selected": resultUrl,
@@ -120,6 +98,20 @@ class _Screen7State extends State<Screen7> {
   }
 
   Widget build(BuildContext context) {
+    Image imageSnap = Image.network(
+      widget.imgUrl,
+      width: 490.0,
+      height: 520.0,
+      fit: BoxFit.cover,
+    );
+
+    Image imageSnapTarget = Image.network(
+      widget.imgUrlTarget,
+      width: 490.0,
+      height: 520.0,
+      fit: BoxFit.cover,
+    );
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -150,6 +142,10 @@ class _Screen7State extends State<Screen7> {
                     children: [
                       Image.asset(
                         'assets/template/text_screen7.png',
+/*
+                        width: 300,
+                        height: 100,
+*/
                         width: 800,
                         height: 300,
                       )
@@ -167,7 +163,10 @@ class _Screen7State extends State<Screen7> {
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
                                 image: AssetImage(
+                                  'assets/template/screen7_layer_down.png',
+/*
                                     'assets/template/screen7_layer_down.png',
+*/
                                 ), // Add your background image path
                                 fit: BoxFit.fill,
                               ),
@@ -186,7 +185,12 @@ class _Screen7State extends State<Screen7> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
+
+                                    image: imageSnapTarget
+                                        .image, // Add your foreground image path
+/*
                                     image: new FileImage(File(widget.imgUrlTarget),), // Add your foreground image path
+*/
                                     //image: AssetImage(widget.imgUrlTarget),
                                     fit: BoxFit.fill,
                                   ),
@@ -231,7 +235,11 @@ class _Screen7State extends State<Screen7> {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
+                                    image: imageSnap
+                                        .image, // Add your foreground image path
+/*
                                     image: new FileImage(File(widget.imgUrl),), // Add your foreground image path
+*/
                                     //image: AssetImage(widget.imgUrl),
                                     fit: BoxFit.fill,
                                   ),
@@ -345,7 +353,11 @@ class _Screen7State extends State<Screen7> {
                 );
               },
               icon: Icon(Icons.arrow_back_sharp),
+              label: Text(
+                '재시작',
+/*
               label: Text('재시작',
+*/
                 style: TextStyle(
                   fontSize: 60,
                 ),
