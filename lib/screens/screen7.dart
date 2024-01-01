@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -32,7 +33,6 @@ class _Screen7State extends State<Screen7> {
     super.initState();
     AudioPlayer().play(AssetSource('audio/screen7.mp3'));
     _uploadImage();
-    _printDataAndSaveImage(widget.imgUrl);
   }
 
   Future<html.File> convertUint8ListToFile(
@@ -50,23 +50,29 @@ class _Screen7State extends State<Screen7> {
   }
 
   Future<void> _uploadImage() async {
+    Random random = new Random();
     try {
-      Dio dio = Dio();
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromBytes(widget.imgUrl as List<int>),
-      });
-
-      final response =
-          await dio.post('http://128.199.205.168/api/upload/', data: formData);
-
-      print('response');
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://128.199.205.168/api/upload/'));
+      //print('Bat dua upload 1111 ');
+      request.files.add(
+        //await http.MultipartFile.fromPath('file', widget.imgUrl),
+        await http.MultipartFile.fromBytes('file', widget.imgUrl,
+            filename: "${random.nextInt(100)}_photo_result.jpg"),
+      );
+      //print('Bat dua upload 2222 ');
+      final response = await request.send();
+      //print('Upload thanh cong');
+      //print(response.statusCode);
       if (response.statusCode == 200) {
-        final jsonData = response.data;
+        final jsonData = await http.Response.fromStream(response);
         final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
         if (result.isNotEmpty) {
           setState(() {
             imgUrlTest = 'http://128.199.205.168/${result['image']}';
           });
+
+          _printDataAndSaveImage(imgUrlTest);
         }
       } else {
         // Handle errors
@@ -74,18 +80,50 @@ class _Screen7State extends State<Screen7> {
       }
     } catch (error) {
       print('Error uploaded');
-      print(error);
     }
   }
 
-  Future<void> _printDataAndSaveImage(Uint8List resultUrl) async {
+  // Future<void> _uploadImage() async {
+  //   try {
+  //     Dio dio = Dio();
+  //     FormData formData = FormData.fromMap({
+  //       'file': await MultipartFile.fromBytes(widget.imgUrl as List<int>),
+  //     });
+
+  //     final response =
+  //         await dio.post('http://128.199.205.168/api/upload/', data: formData);
+
+  //     print('response');
+  //     if (response.statusCode == 200) {
+  //       final jsonData = response.data;
+  //       final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
+  //       if (result.isNotEmpty) {
+  //         setState(() {
+  //           imgUrlTest = 'http://128.199.205.168/${result['image']}';
+  //         });
+  //       }
+  //     } else {
+  //       // Handle errors
+  //       print('Failed to upload image. Status code: ${response.statusCode}');
+  //     }
+  //   } catch (error) {
+  //     print('Error uploaded');
+  //     print(error);
+  //   }
+  // }
+
+  Future<void> _printDataAndSaveImage(String resultUrl) async {
     // Define the API endpoint and headers
-    final apiUrl = Uri.parse('http://127.0.0.1:8000/api/generate-image/');
-    final headers = {'Content-Type': 'application/json; charset=utf-8'};
+    final apiUrl = Uri.parse('http://localhost:8000/api/generate-image/');
+    final headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*'
+    };
 
     // Prepare the request body
     final requestBody = {
-      "image_selected": base64Encode(resultUrl),
+      "image_result_from_server": resultUrl,
+      "image_selected": "C:/photoboothprint/myphotos/Result/result.png",
       "bkgrnd_image": "C:/photoboothprint/3a1.jpg",
       "star1_img": "C:/photoboothprint/star1.png",
       "star2_img": "C:/photoboothprint/star2.png",
@@ -307,7 +345,7 @@ class _Screen7State extends State<Screen7> {
                             margin: EdgeInsets.only(
                               // left: 20,
                               // right: 20,
-                              top: 30,
+                              top: 70,
                               // bottom: 20,
                             ),
                             child: ClipRRect(

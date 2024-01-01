@@ -317,11 +317,14 @@ class ImageSaver {
 }
 
 class ApiService {
-  static const String apiUrl = 'http://127.0.0.1:7860/sdapi/v1/txt2img';
+  static const String apiUrl = 'http://localhost:7860/sdapi/v1/txt2img';
 
   Future<Map<String, dynamic>> postData(Map<String, dynamic> payload) async {
     final response = await http.post(Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
         body: jsonEncode(payload));
     if (response.statusCode == 200) {
       return json.decode(response.body);
