@@ -4,7 +4,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:photobooth_section1/screens/screen1.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -83,35 +82,6 @@ class _Screen7State extends State<Screen7> {
     }
   }
 
-  // Future<void> _uploadImage() async {
-  //   try {
-  //     Dio dio = Dio();
-  //     FormData formData = FormData.fromMap({
-  //       'file': await MultipartFile.fromBytes(widget.imgUrl as List<int>),
-  //     });
-
-  //     final response =
-  //         await dio.post('http://128.199.205.168/api/upload/', data: formData);
-
-  //     print('response');
-  //     if (response.statusCode == 200) {
-  //       final jsonData = response.data;
-  //       final result = jsonDecode(jsonData.body) as Map<String, dynamic>;
-  //       if (result.isNotEmpty) {
-  //         setState(() {
-  //           imgUrlTest = 'http://128.199.205.168/${result['image']}';
-  //         });
-  //       }
-  //     } else {
-  //       // Handle errors
-  //       print('Failed to upload image. Status code: ${response.statusCode}');
-  //     }
-  //   } catch (error) {
-  //     print('Error uploaded');
-  //     print(error);
-  //   }
-  // }
-
   Future<void> _printDataAndSaveImage(String resultUrl) async {
     // Define the API endpoint and headers
     final apiUrl = Uri.parse('http://localhost:8000/api/generate-image/');
@@ -154,7 +124,9 @@ class _Screen7State extends State<Screen7> {
   }
 
   Widget build(BuildContext context) {
-    Image imageSnap = Image.memory(widget.imgUrl);
+    Image imageSnap = Image.memory(
+      widget.imgUrl,
+    );
 
     Image imageSnapTarget = Image.network(
       widget.imgUrlTarget,
@@ -193,8 +165,12 @@ class _Screen7State extends State<Screen7> {
                     children: [
                       Image.asset(
                         'assets/template/text_screen7.png',
+/*
                         width: 300,
                         height: 100,
+*/
+                        width: 800,
+                        height: 300,
                       )
                     ],
                   ),
@@ -211,6 +187,9 @@ class _Screen7State extends State<Screen7> {
                               image: DecorationImage(
                                 image: AssetImage(
                                   'assets/template/screen7_layer_down.png',
+/*
+                                    'assets/template/screen7_layer_down.png',
+*/
                                 ), // Add your background image path
                                 fit: BoxFit.fill,
                               ),
@@ -231,6 +210,9 @@ class _Screen7State extends State<Screen7> {
                                   image: DecorationImage(
                                     image: imageSnapTarget
                                         .image, // Add your foreground image path
+
+                                    //image: Image.memory(base64Decode(strbase64)).image,
+
                                     //image: AssetImage(widget.imgUrlTarget),
                                     fit: BoxFit.fill,
                                   ),
@@ -276,6 +258,9 @@ class _Screen7State extends State<Screen7> {
                                   image: DecorationImage(
                                     image: imageSnap
                                         .image, // Add your foreground image path
+/*
+                                    image: new FileImage(File(widget.imgUrl),), // Add your foreground image path
+*/
                                     //image: AssetImage(widget.imgUrl),
                                     fit: BoxFit.fill,
                                   ),
@@ -345,7 +330,7 @@ class _Screen7State extends State<Screen7> {
                             margin: EdgeInsets.only(
                               // left: 20,
                               // right: 20,
-                              top: 70,
+                              top: 80,
                               // bottom: 20,
                             ),
                             child: ClipRRect(
@@ -391,6 +376,9 @@ class _Screen7State extends State<Screen7> {
               icon: Icon(Icons.arrow_back_sharp),
               label: Text(
                 '재시작',
+/*
+              label: Text('재시작',
+*/
                 style: TextStyle(
                   fontSize: 60,
                 ),

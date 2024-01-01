@@ -47,6 +47,9 @@ class _Screen3State extends State<Screen3> {
   int _cameraId = -1;
   bool _initialized = false;
 
+  int _cntdown = 3;
+  bool delayStartCnt = false;
+
   final _controller = CameraController(
       options: const CameraOptions(
     audio: AudioConstraints(),
@@ -57,6 +60,7 @@ class _Screen3State extends State<Screen3> {
   void initState() {
     super.initState();
     _initializeCamera();
+    _delayTimer();
   }
 
   bool get _isCameraAvailable =>
@@ -71,6 +75,20 @@ class _Screen3State extends State<Screen3> {
   Future<void> _initializeCamera() async {
     await _controller.initialize();
     await _play();
+  }
+
+  void _delayTimer() {
+    const threeSec = const Duration(seconds: 3);
+    _timer = Timer.periodic(threeSec, (Timer timer1) {
+      if (_cntdown == 0) {
+        timer1.cancel();
+        startTimer();
+      } else {
+        setState(() {
+          _cntdown--;
+        });
+      }
+    });
   }
 
   @override
