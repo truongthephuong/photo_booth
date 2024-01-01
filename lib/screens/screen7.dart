@@ -49,7 +49,6 @@ class _Screen7State extends State<Screen7> {
   }
 
   Future<void> _uploadImage() async {
-    Random random = new Random();
     try {
       var request = http.MultipartRequest(
           'POST', Uri.parse('http://128.199.205.168/api/upload/'));
@@ -57,7 +56,7 @@ class _Screen7State extends State<Screen7> {
       request.files.add(
         //await http.MultipartFile.fromPath('file', widget.imgUrl),
         await http.MultipartFile.fromBytes('file', widget.imgUrl,
-            filename: "${random.nextInt(100)}_photo_result.jpg"),
+            filename: "photo_result.jpg"),
       );
       //print('Bat dua upload 2222 ');
       final response = await request.send();
