@@ -109,11 +109,9 @@ class _Screen3State extends State<Screen3> {
       if (_cntdown == 0) {
         timer1.cancel();
         startTimer();
-
       } else {
         setState(() {
           _cntdown--;
-
         });
       }
     });
@@ -195,16 +193,16 @@ class _Screen3State extends State<Screen3> {
       savedImages.add(savedImage);
     });
 
-    if (savedImages.length >= 4) {
-      Timer(Duration(seconds: 5), () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Screen4(
-                      images: savedImages,
-                    )));
-      });
-    }
+    // if (savedImages.length >= 4) {
+    //   Timer(Duration(seconds: 5), () {
+    //     Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => Screen4(
+    //                   images: savedImages,
+    //                 )));
+    //   });
+    // }
   }
 
   Widget build(BuildContext context) {
@@ -278,9 +276,24 @@ class _Screen3State extends State<Screen3> {
                                 child: AspectRatio(
                                     aspectRatio: 10.0 / 7.5, //5/4
                                     // aspectRatio: _previewSize!.width /_previewSize!.height,
-                                    child: Camera(
-                                      controller: _controller,
-                                      placeholder: (_) => const SizedBox(),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Camera(controller: _controller),
+                                        Center(
+                                          child: Container(
+                                            width: 200.0,
+                                            height: 150.0,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.red,
+                                                width: 5.0,
+                                              ),
+                                              color: Colors
+                                                  .transparent, // Transparent background
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     )),
                               ),
                             ),

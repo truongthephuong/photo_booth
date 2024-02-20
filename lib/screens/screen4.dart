@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'package:stroke_text/stroke_text.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_cropper/image_cropper.dart';
 
 class Screen4 extends StatefulWidget {
   List<ImageModel> images = [];
@@ -26,6 +27,8 @@ class _Screen4State extends State<Screen4> {
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
+
+  CroppedFile? _croppedFile;
 
   @override
   void initState() {
@@ -80,14 +83,60 @@ class _Screen4State extends State<Screen4> {
     if (chooseImgUrl == '') {
       _showMyDialog();
       return;
-    } else {
-      Navigator.pop(context);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Screen5(
-                    image: chooseImgUrl,
-                  )));
+    }
+
+    _cropImage(chooseImgUrl);
+    if (_croppedFile == null) {
+      return;
+    }
+
+    print(_croppedFile);
+
+    Navigator.pop(context);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Screen5(
+                  image: _croppedFile!.path,
+                )));
+  }
+
+  Future<void> _cropImage(_pickedFile) async {
+    if (_pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: _pickedFile,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+            viewPort: const CroppieViewPort(
+                width: 280, height: 180, type: 'rectangle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          _croppedFile = croppedFile;
+        });
+      }
     }
   }
 
@@ -207,7 +256,6 @@ class _Screen4State extends State<Screen4> {
                                       : Border.all(
                                           color: Colors.white, width: 4),
                                   image: DecorationImage(
-
                                     fit: BoxFit.cover,
                                     image: imageSnap1.image,
                                   ),
